@@ -4,5 +4,11 @@
     <string name="app_name">Team07RecipeFinder</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
+    
+<!--     TextView Strings -->
+
+<!--     EditTextHint Strings -->
+    
+    
 
 </resources>
