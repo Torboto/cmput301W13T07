@@ -20,6 +20,7 @@
             android:layout_width="fill_parent"
             android:layout_height="fill_parent" >
 
+<!--             Pantry Tab -->
             <LinearLayout
                 android:id="@+id/tab1"
                 android:layout_width="fill_parent"
@@ -34,6 +35,7 @@
                     android:text="@string/tab_pantry" />
             </LinearLayout>
 
+<!--             Search Tab -->
             <LinearLayout
                 android:id="@+id/tab2"
                 android:layout_width="fill_parent"
@@ -46,8 +48,11 @@
                     android:layout_width="fill_parent"
                     android:layout_height="100px"
                     android:text="@string/tab_search" />
+                
+                
             </LinearLayout>
 
+<!--             MyRecipe Tab -->
             <LinearLayout
                 android:id="@+id/tab3"
                 android:layout_width="fill_parent"

@@ -18,14 +18,14 @@ public class MainActivity extends Activity {
 
 	        TabSpec spec1=tabHost.newTabSpec("tab_pantry");
 	        spec1.setContent(R.id.tab1);
-	        spec1.setIndicator("tab_pantry");
+	        spec1.setIndicator("Pantry");
 
 	        TabSpec spec2=tabHost.newTabSpec("tab_search");
-	        spec2.setIndicator("tab_search");
+	        spec2.setIndicator("Search");
 	        spec2.setContent(R.id.tab2);
 
 	        TabSpec spec3=tabHost.newTabSpec("tab_myrecipes");
-	        spec3.setIndicator("tab_myrecipes");
+	        spec3.setIndicator("MyRecipes");
 	        spec3.setContent(R.id.tab3);
 
 	        tabHost.addTab(spec1);
