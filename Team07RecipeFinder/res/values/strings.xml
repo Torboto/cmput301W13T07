@@ -4,11 +4,17 @@
     <string name="app_name">Team07RecipeFinder</string>
     <string name="hello_world">Hello world!</string>
     <string name="menu_settings">Settings</string>
-    
-<!--     TextView Strings -->
 
-<!--     EditTextHint Strings -->
+    <!-- TabNames Strings -->
+    <string name="tab_pantry">Pantry</string>
+    <string name="tab_search">Search</string>
+    <string name="tab_myrecipes">MyRecipes</string>
     
-    
+    <!-- TextView Strings -->
+
+
+    <!-- EditTextHint Strings -->
+
+    <string name="title_activity_main">Recipe Finder</string>
 
 </resources>
