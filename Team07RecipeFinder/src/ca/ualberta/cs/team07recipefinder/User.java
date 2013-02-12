@@ -17,6 +17,10 @@ public class User {
 		}
 		return instance;
 	}
+	
+	public void emailRecipe(int recipeId) {
+		
+	}
 
 	public String getName() {
 		return name;
