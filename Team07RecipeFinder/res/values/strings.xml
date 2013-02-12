@@ -26,5 +26,9 @@
     <string name="newStep">1. New Step</string>
     <string name="done">Done</string>
     <string name="recipeImage">Recipe Image</string>
+    <string name="search_ingredient">Ingredients</string>
+    <string name="search_recipe">Recipe</string>
+    <string name="import_ingredient">Import</string>
+    <string name="search">Search</string>
 
 </resources>
