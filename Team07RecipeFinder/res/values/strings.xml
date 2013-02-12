@@ -30,5 +30,7 @@
     <string name="search_recipe">Recipe</string>
     <string name="import_ingredient">Import</string>
     <string name="search">Search</string>
+    <string name="save">Save</string>
+    <string name="share">Share</string>
 
 </resources>
