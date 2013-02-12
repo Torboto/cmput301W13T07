@@ -9,12 +9,22 @@
     <string name="tab_pantry">Pantry</string>
     <string name="tab_search">Search</string>
     <string name="tab_myrecipes">MyRecipes</string>
-    
+
     <!-- TextView Strings -->
 
 
     <!-- EditTextHint Strings -->
 
     <string name="title_activity_main">Recipe Finder</string>
+    <string name="title_activity_new_recipe">NewRecipeActivity</string>
+    
+    <!-- NewRecipeActivity Strings -->
+    <string name="description">Description</string>
+    <string name="ingredients">Ingredients</string>
+    <string name="newIngredient">1. New Ingredient</string>
+    <string name="procedure">Procedure</string>
+    <string name="newStep">1. New Step</string>
+    <string name="done">Done</string>
+    <string name="recipeImage">Recipe Image</string>
 
 </resources>
