@@ -10,15 +10,16 @@
     <string name="tab_search">Search</string>
     <string name="tab_myrecipes">MyRecipes</string>
 
+    <!-- MainActivity Strings -->
     <!-- TextView Strings -->
-
-
+    <string name="add">Add</string>
+    <string name="edit">Edit</string>
     <!-- EditTextHint Strings -->
-
     <string name="title_activity_main">Recipe Finder</string>
     <string name="title_activity_new_recipe">NewRecipeActivity</string>
-    
+
     <!-- NewRecipeActivity Strings -->
+    <!-- TextView Strings -->
     <string name="description">Description</string>
     <string name="ingredients">Ingredients</string>
     <string name="newIngredient">1. New Ingredient</string>
@@ -26,11 +27,12 @@
     <string name="newStep">1. New Step</string>
     <string name="done">Done</string>
     <string name="recipeImage">Recipe Image</string>
-    <string name="search_ingredient">Ingredients</string>
-    <string name="search_recipe">Recipe</string>
-    <string name="import_ingredient">Import</string>
     <string name="search">Search</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
+    <!-- EditTextHint Strings -->
+    <string name="search_ingredient">Ingredients</string>
+    <string name="search_recipe">Recipe</string>
+    <string name="import_ingredient">Import</string>
 
 </resources>

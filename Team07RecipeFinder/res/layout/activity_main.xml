@@ -20,25 +20,58 @@
                 android:layout_width="fill_parent"
                 android:layout_height="wrap_content" >
             </TabWidget>
+            <!-- Frame for tabs -->
 
             <FrameLayout
                 android:id="@android:id/tabcontent"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent" >
 
+                <!-- Pantry Tab -->
+
                 <LinearLayout
                     android:id="@+id/tab1"
                     android:layout_width="fill_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:paddingTop="60px" >
+                    android:layout_height="fill_parent"
+                    android:orientation="horizontal"
+                    android:paddingTop="60dp" >
 
-                    <TextView
-                        android:id="@+id/txt1"
+                    <LinearLayout
                         android:layout_width="fill_parent"
-                        android:layout_height="100px"
-                        android:text="@string/tab_pantry" />
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:orientation="horizontal" >
+
+                        <ListView
+                            android:id="@+id/lvPantry"
+                            android:layout_width="match_parent"
+                            android:layout_height="fill_parent" >
+                        </ListView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" >
+
+                        <Button
+                            android:id="@+id/buttonAdd"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/add" />
+
+                        <Button
+                            android:id="@+id/buttonEdit"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/edit" />
+                    </LinearLayout>
                 </LinearLayout>
+
+                <!-- Search Tab -->
 
                 <LinearLayout
                     android:id="@+id/tab2"
@@ -65,6 +98,7 @@
                             android:layout_weight="1"
                             android:text="@string/search_recipe" />
                     </LinearLayout>
+                    <!-- MyRecipes Tab -->
 
                     <LinearLayout
                         android:layout_width="fill_parent"
