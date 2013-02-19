@@ -6,6 +6,7 @@ import android.view.Menu;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
+
 public class MainActivity extends Activity {
 
 	@Override
