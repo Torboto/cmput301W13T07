@@ -36,5 +36,6 @@
     <string name="title_activity_view_recipe">ViewRecipe</string>
     <string name="enter_keywords">Enter Keywords</string>
     <string name="enter_ingredient">Enter Ingredients</string>
+    <string name="synch_recipies">Synch</string>
 
 </resources>

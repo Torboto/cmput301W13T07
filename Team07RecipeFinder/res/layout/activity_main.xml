@@ -98,7 +98,6 @@
                             android:layout_weight="1"
                             android:text="@string/search_recipe" />
                     </LinearLayout>
-                    <!-- MyRecipes Tab -->
 
                     <LinearLayout
                         android:layout_width="fill_parent"
@@ -149,12 +148,50 @@
                     </ListView>
                 </LinearLayout>
 
+                <!-- MyRecipes Tab -->
+                
                 <LinearLayout
                     android:id="@+id/tab3"
                     android:layout_width="fill_parent"
                     android:layout_height="fill_parent"
                     android:orientation="vertical" >
+                    
+                    
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="fill_parent"
+                        android:layout_gravity="right"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:orientation="horizontal" >
+
+                        <ListView
+                            android:id="@+id/lvMyRecipies"
+                            android:layout_width="match_parent"
+                            android:layout_height="fill_parent" >
+                        </ListView>
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" >
+
+                        <Button
+                            android:id="@+id/buttonAddRecipe"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/add" />
+
+                        <Button
+                            android:id="@+id/buttonSynch"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:text="@string/synch_recipies" />
+                    </LinearLayout>
                 </LinearLayout>
+                
             </FrameLayout>
         </LinearLayout>
     </TabHost>
