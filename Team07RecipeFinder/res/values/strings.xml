@@ -37,7 +37,10 @@
     <string name="enter_keywords">Enter Keywords</string>
     <string name="enter_ingredient">Enter Ingredients</string>
     <string name="synch_recipies">Synch</string>
-    <string name="hello_world">Hello world!</string>
     <string name="title_activity_view_searched_recipe">ViewSearchedRecipeActivity</string>
+    
+    <!-- ViewRecipeActivity Strings -->
+    <!-- TextView Strings -->
+	<string name="recipe_title">Recipe Title</string>
 
 </resources>
