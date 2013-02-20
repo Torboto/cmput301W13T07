@@ -42,5 +42,10 @@
     <!-- ViewRecipeActivity Strings -->
     <!-- TextView Strings -->
 	<string name="recipe_title">Recipe Title</string>
-
+	<string name="recipe_description">Recipe Description</string>
+	<string name="recipe_ingredients">Ingredients:</string>
+	<string name="recipe_directions">Directions:</string>
+	<!-- Button Strings -->
+	<string name="button_edit">Edit</string>
+	<string name="button_delete">Delete</string>
 </resources>
