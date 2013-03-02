@@ -6,6 +6,7 @@ public class User {
 	private String name;
 	private String email;
 	private Pantry pantry;
+    private String Filename = "userdata";
 	
 	protected User() {
 		
@@ -45,5 +46,9 @@ public class User {
 	public void setPantry(Pantry pantry) {
 		this.pantry = pantry;
 	}
+
+    public String getFilename(){
+        return Filename;
+    }
 	
 }
