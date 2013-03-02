@@ -1,6 +1,6 @@
 package ca.ualberta.cs.team07recipefinder;
 
-// Default View for the view classes to inherit from.
-public class View {
-
+// Generic View interface for the view classes to implement.
+public interface View<M> {
+	public void update(M model);
 }
