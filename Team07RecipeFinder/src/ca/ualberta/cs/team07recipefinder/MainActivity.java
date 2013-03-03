@@ -42,4 +42,11 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		//GC - MyRecipes Tab
+		
+	}
 }
