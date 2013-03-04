@@ -37,10 +37,7 @@ public class User implements Serializable {
 	 * ET: Sets name/email member variables for object, and then writes
 	 * serilized form to file userdata in the application data folder.
 	 */
-	public void Write(Context context, String inputEmail, String inputName) {
-		this.email = inputEmail;
-		this.name = inputName;
-
+	public void Write(Context context) {
 		try {
 			context.deleteFile(filename);
 			FileOutputStream fout = context.openFileOutput(filename,

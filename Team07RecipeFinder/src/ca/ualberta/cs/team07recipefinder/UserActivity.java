@@ -49,7 +49,10 @@ public class UserActivity extends Activity {
 						verifyUser();
 						//setError should return null if no flags have be set during verifyUser.
 						if (mEmailView.getError() == null && mPersonNameView.getError() == null) {
-							user.Write(getApplicationContext(), mEmail, mPersonName);
+							user.setEmail(mEmail);
+							user.setName(mPersonName);
+							
+							user.Write(getApplicationContext());
 							launchMainActivity();
 						}
 					}
@@ -64,6 +67,9 @@ public class UserActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Starts main activity.
+	 */
 	public void launchMainActivity(){
 		Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 		//TODO: Get rid of this flag, should be a better way to launch new activity.
