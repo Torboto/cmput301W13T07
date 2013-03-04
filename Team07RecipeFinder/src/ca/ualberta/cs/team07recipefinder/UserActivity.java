@@ -11,7 +11,7 @@ import android.animation.Animator;
 import android.animation.AnimatorListenerAdapter;
 import android.annotation.TargetApi;
 import android.app.Activity;
-import android.os.AsyncTask;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -25,12 +25,8 @@ import android.widget.TextView;
  * well.
  */
 public class UserActivity extends Activity {
-	/**
-	 * A dummy authentication store containing known user names and passwords.
-	 * TODO: remove after connecting to a real authentication system.
-	 */
-	private static final String[] DUMMY_CREDENTIALS = new String[] {
-			"foo@example.com:hello", "bar@example.com:world" };
+
+	User user = new User();
 
 	/**
 	 * The default email to populate the email field with.
@@ -39,9 +35,11 @@ public class UserActivity extends Activity {
 
 	// Values for email and password at the time of the login attempt.
 	private String mEmail;
+	private String mPersonName = "Gaxe Scmt";
 
 	// UI references.
 	private EditText mEmailView;
+	private EditText mPersonNameView;
 	private View mLoginFormView;
 	private View mLoginStatusView;
 	private TextView mLoginStatusMessageView;
@@ -56,6 +54,8 @@ public class UserActivity extends Activity {
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
+		
+		mPersonNameView = (EditText) findViewById(R.id.name);
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
@@ -65,10 +65,19 @@ public class UserActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						createAccount();
+						verifyUser();
 					}
 				});
-	}
+		
+		if(userExists()){
+			Intent intent = new Intent(this, MainActivity.class);
+			this.startActivity(intent);
+		}
+		verifyUser();
+//		if(true){
+//			user.Write(getBaseContext());
+//			}
+		}
 
 	@Override
 	public boolean onCreateOptionsMenu(Menu menu) {
@@ -82,25 +91,28 @@ public class UserActivity extends Activity {
 	 * If there are form errors (invalid email, missing fields, etc.), the
 	 * errors are presented and no actual login attempt is made.
 	 */
-	public void createAccount() {
+	public void verifyUser() {
 		// Reset errors.
 		mEmailView.setError(null);
+		mPersonNameView.setError(null);
 
 		// Store values at the time of the login attempt.
 		mEmail = mEmailView.getText().toString();
-
-		boolean cancel = false;
+		mPersonName = mPersonNameView.getText().toString();
 		View focusView = null;
 
 		// Check for a valid email address.
 		if (TextUtils.isEmpty(mEmail)) {
 			mEmailView.setError(getString(R.string.error_field_required));
 			focusView = mEmailView;
-			cancel = true;
 		} else if (!mEmail.contains("@")) {
 			mEmailView.setError(getString(R.string.error_invalid_email));
 			focusView = mEmailView;
-			cancel = true;
+		}
+		// Check for a valid email address.
+		if (TextUtils.isEmpty(mPersonName)) {
+			mEmailView.setError(getString(R.string.error_field_required));
+			focusView = mEmailView;
 		}
 	}
 
@@ -149,35 +161,34 @@ public class UserActivity extends Activity {
 	 * Represents an asynchronous login/registration task used to authenticate
 	 * the user.
 	 */
-		public Boolean userExists() {
+	public Boolean userExists() {
 
-            FileInputStream fin = null;
-            ObjectInputStream ois = null;
-            User user = new User();
-            File file = getBaseContext().getFileStreamPath(user.getFilename());
+		FileInputStream fin = null;
+		ObjectInputStream ois = null;
+		File file = getBaseContext().getFileStreamPath(user.getFilename());
 
-            if (file.exists()) {
-                try {
-                    fin = getBaseContext().openFileInput(user.getFilename());
-                    ois = new ObjectInputStream(fin);
-                    user = (User) ois.readObject();
-                    return true;
+		if (file.exists()) {
+			try {
+				fin = getBaseContext().openFileInput(user.getFilename());
+				ois = new ObjectInputStream(fin);
+				user = (User) ois.readObject();
+				return true;
 
-                } catch (FileNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (StreamCorruptedException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (IOException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                } catch (ClassNotFoundException e) {
-                    // TODO Auto-generated catch block
-                    e.printStackTrace();
-                }
-            }
-            return false;
-        }
+			} catch (FileNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (StreamCorruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (ClassNotFoundException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		return false;
+	}
 
 }
