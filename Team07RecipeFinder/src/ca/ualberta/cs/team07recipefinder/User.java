@@ -3,10 +3,12 @@ package ca.ualberta.cs.team07recipefinder;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
 import android.content.Context;
 
-public class User {
+@SuppressWarnings("serial")
+public class User implements Serializable{
 	private static User instance = null;
 	private String name;
 	private String email;
@@ -14,9 +16,8 @@ public class User {
 	private String filename = "userdata";
 
 	protected User() {
-
 	}
-
+	
 	public static User getInstance() {
 		if (instance == null) {
 			instance = new User();

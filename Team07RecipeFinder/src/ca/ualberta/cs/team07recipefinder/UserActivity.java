@@ -15,14 +15,12 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.TextView;
 
 /**
- * Activity which displays a login screen to the user, offering registration as
- * well.
+ * Activity which displayed account creation the first time app is used.
  */
 public class UserActivity extends Activity {
 
@@ -54,37 +52,39 @@ public class UserActivity extends Activity {
 		mEmail = getIntent().getStringExtra(EXTRA_EMAIL);
 		mEmailView = (EditText) findViewById(R.id.email);
 		mEmailView.setText(mEmail);
-		
+
 		mPersonNameView = (EditText) findViewById(R.id.name);
 
 		mLoginFormView = findViewById(R.id.login_form);
 		mLoginStatusView = findViewById(R.id.login_status);
 		mLoginStatusMessageView = (TextView) findViewById(R.id.login_status_message);
-
+		
 		findViewById(R.id.buttonCreateAccount).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
 						verifyUser();
+						//setError should return null if no flags have be set during verifyUser.
+						if (mEmailView.getError() == null && mPersonNameView.getError() == null) {
+							user.setEmail(mEmail);
+							user.setName(mPersonName);
+							user.Write(getBaseContext());
+							Intent intent = new Intent(getBaseContext(), MainActivity.class);
+							//TODO: Get rid of this flag, should be a better way to launch new activity.
+							intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+							getBaseContext().startActivity(intent);
+						}
 					}
 				});
-		
-		if(userExists()){
+
+		if (userExists()) {
 			Intent intent = new Intent(this, MainActivity.class);
+			intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			this.startActivity(intent);
 		}
-		verifyUser();
-//		if(true){
-//			user.Write(getBaseContext());
-//			}
-		}
-
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		super.onCreateOptionsMenu(menu);
-		getMenuInflater().inflate(R.menu.activity_user, menu);
-		return true;
 	}
+	
+	
 
 	/**
 	 * Attempts to sign in or register the account specified by the login form.
