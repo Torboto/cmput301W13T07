@@ -24,7 +24,7 @@ import android.widget.TextView;
  */
 public class UserActivity extends Activity {
 
-	User user = new User();
+	User user = User.getInstance();
 
 	/**
 	 * The default email to populate the email field with.
