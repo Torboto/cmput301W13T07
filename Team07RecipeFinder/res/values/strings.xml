@@ -3,6 +3,8 @@
 
     <string name="app_name">Team07RecipeFinder</string>
     <string name="menu_settings">Settings</string>
+    <string name="register">Register</string>
+    <string name="prompt_name">Name</string>
 
     <!-- TabNames Strings -->
     <string name="tab_pantry">Pantry</string>
@@ -38,14 +40,15 @@
     <string name="enter_ingredient">Enter Ingredients</string>
     <string name="synch_recipies">Synch</string>
     <string name="title_activity_view_searched_recipe">ViewSearchedRecipeActivity</string>
-    
+
     <!-- ViewRecipeActivity Strings -->
     <!-- TextView Strings -->
-	<string name="recipe_title">Recipe Title</string>
-	<string name="recipe_description">Recipe Description</string>
-	<string name="recipe_ingredients">Ingredients:</string>
-	<string name="recipe_directions">Directions:</string>
-	<!-- Button Strings -->
-	<string name="button_edit">Edit</string>
-	<string name="button_delete">Delete</string>
+    <string name="recipe_title">Recipe Title</string>
+    <string name="recipe_description">Recipe Description</string>
+    <string name="recipe_ingredients">Ingredients:</string>
+    <string name="recipe_directions">Directions:</string>
+    <!-- Button Strings -->
+    <string name="button_edit">Edit</string>
+    <string name="button_delete">Delete</string>
+
 </resources>
