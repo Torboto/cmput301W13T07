@@ -1,7 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
-
+import java.util.UUID;
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -70,9 +70,11 @@ public class MainActivity extends Activity {
 				ingredients.add("cats");
 				images.add("img1");
 				images.add("img2");
+				UUID recipe_id = UUID.randomUUID();
+				UUID user_id = UUID.randomUUID();
 				
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, images,
-						11, 22);
+						recipe_id, user_id);
 				
 				test_string = client.add(test_r);
 				

@@ -1,8 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
-
-
+import java.util.UUID;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.client.methods.HttpPost;
@@ -31,8 +30,8 @@ public class RecipeBook extends Model<View> {
 			String description, 
 			ArrayList<String> ingredients, 
 			ArrayList<String> images, 
-			int recipeId, 
-			int creatorId){
+			UUID recipeId, 
+			UUID creatorId){
 		
 		Recipe recipe = new Recipe(
 				name, 
