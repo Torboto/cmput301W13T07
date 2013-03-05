@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import java.util.UUID;
 
 /*
  * GC:
@@ -21,12 +22,12 @@ public class SqlClient extends SQLiteOpenHelper {
     public static final String DATABASE_NAME = "RecipeCache.db";
     public static final String TABLE_NAME = "LocalRecipes";
     private static final String COLUMN_NAME_ID = "recipe_id";
-    private static final String COLUMN_NAME_TEXT = "recipe_text";
+    private static final String COLUMN_NAME_CONTENT = "recipe_text";
     
     // GC: Statement for creating a table.
     private static final String SQL_CREATE_ENTRIES =
         "CREATE TABLE " + TABLE_NAME + " (" +
-        COLUMN_NAME_ID + " VARCHAR PRIMARY KEY," + COLUMN_NAME_TEXT 
+        COLUMN_NAME_ID + " VARCHAR PRIMARY KEY," + COLUMN_NAME_CONTENT 
         + " TEXT" + " )";
     
     // GC: Statement for deleting a table.
@@ -51,44 +52,36 @@ public class SqlClient extends SQLiteOpenHelper {
     }
     
     // GC: Add recipe to database.
-    public String add(Recipe recipe) {
-    	String test_string = "";
-    	
+    public void addRecipe(Recipe recipe) {
     	Gson gson = new Gson();
     	
     	// GC: Gets the data repository in write mode
     	SQLiteDatabase db = this.getWritableDatabase();
-    	/*
-    	// GC: Create a new map of values, where column names are the keys
     	ContentValues values = new ContentValues();
     	
-    	values.put(COLUMN_NAME_ID, recipe.getRecipeId());
-    	
-
-        db.insert(TABLE_NAME, null, values);
-        db.close(); */
+    	// GC: Convert Recipe data to json string.
     	String json = gson.toJson(recipe);
-    	return json;
+    	
+    	values.put(COLUMN_NAME_ID, String.valueOf(recipe.getRecipeId()));
+    	values.put(COLUMN_NAME_CONTENT, json);
+    	
+        db.insert(TABLE_NAME, null, values);
+        db.close();
     }
-/*    
-    // GC: Get entry from database based on recipe ID.
-    public CalorieEntry getEntry(int id) {
+   
+    // GC: Get a Recipe from database based on recipe ID.
+    public Recipe getRecipe(UUID id) {
+    	Recipe recipe;
+    	String json;
+    	
+    	Gson gson = new Gson();
     	SQLiteDatabase db = this.getReadableDatabase();
     	
     	// Define a projection that specifies which columns from the database
     	// we will use in the query
     	String[] projection = {
     	    COLUMN_NAME_ID,
-    	    COLUMN_NAME_DESC,
-    	    COLUMN_NAME_TOTCAL,
-    	    COLUMN_NAME_CALPS,
-    	    COLUMN_NAME_SERVS,
-    	    COLUMN_NAME_NUMS,
-    	    COLUMN_NAME_HOUR,
-    	    COLUMN_NAME_DAY,
-    	    COLUMN_NAME_MONTH,
-    	    COLUMN_NAME_YEAR,
-    	    COLUMN_NAME_CUSTOM
+    	    COLUMN_NAME_CONTENT
     	    };
     	
     	// Query the database for the rows and columns we want.
@@ -99,19 +92,13 @@ public class SqlClient extends SQLiteOpenHelper {
     		c.moveToFirst();
     	}
     	
-    	// Create a new time variable to pass to the new CalorieEntry
-    	Time read_time = new Time(Integer.parseInt(c.getString(6)),
-    			Integer.parseInt(c.getString(7)), Integer.parseInt(c.getString(8)),
-    			Integer.parseInt(c.getString(9)));
+    	json = c.getString(1);
+    	recipe = gson.fromJson(json, Recipe.class);
     	
-    	CalorieEntry read_entry = new CalorieEntry(Integer.parseInt(c.getString(0)),
-    			c.getString(1), read_time, Double.parseDouble(c.getString(2)),
-    			Double.parseDouble(c.getString(3)), Double.parseDouble(c.getString(4)),
-    			Double.parseDouble(c.getString(5)), Boolean.parseBoolean(c.getString(10)));
     	// Return entry that has been read from database.
-    	return read_entry;
+    	return recipe;
     }
-    
+/*    
     // Edit an existing entry
     public void editEntry(CalorieEntry temp_entry, int id) {
     	SQLiteDatabase db = this.getReadableDatabase();

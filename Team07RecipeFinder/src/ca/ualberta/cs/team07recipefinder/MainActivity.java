@@ -61,7 +61,8 @@ public class MainActivity extends Activity {
 		addButton.setOnClickListener(new View.OnClickListener() {
 			// The cancel button ends the NewEntryActivty activity.
 			public void onClick(View v) {
-				String test_string;
+				String test_string = "blah";
+				Recipe read_recipe;
 				SqlClient client = new SqlClient(MainActivity.this);
 				
 				ArrayList<String> ingredients = new ArrayList<String>();
@@ -76,10 +77,11 @@ public class MainActivity extends Activity {
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, images,
 						recipe_id, user_id);
 				
-				test_string = client.add(test_r);
+				client.addRecipe(test_r);
+				read_recipe = client.getRecipe(recipe_id);
 				
 				TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
-				tv_test.setText(String.valueOf(test_string));
+				tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
 			}
 		});
 		
