@@ -25,12 +25,16 @@ public class Recipe {
 		this.creatorId = creatorId;
 	}
 	
-	public ArrayList<String> getImages(){
+	public ArrayList<String> getImages() {
 		return this.images;
 	}
 	
-	public void setImage(String image){
+	public void setImage(String image) {
 		this.images.add(image);
+	}
+	
+	public int getRecipeId() {
+		return this.recipeId;
 	}
 
 }

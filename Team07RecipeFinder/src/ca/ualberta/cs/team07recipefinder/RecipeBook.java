@@ -2,6 +2,12 @@ package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
 
+
+import org.apache.http.client.HttpClient;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.client.methods.HttpPost;
+
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -16,6 +22,12 @@ import com.google.gson.reflect.TypeToken;
 public class RecipeBook extends Model<View> {
 	// GC: a list that contains all of the user's locally cached recipes.
 	private ArrayList<Recipe> recipes;
+	
+	// GC: Http Connector
+	private HttpClient httpclient = new DefaultHttpClient();
+
+	// GC: JSON Utilities
+	private Gson gson = new Gson();
 	
 	public void createRecipe(String name, 
 			String description, 
@@ -52,7 +64,11 @@ public class RecipeBook extends Model<View> {
 	 * @throws IllegalStateException 
 	 */
 	public void writeRecipeToServer(){
-		
+		/*HttpPost httpPost = new HttpPost(
+				"http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/"
+								+recipe.getId());
+		StringEntity stringentity = null;
+		*/
 	}
 	
 	/* 
