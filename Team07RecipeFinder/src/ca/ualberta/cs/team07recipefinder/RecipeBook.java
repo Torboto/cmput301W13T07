@@ -2,10 +2,15 @@ package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+
 /*
  * GC:
  * A model class that contains a list of the user's cached recipes, and
  * methods for saving recipes, deleting recipes, and searching for recipes
+ * webservice: http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
  */
 
 public class RecipeBook extends Model<View> {
@@ -28,7 +33,7 @@ public class RecipeBook extends Model<View> {
 				creatorId);
 		
 		recipes.add(recipe);
-		writeRecipeToCache();
+		writeRecipeToCache(recipe);
 		writeRecipeToServer();
 	}
 	
@@ -36,16 +41,18 @@ public class RecipeBook extends Model<View> {
 	 * GC:
 	 * Adds a recipe to the user's locally cached recipes
 	 */
-	public void writeRecipeToCache(){
-
+	public void writeRecipeToCache(Recipe recipe){
+		
 	}
 	
 	/*
 	 * ET:
-	 * Writes recipe to the server
+	 * Writes recipe to the webservice. Follows format of lab ESClient Demo.
+	 * @throws IOException 
+	 * @throws IllegalStateException 
 	 */
 	public void writeRecipeToServer(){
-	
+		
 	}
 	
 	/* 
