@@ -32,6 +32,5 @@ public class Recipe {
 	public void setImage(String image){
 		this.images.add(image);
 	}
-	
 
 }
