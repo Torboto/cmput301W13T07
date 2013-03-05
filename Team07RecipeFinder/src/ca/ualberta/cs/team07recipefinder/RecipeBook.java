@@ -5,9 +5,9 @@ import java.util.UUID;
 import org.apache.http.client.HttpClient;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.client.methods.HttpPost;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
-
 
 /*
  * GC:
@@ -15,15 +15,12 @@ import com.google.gson.reflect.TypeToken;
  * methods for saving recipes, deleting recipes, and searching for recipes
  * webservice: http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
  */
-
 public class RecipeBook extends Model<View> {
-	// GC: a list that contains all of the user's locally cached recipes.
+	//ET: Current list of recipes returned from either a search, or grabbed from cache.
 	private ArrayList<Recipe> recipes;
 	
-	// GC: Http Connector
 	private HttpClient httpclient = new DefaultHttpClient();
 
-	// GC: JSON Utilities
 	private Gson gson = new Gson();
 	
 	public void createRecipe(String name, 
@@ -64,7 +61,7 @@ public class RecipeBook extends Model<View> {
 		/*HttpPost httpPost = new HttpPost(
 				"http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/"
 								+recipe.getId());
-		StringEntity stringentity = null;
+		StringEntity stringEntity = null;
 		*/
 	}
 	
