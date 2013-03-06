@@ -23,26 +23,6 @@ public class RecipeBook extends Model<View> {
 
 	private Gson gson = new Gson();
 	
-	public void createRecipe(String name, 
-			String description, 
-			ArrayList<String> ingredients, 
-			ArrayList<String> images, 
-			UUID recipeId, 
-			UUID creatorId){
-		
-		Recipe recipe = new Recipe(
-				name, 
-				description, 
-				ingredients, 
-				images, 
-				recipeId, 
-				creatorId);
-		
-		recipes.add(recipe);
-		writeRecipeToCache(recipe);
-		writeRecipeToServer();
-	}
-	
 	/*
 	 * GC:
 	 * Adds a recipe to the user's locally cached recipes

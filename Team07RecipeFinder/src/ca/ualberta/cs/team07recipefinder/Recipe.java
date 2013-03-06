@@ -9,21 +9,20 @@ public class Recipe {
 	ArrayList<String> ingredients;
 	ArrayList<String> images;
 	UUID recipeId;
-	UUID creatorId;
+	String creatorEmail;
 	
 	public Recipe(String name, 
 			String description, 
 			ArrayList<String> ingredients, 
-			ArrayList<String> images, 
-			UUID recipeId, 
-			UUID creatorId){
+			ArrayList<String> images,  
+			String creatorEmail){
 		
 		this.name = name;
 		this.description = description;
 		this.ingredients = ingredients;
 		this.images = images;
-		this.recipeId = recipeId;
-		this.creatorId = creatorId;
+		this.creatorEmail = creatorEmail;
+		this.recipeId = UUID.randomUUID();
 	}
 	
 	public ArrayList<String> getImages() {

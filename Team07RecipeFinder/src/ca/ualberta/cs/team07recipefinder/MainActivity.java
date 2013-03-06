@@ -74,14 +74,14 @@ public class MainActivity extends Activity {
 				UUID recipe_id = UUID.randomUUID();
 				UUID user_id = UUID.randomUUID();
 				
-				Recipe test_r = new Recipe("test1", "test_desc", ingredients, images,
-						recipe_id, user_id);
+				//Recipe test_r = new Recipe("test1", "test_desc", ingredients, images,
+				//		recipe_id, user_id);
 				
-				client.addRecipe(test_r);
-				read_recipe = client.getRecipe(recipe_id);
+				//client.addRecipe(test_r);
+				//read_recipe = client.getRecipe(recipe_id);
 				
-				TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
-				tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
+			//	TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
+			//	tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
 			}
 		});
 		
