@@ -31,6 +31,7 @@ public class NewRecipeActivity extends Activity {
 
 	public void createRecipe(View v) {
 
+		titleEditText = grabTitle();
 		descriptionEditText = grabDescription();
 		ingredientsEditText = grabIngredients();
 		directionsEditText = grabDirections();
@@ -41,7 +42,7 @@ public class NewRecipeActivity extends Activity {
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
 			 */
-			String title = "Need to Add This";
+			String title = titleEditText.toString();
 			String description = descriptionEditText.toString();
 			ArrayList<String> ingredients = parseIngredients(ingredientsEditText);
 			String directions = directionsEditText.toString();
@@ -66,25 +67,37 @@ public class NewRecipeActivity extends Activity {
 			return true;
 	}
 
-	// TODO: figure out title
-	// private EditText grabTitle(){
-	// AS: returns the title as an Edit Text
-	// EditText titleEditText = (EditText) findViewById(R.id.etTitle);
-	// return titleEditText;
-	// }
+	 private EditText grabTitle(){
+		 //AS: returns the title as an Edit Text
+		 EditText titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
+		 return titleEditText;
+	 }
 
 	private EditText grabDescription() {
 		// AS: returns the description as an Edit Text
-		EditText descriptionEditText = (EditText) findViewById(R.id.etDescription);
+		EditText descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
 		return descriptionEditText;
 	}
 
 	private EditText grabIngredients() {
 		// AS: returns the ingredients as an Edit Text
-		EditText ingredientsEditText = (EditText) findViewById(R.id.etNewIngredients);
+		EditText ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
 		return ingredientsEditText;
 	}
 
+	private EditText grabDirections() {
+		// AS: returns the new directions as an Edit Text
+		EditText IngredientsEditText = (EditText) findViewById(R.id.etDirectionsList);
+		return IngredientsEditText;
+	}
+
+	private String grabEmail() {
+		// AS: gets the email address of the user
+		User theUser = User.getInstance();
+		String email = theUser.getEmail();
+		return email;
+	}
+	
 	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
 		/*
 		 *  AS: takes the ingredients as an Edit Text and returns them as
@@ -95,19 +108,6 @@ public class NewRecipeActivity extends Activity {
 		ArrayList<String> ingredients = (ArrayList<String>) Arrays
 				.asList(ingredientsString.split("\n"));
 		return ingredients;
-	}
-
-	private EditText grabDirections() {
-		// AS: returns the new directions as an Edit Text
-		EditText IngredientsEditText = (EditText) findViewById(R.id.etNewIngredients);
-		return IngredientsEditText;
-	}
-
-	private String grabEmail() {
-		// AS: gets the email address of the user
-		User theUser = User.getInstance();
-		String email = theUser.getEmail();
-		return email;
 	}
 
 }
