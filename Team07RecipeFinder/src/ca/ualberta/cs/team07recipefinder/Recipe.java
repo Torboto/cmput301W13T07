@@ -1,21 +1,22 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class Recipe {
 	String name;
 	String description;
 	ArrayList<String> ingredients;
 	ArrayList<String> images;
-	int recipeId;
-	int creatorId;
+	UUID recipeId;
+	UUID creatorId;
 	
 	public Recipe(String name, 
 			String description, 
 			ArrayList<String> ingredients, 
 			ArrayList<String> images, 
-			int recipeId, 
-			int creatorId){
+			UUID recipeId, 
+			UUID creatorId){
 		
 		this.name = name;
 		this.description = description;
@@ -33,7 +34,7 @@ public class Recipe {
 		this.images.add(image);
 	}
 	
-	public int getRecipeId() {
+	public UUID getRecipeId() {
 		return this.recipeId;
 	}
 
