@@ -4,7 +4,6 @@
     <string name="app_name">Team07RecipeFinder</string>
     <string name="menu_settings">Settings</string>
 
-
     <!-- TabNames Strings -->
     <string name="tab_pantry">Pantry</string>
     <string name="tab_search">Search</string>
@@ -49,5 +48,6 @@
     <!-- Button Strings -->
     <string name="button_edit">Edit</string>
     <string name="button_delete">Delete</string>
+    <string name="hello_world">Hello world!</string>
 
 </resources>
