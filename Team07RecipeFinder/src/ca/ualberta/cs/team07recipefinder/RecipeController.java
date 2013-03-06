@@ -1,6 +1,12 @@
 package ca.ualberta.cs.team07recipefinder;
 
+import java.util.ArrayList;
+import java.util.UUID;
+
 public class RecipeController {
+	
+	private RecipeController(){
+	}
 
 	public void writeRecipe(Recipe recipe){
 	}
