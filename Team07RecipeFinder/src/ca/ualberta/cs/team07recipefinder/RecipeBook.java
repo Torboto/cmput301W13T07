@@ -9,47 +9,12 @@ import org.apache.http.client.methods.HttpPost;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-/*
- * GC:
- * A model class that contains a list of the user's cached recipes, and
- * methods for saving recipes, deleting recipes, and searching for recipes
- * webservice: http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
- */
+
 public class RecipeBook extends Model<View> {
 	//ET: Current list of recipes returned from either a search, or grabbed from cache.
 	private ArrayList<Recipe> recipes;
 	
-	private HttpClient httpclient = new DefaultHttpClient();
-
-	private Gson gson = new Gson();
-	
-	/*
-	 * GC:
-	 * Adds a recipe to the user's locally cached recipes
-	 */
-	public void writeRecipeToCache(Recipe recipe){
-		
-	}
-	
-	/*
-	 * ET:
-	 * Writes recipe to the webservice. Follows format of lab ESClient Demo.
-	 * @throws IOException 
-	 * @throws IllegalStateException 
-	 */
-	public void writeRecipeToServer(){
-		/*HttpPost httpPost = new HttpPost(
-				"http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/"
-								+recipe.getId());
-		StringEntity stringEntity = null;
-		*/
-	}
-	
-	/* 
-	 * GC:
-	 * Deletes a recipe from the user's locally cached recipes
-	 */
-	public void deleteRecipe(){
-			
+	public void addRecipe(Recipe recipe){
+		recipes.add(recipe);
 	}
 }
