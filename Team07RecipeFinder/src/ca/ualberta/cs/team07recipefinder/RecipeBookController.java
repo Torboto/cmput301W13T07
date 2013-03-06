@@ -3,6 +3,7 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.ArrayList;
 
 //GC: The controller for the RecipeBook model class.
+//AS: this won't exist anymore most likely!
 public class RecipeBookController {
 
 	public void createRecipe(String name, 
@@ -12,7 +13,7 @@ public class RecipeBookController {
 			int recipeId, 
 			int creatorId){
 		RecipeBook recipeBook = new RecipeBook();
-		recipeBook.createRecipe(name, description, ingredients,
-				images, recipeId, creatorId);
+	//	recipeBook.createRecipe(name, description, ingredients,
+	//			images, recipeId, creatorId);
 	}
 }

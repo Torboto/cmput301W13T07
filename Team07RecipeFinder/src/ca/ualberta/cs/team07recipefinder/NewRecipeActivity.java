@@ -1,5 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
+import java.util.UUID;
+
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.Menu;
@@ -13,12 +15,6 @@ public class NewRecipeActivity extends Activity {
 		setContentView(R.layout.activity_new_recipe);
 	}
 
-	@Override
-	public boolean onCreateOptionsMenu(Menu menu) {
-		// Inflate the menu; this adds items to the action bar if it is present.
-		getMenuInflater().inflate(R.menu.activity_new_recipe2, menu);
-		return true;
-	}
 	
 	public void back(View v) {
 		// AS: Go back to my recipes activity
@@ -30,23 +26,26 @@ public class NewRecipeActivity extends Activity {
 		EditText DescriptionEditText = getDescription();
 		EditText IngredientsEditText = getIngredients();
 		EditText DirectionsEditText = getDirections();
-		if ((!isEmpty(DescriptionEditText)) && (!isEmpty(IngredientsEditText)) &&
-				(!isEmpty(DirectionsEditText))){
+		if ((!IsEmpty(DescriptionEditText)) && (!IsEmpty(IngredientsEditText)) &&
+				(!IsEmpty(DirectionsEditText))){
 			/*
 			 *  AS: Now we know the required fields are filled in
 			 *   before we proceed
 			 */
+			String Title = "Need to Add This";
 			String Description = DescriptionEditText.toString();
 			String Ingredients = IngredientsEditText.toString();
 			String Directions = DirectionsEditText.toString();
-			RecipeBookController RBController = new RecipeBookController();
-			//RBController.creatRecipe();
+			UUID recipeID = getID();
+			String email = getEmail();
+			
+		//	Recipe recipe = new Recipe();
 		}
 		
 		// AS: If one or more fields empty could potentially have a 
 		// dialog saying so?
 	}
-	private boolean isEmpty(EditText etText) {
+	private boolean IsEmpty(EditText etText) {
 		// AS: returns if an Edit Text is empty or not
 		if(etText.getText().toString().trim().length() > 0)
 		    return false;
@@ -63,20 +62,30 @@ public class NewRecipeActivity extends Activity {
 	
 	private EditText getDescription(){
 		// AS: returns the description as an Edit Text
-		EditText DescriptionEditText = (EditText) findViewById(R.id.etDescription);
-		return DescriptionEditText;
+		EditText descriptionEditText = (EditText) findViewById(R.id.etDescription);
+		return descriptionEditText;
 	}
 
 	private EditText getIngredients(){
 		// AS: returns the ingredients as an Edit Text
-		EditText IngredientsEditText = (EditText) findViewById(R.id.etNewIngredients);
-		return IngredientsEditText;
+		EditText ingredientsEditText = (EditText) findViewById(R.id.etNewIngredients);
+		return ingredientsEditText;
 	}
 	
 	private EditText getDirections(){
 		// AS: returns the new directions as an Edit Text
 		EditText IngredientsEditText = (EditText) findViewById(R.id.etNewIngredients);
 		return IngredientsEditText;
+	}
+	
+	private UUID getID(){
+		UUID id = UUID.randomUUID();
+		return id;
+	}
+	private String getEmail(){
+		User theUser = User.getInstance();
+		String email = theUser.getEmail();
+		return email;
 	}
 	
 	
