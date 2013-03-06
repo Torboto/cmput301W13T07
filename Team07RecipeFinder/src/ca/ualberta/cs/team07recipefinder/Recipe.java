@@ -7,6 +7,7 @@ public class Recipe {
 	String name;
 	String description;
 	ArrayList<String> ingredients;
+	String directions;
 	ArrayList<String> images;
 	UUID recipeId;
 	String creatorEmail;
@@ -16,11 +17,12 @@ public class Recipe {
 	 * access.
 	 */
 	public Recipe(String name, String description,
-			ArrayList<String> ingredients, String creatorEmail) {
+			ArrayList<String> ingredients, String directions, String creatorEmail) {
 
 		this.name = name;
 		this.description = description;
 		this.ingredients = ingredients;
+		this.directions = directions;
 		this.creatorEmail = creatorEmail;
 		this.recipeId = UUID.randomUUID();
 	}
