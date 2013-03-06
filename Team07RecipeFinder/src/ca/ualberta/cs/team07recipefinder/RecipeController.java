@@ -8,7 +8,7 @@ public class RecipeController {
 	private RecipeController(){
 	}
 
-	public void writeRecipe(Recipe recipe){
+	public static void writeRecipe(Recipe recipe){
 	}
 
     public void deleteRecipe(UUID uuid){

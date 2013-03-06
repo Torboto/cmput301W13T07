@@ -11,6 +11,7 @@ import android.widget.EditText;
 
 public class NewRecipeActivity extends Activity {
 
+	EditText titleEditText;
 	EditText descriptionEditText;
 	EditText ingredientsEditText;
 	EditText directionsEditText;
@@ -46,8 +47,11 @@ public class NewRecipeActivity extends Activity {
 			String directions = directionsEditText.toString();
 			String email = grabEmail();
 
-			Recipe recipe = new Recipe(title, description, ingredients,
+			Recipe newRecipe = new Recipe(title, description, ingredients,
 			 directions, email );
+			
+			// Finally, we can use RecipeController to write this new Recipe
+			RecipeController.writeRecipe(newRecipe);
 		}
 
 		// AS: If one or more fields empty could potentially have a
@@ -63,10 +67,10 @@ public class NewRecipeActivity extends Activity {
 	}
 
 	// TODO: figure out title
-	// private EditText getTitle(){
-	// AS: returns the new directions as an Edit Text
-	// EditText TitleEditText = (EditText) findViewById(R.id.etTitle);
-	// return TitleEditText;
+	// private EditText grabTitle(){
+	// AS: returns the title as an Edit Text
+	// EditText titleEditText = (EditText) findViewById(R.id.etTitle);
+	// return titleEditText;
 	// }
 
 	private EditText grabDescription() {
@@ -82,6 +86,11 @@ public class NewRecipeActivity extends Activity {
 	}
 
 	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
+		/*
+		 *  AS: takes the ingredients as an Edit Text and returns them as
+		 * and ArrayList of Strings. This assumes that they are separated by
+		 * new lines.
+		 */
 		String ingredientsString = ingredientsEditText.toString();
 		ArrayList<String> ingredients = (ArrayList<String>) Arrays
 				.asList(ingredientsString.split("\n"));
@@ -95,6 +104,7 @@ public class NewRecipeActivity extends Activity {
 	}
 
 	private String grabEmail() {
+		// AS: gets the email address of the user
 		User theUser = User.getInstance();
 		String email = theUser.getEmail();
 		return email;
