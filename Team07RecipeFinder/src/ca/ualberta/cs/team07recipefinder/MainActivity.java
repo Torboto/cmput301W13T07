@@ -10,6 +10,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity {

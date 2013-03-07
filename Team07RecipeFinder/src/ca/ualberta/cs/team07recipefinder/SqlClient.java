@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.UUID;
 
 /*
@@ -74,8 +76,6 @@ public class SqlClient extends SQLiteOpenHelper {
     public Recipe getRecipe(UUID id) {
     	Recipe recipe;
     	String json;
-    	
-    	System.out.println(id.toString());
     	
     	Gson gson = new Gson();
     	SQLiteDatabase db = this.getReadableDatabase();
@@ -167,24 +167,30 @@ public class SqlClient extends SQLiteOpenHelper {
 			db.delete(TABLE_NAME, selection, selectionArgs);
 		}
     }
-  /*  
-    // Find and return all the ids in the database
-    public ArrayList<Integer> findAllID() {
-    	ArrayList<Integer> id_array = new ArrayList<Integer>();
+    
+    // GC: Find and return all recipes that are saved in the database
+    public ArrayList<Recipe> getAllRecipes() {
+    	String json;
+    	Recipe tempRecipe = null;
+    	Gson gson = new Gson();
+    	
+    	ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
     	SQLiteDatabase db = this.getReadableDatabase();
     	
-    	// Query the database for all the rows.
+    	// GC: Query the database for all the rows.
     	Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     			
     	c.moveToFirst();
+
+		// Add each id to the array
+		while (!c.isAfterLast()) {
+			json = c.getString(1);
+	    	tempRecipe = gson.fromJson(json, Recipe.class);
+			recipeList.add(tempRecipe);
+			c.moveToNext();
+		}
     	
-    	// Add each id to the array
-    	while (!c.isAfterLast()) {
-    	     id_array.add(Integer.parseInt(c.getString(0)));
-    	     c.moveToNext();
-    	}
-    	
-    	return id_array;
+    	return recipeList;
     }
-*/
+
 }
