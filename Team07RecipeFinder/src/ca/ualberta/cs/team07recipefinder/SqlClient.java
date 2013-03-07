@@ -50,6 +50,7 @@ public class SqlClient extends SQLiteOpenHelper {
     }
     
     // GC: Add recipe to database.
+    //TODO: Can we change this to writeRecipe? -ET
     public void addRecipe(Recipe recipe) {
     	Gson gson = new Gson();
     	
@@ -68,6 +69,7 @@ public class SqlClient extends SQLiteOpenHelper {
     }
    
     // GC: Get a Recipe from database based on recipe ID.
+    //TODO: Can we change this to readRecipe? -ET
     public Recipe getRecipe(UUID id) {
     	Recipe recipe;
     	String json;

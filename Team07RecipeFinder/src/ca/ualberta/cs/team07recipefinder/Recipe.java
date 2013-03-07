@@ -7,33 +7,37 @@ public class Recipe {
 	String name;
 	String description;
 	ArrayList<String> ingredients;
+	String directions;
 	ArrayList<String> images;
 	UUID recipeId;
-	UUID creatorId;
-	
-	public Recipe(String name, 
-			String description, 
-			ArrayList<String> ingredients, 
-			ArrayList<String> images, 
-			UUID recipeId, 
-			UUID creatorId){
-		
+	String creatorEmail;
+
+	/*
+	 * Creates recipe with inputed data, and also generates unique UUID for
+	 * access.
+	 */
+	public Recipe(String name, String description,
+			ArrayList<String> ingredients, String directions, String creatorEmail) {
+
 		this.name = name;
 		this.description = description;
 		this.ingredients = ingredients;
-		this.images = images;
-		this.recipeId = recipeId;
-		this.creatorId = creatorId;
+		this.directions = directions;
+		this.creatorEmail = creatorEmail;
+		this.recipeId = UUID.randomUUID();
 	}
-	
+
 	public ArrayList<String> getImages() {
 		return this.images;
 	}
-	
+
+	/*
+	 * Add an image to the collection of images for the recipe
+	 */
 	public void setImage(String image) {
 		this.images.add(image);
 	}
-	
+
 	public UUID getRecipeId() {
 		return this.recipeId;
 	}
