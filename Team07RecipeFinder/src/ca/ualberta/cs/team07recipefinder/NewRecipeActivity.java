@@ -2,11 +2,9 @@ package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.UUID;
 
-import android.os.Bundle;
 import android.app.Activity;
-import android.view.Menu;
+import android.os.Bundle;
 import android.widget.EditText;
 
 public class NewRecipeActivity extends Activity {

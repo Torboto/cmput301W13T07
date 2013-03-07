@@ -4,27 +4,40 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 public class RecipeController {
-	
-	private RecipeController(){
+
+	private RecipeController() {
 	}
 
-	public void writeRecipe(Recipe recipe){
+	/*
+	 * Writes to SQL local database, and if it has internet access also writes
+	 * to HTTP.
+	 */
+	public void writeRecipe(Recipe recipe) {
 	}
 
-    public void deleteRecipe(UUID uuid){
-    }
-
-    /*
-     * Write over old recipe with the same UUID
-     */
-    public void updateRecipe(Recipe recipe){
-    }
-	
-    public RecipeBook searchRecipeIngredients(ArrayList<String> ingredients){
-        return null;
+	/*
+	 * Only deletes from SQL local database
+	 */
+	public void deleteRecipe(UUID uuid) {
 	}
-    
-    public RecipeBook searchRecipeTitles(String title){
-        return null;
+
+	/*
+	 * Write over old recipe with the same UUID
+	 */
+	public void updateRecipe(Recipe recipe) {
+	}
+
+	/*
+	 * Only searches HTTP server
+	 */
+	public RecipeBook searchRecipeIngredients(ArrayList<String> ingredients) {
+		return null;
+	}
+
+	/*
+	 * Only searches HTTP server
+	 */
+	public RecipeBook searchRecipeTitles(String title) {
+		return null;
 	}
 }
