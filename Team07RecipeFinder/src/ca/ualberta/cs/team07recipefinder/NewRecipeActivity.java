@@ -46,7 +46,8 @@ public class NewRecipeActivity extends Activity {
 		}
 
 		// AS: If one or more fields empty could potentially have a
-		// dialog saying so?
+		// dialog saying so? Next Iteration of project
+		finish();
 	}
 
 	private boolean isEmpty(EditText etText) {
