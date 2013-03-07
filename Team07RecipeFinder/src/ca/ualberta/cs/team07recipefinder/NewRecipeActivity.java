@@ -50,7 +50,8 @@ public class NewRecipeActivity extends Activity {
 			 directions, email );
 			
 			// Finally, we can use RecipeController to write this new Recipe
-			RecipeController.writeRecipe(newRecipe);
+			RecipeController rc = new RecipeController();
+			rc.writeRecipe(newRecipe);
 		}
 
 		// AS: If one or more fields empty could potentially have a

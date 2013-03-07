@@ -5,7 +5,7 @@ import java.util.UUID;
 
 public class RecipeController {
 
-	private RecipeController() {
+	public RecipeController() {
 	}
 
 	/*
