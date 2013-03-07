@@ -61,27 +61,30 @@ public class MainActivity extends Activity {
 		addButton.setOnClickListener(new View.OnClickListener() {
 			// The cancel button ends the NewEntryActivty activity.
 			public void onClick(View v) {
-				String test_string = "blah";
-				Recipe read_recipe;
+				/*Recipe read_recipe;
 				SqlClient client = new SqlClient(MainActivity.this);
 				
 				ArrayList<String> ingredients = new ArrayList<String>();
 				ArrayList<String> images = new ArrayList<String>();;
-				ingredients.add("fish");
-				ingredients.add("cats");
+				ingredients.add("punpkin");
+				ingredients.add("pumpkin");
 				images.add("img1");
 				images.add("img2");
-				UUID recipe_id = UUID.randomUUID();
-				UUID user_id = UUID.randomUUID();
+				String directions = "HULLO?";
+				//UUID recipe_id = UUID.randomUUID();
+				// UUID user_id = UUID.randomUUID();
+				UUID recipe_id =  UUID.fromString("23812c08-02b9-427e-9520-453434f4c892");
+				String user_id = "111-1-1-1-1";
 				
-				//Recipe test_r = new Recipe("test1", "test_desc", ingredients, images,
-				//		recipe_id, user_id);
+				Recipe test_r = new Recipe("test1", "test_desc", ingredients, directions, user_id);
 				
 				//client.addRecipe(test_r);
 				//read_recipe = client.getRecipe(recipe_id);
+				client.updateRecipe(recipe_id, test_r);
 				
-			//	TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
-			//	tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
+				//TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
+				//tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
+				 */
 			}
 		});
 		
