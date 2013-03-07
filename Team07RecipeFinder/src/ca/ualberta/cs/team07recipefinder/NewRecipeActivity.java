@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class NewRecipeActivity extends Activity {
@@ -18,23 +20,27 @@ public class NewRecipeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_recipe);
-	}
-
-	public void back(View v) {
-		// AS: Go back to my recipes activity
-		finish();
+		
+		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
+		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
+		ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
+		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
+		
+		Button doneButton = (Button) findViewById(R.id.bDone);
+		doneButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// AS: The done button calls createRecipe
+				createRecipe();
+			}
+		});
 	}
 
 	// AS: Stuff below here will be factored out into View
 
-	public void createRecipe(View v) {
+	private void createRecipe() {
 
-		titleEditText = grabTitle();
-		descriptionEditText = grabDescription();
-		ingredientsEditText = grabIngredients();
-		directionsEditText = grabDirections();
-
-		if ((!isEmpty(descriptionEditText)) && (!isEmpty(ingredientsEditText))
+		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
+				&& (!isEmpty(ingredientsEditText))
 				&& (!isEmpty(directionsEditText))) {
 			/*
 			 * AS: Now we know the required fields are filled in before we
@@ -47,15 +53,16 @@ public class NewRecipeActivity extends Activity {
 			String email = grabEmail();
 
 			Recipe newRecipe = new Recipe(title, description, ingredients,
-			 directions, email );
-			
+					directions, email);
+
 			// Finally, we can use RecipeController to write this new Recipe
 			RecipeController rc = new RecipeController();
 			rc.writeRecipe(newRecipe);
 		}
 
 		// AS: If one or more fields empty could potentially have a
-		// dialog saying so?
+		// dialog saying so? Next Iteration of project
+		finish();
 	}
 
 	private boolean isEmpty(EditText etText) {
@@ -66,42 +73,18 @@ public class NewRecipeActivity extends Activity {
 			return true;
 	}
 
-	 private EditText grabTitle(){
-		 //AS: returns the title as an Edit Text
-		 EditText titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
-		 return titleEditText;
-	 }
-
-	private EditText grabDescription() {
-		// AS: returns the description as an Edit Text
-		EditText descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
-		return descriptionEditText;
-	}
-
-	private EditText grabIngredients() {
-		// AS: returns the ingredients as an Edit Text
-		EditText ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
-		return ingredientsEditText;
-	}
-
-	private EditText grabDirections() {
-		// AS: returns the new directions as an Edit Text
-		EditText IngredientsEditText = (EditText) findViewById(R.id.etDirectionsList);
-		return IngredientsEditText;
-	}
-
 	private String grabEmail() {
 		// AS: gets the email address of the user
 		User theUser = User.getInstance();
 		String email = theUser.getEmail();
 		return email;
 	}
-	
+
 	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
 		/*
-		 *  AS: takes the ingredients as an Edit Text and returns them as
-		 * and ArrayList of Strings. This assumes that they are separated by
-		 * new lines.
+		 * AS: takes the ingredients as an Edit Text and returns them as and
+		 * ArrayList of Strings. This assumes that they are separated by new
+		 * lines.
 		 */
 		String ingredientsString = ingredientsEditText.toString();
 		ArrayList<String> ingredients = (ArrayList<String>) Arrays

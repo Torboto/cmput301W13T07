@@ -4,12 +4,14 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
+import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -77,7 +79,6 @@ public class MainActivity extends Activity {
 		Button addButton = (Button) findViewById(R.id.buttonAddRecipe);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
-			// The cancel button ends the NewEntryActivty activity.
 			public void onClick(View v) {
 				String test_string = "blah";
 				Recipe read_recipe;
@@ -107,6 +108,11 @@ public class MainActivity extends Activity {
 				
 				new WriteRecipeTask().execute(test_r);
 		
+				// GC: The add button starts the NewRecipeActivity
+				Intent newRecipeIntent =
+						new Intent(getApplicationContext(), 
+								NewRecipeActivity.class);
+				startActivity(newRecipeIntent);
 			}
 		});
 		

@@ -6,6 +6,8 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
 import com.google.gson.Gson;
+
+import java.util.ArrayList;
 import java.util.UUID;
 
 /*
@@ -52,6 +54,7 @@ public class SqlClient extends SQLiteOpenHelper {
     // GC: Add recipe to database.
     //TODO: Can we change this to writeRecipe? -ET
     public void addRecipe(Recipe recipe) {
+    	String json;
     	Gson gson = new Gson();
     	
     	// GC: Gets the data repository in write mode
@@ -59,7 +62,7 @@ public class SqlClient extends SQLiteOpenHelper {
     	ContentValues values = new ContentValues();
     	
     	// GC: Convert Recipe data to json string.
-    	String json = gson.toJson(recipe);
+    	json = gson.toJson(recipe);
     	
     	values.put(COLUMN_NAME_ID, String.valueOf(recipe.getRecipeId()));
     	values.put(COLUMN_NAME_CONTENT, json);
@@ -98,77 +101,96 @@ public class SqlClient extends SQLiteOpenHelper {
     	// Return entry that has been read from database.
     	return recipe;
     }
-    /*
-    // GC: update an existing recipe in the database.
-    public void updateRecipe(Recipe temp_recipe, UUID recipeId) {
-    	
-    	SQLiteDatabase db = this.getReadableDatabase();
-
-    	// New value for one column
-    	ContentValues values = new ContentValues();
-    	
-    	values.put(COLUMN_NAME_ID, String.valueOf(recipeId));
-    	values.put(COLUMN_NAME_CONTENT, temp_recipe.getDesc());
-
-    	// Which row to update, based on the ID
-    	String selection = COLUMN_NAME_ID + " LIKE ?";
-    	String[] selectionArgs = { String.valueOf(recipeId) };
-
-    	int count = db.update(
-    	    TABLE_NAME,
-    	    values,
-    	    selection,
-    	    selectionArgs);
-    }*/
     
-    // GC: Query the database to check if a Recipe exits with the recipeId
-    public boolean checkRow(UUID recipeId)
-    {
+    // GC: update an existing recipe in the database.
+    public void updateRecipe( UUID recipeId, Recipe temp_recipe ) {
+    	String json;
+    	boolean isExists;
+    	Gson gson = new Gson();
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	
+    	json = gson.toJson( temp_recipe );
+    	
+    	// GC: Only query the database if the row exists.
+    	isExists = checkRow( recipeId );
+    	
+		if (isExists == true) {
+			// New value for one column
+			ContentValues values = new ContentValues();
+
+			values.put(COLUMN_NAME_ID, String.valueOf( recipeId ));
+			values.put(COLUMN_NAME_CONTENT, json);
+
+			// Which row to update, based on the ID
+			String selection = COLUMN_NAME_ID + " LIKE ?";
+			String[] selectionArgs = { String.valueOf( recipeId ) };
+
+			db.update(TABLE_NAME, values, selection, selectionArgs);
+		}
+    }
+    
+    /* GC: Query the database to check if a Recipe exits with the recipeId.
+     * 	   Return true if row exists, false if row does not exist.*/
+    public boolean checkRow(UUID recipeId) {
 		boolean isExist = false;
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		// Define a projection that specifies which columns from the database
-		// we will use in the query
+		/* GC: Define a projection that specifies which columns from the
+		 *  database we will use in the query*/
 		String[] projection = { COLUMN_NAME_ID };
 		// Query the database for the rows and columns we want.
     	Cursor c = db.query(TABLE_NAME, projection, COLUMN_NAME_ID + "=?", 
     			new String[] {String.valueOf(recipeId)},
     			null, null, null, null);
-    			
+    	
+    	// GC: if the cursor not null, a rows exist with the given recipeId
     	if(c != null) {
     		isExist = true;
     	}
+    	
 		return isExist;
     }
-   /* 
-    // Delete an existing entry
-    public void deleteEntry(int id) {
-    	SQLiteDatabase db = this.getReadableDatabase();
-    	// Define 'where' part of query.
-    	String selection = COLUMN_NAME_ID + " LIKE ?";
-    	// Specify arguments for the where query.
-    	String[] selectionArgs = { String.valueOf(id) };
-    	// Issue SQL statement.
-    	db.delete(TABLE_NAME, selection, selectionArgs);
-    }
     
-    // Find and return all the ids in the database
-    public ArrayList<Integer> findAllID() {
-    	ArrayList<Integer> id_array = new ArrayList<Integer>();
+    // GC:  Delete an existing recipe from the local database.
+    public void deleteRecipe(UUID recipeId) {
+    	boolean isExists = false;
     	SQLiteDatabase db = this.getReadableDatabase();
     	
-    	// Query the database for all the rows.
+		// GC: Only delete the recipe from the database if the row exists.
+		isExists = checkRow(recipeId);
+
+		if (isExists == true) {
+			String selection = COLUMN_NAME_ID + " LIKE ?";
+			String[] selectionArgs = { String.valueOf(recipeId) };
+
+			// GC: Delete the row with recipeId from the database.
+			db.delete(TABLE_NAME, selection, selectionArgs);
+		}
+    }
+    
+    // GC: Find and return all recipes that are saved in the database
+    public ArrayList<Recipe> getAllRecipes() {
+    	String json;
+    	Recipe tempRecipe = null;
+    	Gson gson = new Gson();
+    	
+    	ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	
+    	// GC: Query the database for all the rows.
     	Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     			
     	c.moveToFirst();
+
+		// Add each id to the array
+		while (!c.isAfterLast()) {
+			json = c.getString(1);
+	    	tempRecipe = gson.fromJson(json, Recipe.class);
+			recipeList.add(tempRecipe);
+			c.moveToNext();
+		}
     	
-    	// Add each id to the array
-    	while (!c.isAfterLast()) {
-    	     id_array.add(Integer.parseInt(c.getString(0)));
-    	     c.moveToNext();
-    	}
-    	
-    	return id_array;
+    	return recipeList;
     }
-*/
+
 }
