@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +21,12 @@ public class NewRecipeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_recipe);
-		
+
 		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
 		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
 		ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
 		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
-		
+
 		Button doneButton = (Button) findViewById(R.id.bDone);
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
@@ -51,7 +52,7 @@ public class NewRecipeActivity extends Activity {
 			ArrayList<String> ingredients = parseIngredients(ingredientsEditText);
 			String directions = directionsEditText.toString();
 			String email = grabEmail();
-
+			Log.v("main", "testing dawg");
 			Recipe newRecipe = new Recipe(title, description, ingredients,
 					directions, email);
 
@@ -87,8 +88,8 @@ public class NewRecipeActivity extends Activity {
 		 * lines.
 		 */
 		String ingredientsString = ingredientsEditText.toString();
-		ArrayList<String> ingredients = (ArrayList<String>) Arrays
-				.asList(ingredientsString.split("\n"));
+		ArrayList<String> ingredients = new ArrayList<String>(
+				Arrays.asList(ingredientsString.split("\n")));
 		return ingredients;
 	}
 
