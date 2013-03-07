@@ -5,14 +5,14 @@ import java.util.UUID;
 
 public class RecipeController {
 
-	private RecipeController() {
+	public RecipeController() {
 	}
 
 	/*
 	 * Writes to SQL local database, and if it has internet access also writes
 	 * to HTTP.
 	 */
-	public static void writeRecipe(Recipe recipe) {
+	public void writeRecipe(Recipe recipe) {
 	}
 
 	/*

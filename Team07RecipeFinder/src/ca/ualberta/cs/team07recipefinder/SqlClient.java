@@ -98,7 +98,7 @@ public class SqlClient extends SQLiteOpenHelper {
     	// Return entry that has been read from database.
     	return recipe;
     }
-   /*
+    /*
     // GC: update an existing recipe in the database.
     public void updateRecipe(Recipe temp_recipe, UUID recipeId) {
     	
