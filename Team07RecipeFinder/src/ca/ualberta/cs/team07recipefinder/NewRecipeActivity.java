@@ -47,7 +47,7 @@ public class NewRecipeActivity extends Activity {
 
 			// Finally, we can use RecipeController to write this new Recipe
 			RecipeController rc = new RecipeController();
-			rc.writeRecipe(newRecipe);
+			rc.writeRecipe(newRecipe, getApplicationContext());
 		}
 
 		// AS: If one or more fields empty could potentially have a
