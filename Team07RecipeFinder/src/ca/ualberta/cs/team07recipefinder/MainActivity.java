@@ -82,7 +82,7 @@ public class MainActivity extends Activity {
 				String test_string = "blah";
 				Recipe read_recipe;
 				SqlClient client = new SqlClient(MainActivity.this);
-				HttpClient httpClient = new HttpClient();
+
 
 				
 				ArrayList<String> ingredients = new ArrayList<String>();
@@ -96,13 +96,17 @@ public class MainActivity extends Activity {
 				
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
 				
+				HttpClient httpClient = new HttpClient();
+				//httpClient.writeRecipe(test_r);
+				
 				//client.addRecipe(test_r);
 				//read_recipe = client.getRecipe(recipe_id);
 				
 			//	TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
 			//	tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
 				
-				httpClient.writeRecipe(test_r);
+				new WriteRecipeTask().execute(test_r);
+		
 			}
 		});
 		
