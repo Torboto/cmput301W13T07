@@ -2,13 +2,12 @@ package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
 import java.util.UUID;
+
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -38,6 +37,25 @@ public class MainActivity extends Activity {
 	        tabHost.addTab(spec1);
 	        tabHost.addTab(spec2);
 	        tabHost.addTab(spec3);
+	        
+
+//		findViewById(R.id.buttonAddRecipe).setOnClickListener(
+//				new View.OnClickListener() {
+//					@Override
+//					public void onClick(View view) {
+//						verifyUser();
+//						// setError should return null if no flags have be set
+//						// during verifyUser.
+//						if (mEmailView.getError() == null
+//								&& mPersonNameView.getError() == null) {
+//							user.setEmail(mEmail);
+//							user.setName(mPersonName);
+//
+//							user.Write(getApplicationContext());
+//							launchMainActivity();
+//						}
+//					}
+//				});
 
 	}
 
@@ -63,6 +81,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				/*Recipe read_recipe;
 				SqlClient client = new SqlClient(MainActivity.this);
+				HttpClient httpClient = new HttpClient();
+
 				
 				ArrayList<String> ingredients = new ArrayList<String>();
 				ArrayList<String> images = new ArrayList<String>();;
@@ -78,12 +98,18 @@ public class MainActivity extends Activity {
 				
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, directions, user_id);
 				
+				
+				Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
+				
 				//client.addRecipe(test_r);
 				//read_recipe = client.getRecipe(recipe_id);
 				client.updateRecipe(recipe_id, test_r);
 				
 				//TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
 				//tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
+				 
+				
+				//httpClient.writeRecipe(test_r);
 				 */
 			}
 		});

@@ -76,9 +76,9 @@ public class User implements Serializable {
 			e.printStackTrace();
 		}
 
-		this.email = user.email;
-		this.name = user.name;
-		this.pantry = user.pantry;
+		email = user.email;
+		name = user.name;
+		pantry = user.pantry;
 
 		try {
 			fin.close();
