@@ -9,15 +9,20 @@ import android.widget.EditText;
 
 public class NewRecipeActivity extends Activity {
 
-	EditText titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
-	EditText descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
-	EditText ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
-	EditText directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
+	EditText titleEditText;
+	EditText descriptionEditText;
+	EditText ingredientsEditText;
+	EditText directionsEditText;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_recipe);
+		
+		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
+		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
+		ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
+		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
 	}
 
 	// AS: Stuff below here will be factored out into View
