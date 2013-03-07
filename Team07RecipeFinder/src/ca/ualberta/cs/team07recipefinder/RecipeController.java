@@ -12,7 +12,7 @@ public class RecipeController {
 	 * Writes to SQL local database, and if it has internet access also writes
 	 * to HTTP.
 	 */
-	public void writeRecipe(Recipe recipe) {
+	public static void writeRecipe(Recipe recipe) {
 	}
 
 	/*
