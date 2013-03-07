@@ -80,6 +80,34 @@ public class MainActivity extends Activity {
 
 		addButton.setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
+				String test_string = "blah";
+				Recipe read_recipe;
+				SqlClient client = new SqlClient(MainActivity.this);
+
+
+				
+				ArrayList<String> ingredients = new ArrayList<String>();
+				ArrayList<String> images = new ArrayList<String>();;
+				ingredients.add("fish");
+				ingredients.add("cats");
+				images.add("img1");
+				images.add("img2");
+				
+				
+				
+				Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
+				
+				HttpClient httpClient = new HttpClient();
+				//httpClient.writeRecipe(test_r);
+				
+				//client.addRecipe(test_r);
+				//read_recipe = client.getRecipe(recipe_id);
+				
+			//	TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
+			//	tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
+				
+				new WriteRecipeTask().execute(test_r);
+		
 				// GC: The add button starts the NewRecipeActivity
 				Intent newRecipeIntent =
 						new Intent(getApplicationContext(), 

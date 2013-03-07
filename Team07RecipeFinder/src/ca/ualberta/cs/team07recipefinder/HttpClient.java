@@ -27,11 +27,10 @@ public class HttpClient {
 
 	private DefaultHttpClient httpClient = new DefaultHttpClient();
 	private Gson gson = new Gson();
+	private String url = "http://cmput301.softwareprocess.es:8080/cmput301w13t07/recipes/";
 
 	public void writeRecipe(Recipe recipe) {
-		HttpPost httpPost = new HttpPost(
-				"http://cmput301.softwareprocess.es:8080/cmput301w13t07/recipes/"
-						+recipe.getRecipeId());
+		HttpPost httpPost = new HttpPost(url+recipe.getRecipeId());
 		StringEntity stringEntity = null;
 
 		try {
@@ -102,5 +101,5 @@ public class HttpClient {
 	public RecipeBook searchRecipes(String title) {
 		return null;
 	}
-
+	
 }
