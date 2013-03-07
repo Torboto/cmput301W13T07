@@ -5,6 +5,8 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
 import android.widget.EditText;
 
 public class NewRecipeActivity extends Activity {
@@ -23,11 +25,19 @@ public class NewRecipeActivity extends Activity {
 		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
 		ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
 		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
+		
+		Button doneButton = (Button) findViewById(R.id.bDone);
+		doneButton.setOnClickListener(new View.OnClickListener() {
+			public void onClick(View v) {
+				// AS: The done button calls createRecipe
+				createRecipe();
+			}
+		});
 	}
 
 	// AS: Stuff below here will be factored out into View
 
-	public void createRecipe(View v) {
+	private void createRecipe() {
 
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
 				&& (!isEmpty(ingredientsEditText))
