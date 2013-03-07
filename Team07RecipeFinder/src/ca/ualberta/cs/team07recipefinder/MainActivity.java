@@ -82,7 +82,8 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				// GC: The add button starts the NewRecipeActivity
 				Intent newRecipeIntent =
-						new Intent(getApplicationContext(), NewRecipeActivity.class);
+						new Intent(getApplicationContext(), 
+								NewRecipeActivity.class);
 				startActivity(newRecipeIntent);
 			}
 		});
