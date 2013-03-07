@@ -99,18 +99,19 @@ public class MainActivity extends Activity {
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, directions, user_id);
 				
 				
-				Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
+				//Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
 				
 				//client.addRecipe(test_r);
 				//read_recipe = client.getRecipe(recipe_id);
-				client.updateRecipe(recipe_id, test_r);
+				//client.updateRecipe(recipe_id, test_r);
+				client.deleteRecipe(recipe_id);
 				
 				//TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
 				//tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
 				 
 				
 				//httpClient.writeRecipe(test_r);
-				 */
+				*/
 			}
 		});
 		

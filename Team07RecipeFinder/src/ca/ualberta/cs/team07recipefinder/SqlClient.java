@@ -131,36 +131,43 @@ public class SqlClient extends SQLiteOpenHelper {
     
     /* GC: Query the database to check if a Recipe exits with the recipeId.
      * 	   Return true if row exists, false if row does not exist.*/
-    public boolean checkRow(UUID recipeId)
-    {
+    public boolean checkRow(UUID recipeId) {
 		boolean isExist = false;
 		SQLiteDatabase db = this.getReadableDatabase();
 
-		// Define a projection that specifies which columns from the database
-		// we will use in the query
+		/* GC: Define a projection that specifies which columns from the
+		 *  database we will use in the query*/
 		String[] projection = { COLUMN_NAME_ID };
 		// Query the database for the rows and columns we want.
     	Cursor c = db.query(TABLE_NAME, projection, COLUMN_NAME_ID + "=?", 
     			new String[] {String.valueOf(recipeId)},
     			null, null, null, null);
-    			
+    	
+    	// GC: if the cursor not null, a rows exist with the given recipeId
     	if(c != null) {
     		isExist = true;
     	}
+    	
 		return isExist;
     }
-   /* 
-    // Delete an existing entry
-    public void deleteEntry(int id) {
-    	SQLiteDatabase db = this.getReadableDatabase();
-    	// Define 'where' part of query.
-    	String selection = COLUMN_NAME_ID + " LIKE ?";
-    	// Specify arguments for the where query.
-    	String[] selectionArgs = { String.valueOf(id) };
-    	// Issue SQL statement.
-    	db.delete(TABLE_NAME, selection, selectionArgs);
-    }
     
+    // GC:  Delete an existing recipe from the local database.
+    public void deleteRecipe(UUID recipeId) {
+    	boolean isExists = false;
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	
+		// GC: Only delete the recipe from the database if the row exists.
+		isExists = checkRow(recipeId);
+
+		if (isExists == true) {
+			String selection = COLUMN_NAME_ID + " LIKE ?";
+			String[] selectionArgs = { String.valueOf(recipeId) };
+
+			// GC: Delete the row with recipeId from the database.
+			db.delete(TABLE_NAME, selection, selectionArgs);
+		}
+    }
+  /*  
     // Find and return all the ids in the database
     public ArrayList<Integer> findAllID() {
     	ArrayList<Integer> id_array = new ArrayList<Integer>();
