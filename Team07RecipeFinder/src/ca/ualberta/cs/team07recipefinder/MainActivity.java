@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -78,41 +79,11 @@ public class MainActivity extends Activity {
 		Button addButton = (Button) findViewById(R.id.buttonAddRecipe);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
-			// The cancel button ends the NewEntryActivty activity.
 			public void onClick(View v) {
-				/*Recipe read_recipe;
-				SqlClient client = new SqlClient(MainActivity.this);
-				HttpClient httpClient = new HttpClient();
-
-				
-				ArrayList<String> ingredients = new ArrayList<String>();
-				ArrayList<String> images = new ArrayList<String>();;
-				ingredients.add("punpkin");
-				ingredients.add("pumpkin");
-				images.add("img1");
-				images.add("img2");
-				String directions = "HULLO?";
-				//UUID recipe_id = UUID.randomUUID();
-				// UUID user_id = UUID.randomUUID();
-				UUID recipe_id =  UUID.fromString("23812c08-02b9-427e-9520-453434f4c892");
-				String user_id = "111-1-1-1-1";
-				
-				Recipe test_r = new Recipe("test1", "test_desc", ingredients, directions, user_id);
-				
-				
-				//Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
-				
-				//client.addRecipe(test_r);
-				//read_recipe = client.getRecipe(recipe_id);
-				//client.updateRecipe(recipe_id, test_r);
-				client.deleteRecipe(recipe_id);
-				
-				//TextView tv_test = (TextView) findViewById(R.id.textView_GCTesting);
-				//tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
-				 
-				
-				//httpClient.writeRecipe(test_r);
-				*/
+				// GC: The add button starts the NewRecipeActivity
+				Intent newRecipeIntent =
+						new Intent(getApplicationContext(), NewRecipeActivity.class);
+				startActivity(newRecipeIntent);
 			}
 		});
 		
