@@ -20,7 +20,7 @@ public class RecipeController {
 		boolean isConnected;
 		
 		// GC: Check if the user is connected to the internet.
-		isConnected = checkInternetConnection(context);
+		//isConnected = checkInternetConnection(context);
 	}
 
 	/*
