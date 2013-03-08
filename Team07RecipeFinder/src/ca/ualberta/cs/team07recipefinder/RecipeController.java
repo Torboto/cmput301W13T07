@@ -3,9 +3,6 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import android.content.Context;
-import android.net.ConnectivityManager;
-
 public class RecipeController {
 
 	public RecipeController() {

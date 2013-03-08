@@ -1,7 +1,6 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
-import java.util.UUID;
 
 import android.app.Activity;
 import android.content.Intent;
@@ -11,7 +10,6 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
-import android.widget.TextView;
 
 
 public class MainActivity extends Activity {
@@ -79,6 +77,7 @@ public class MainActivity extends Activity {
 		Button addButton = (Button) findViewById(R.id.buttonAddRecipe);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				String test_string = "blah";
 				Recipe read_recipe;

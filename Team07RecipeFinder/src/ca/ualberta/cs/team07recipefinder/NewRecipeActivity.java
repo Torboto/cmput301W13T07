@@ -28,6 +28,7 @@ public class NewRecipeActivity extends Activity {
 		
 		Button doneButton = (Button) findViewById(R.id.bDone);
 		doneButton.setOnClickListener(new View.OnClickListener() {
+			@Override
 			public void onClick(View v) {
 				// AS: The done button calls createRecipe
 				createRecipe();
