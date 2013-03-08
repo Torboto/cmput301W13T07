@@ -47,10 +47,11 @@ public class NewRecipeActivity extends Activity {
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
 			 */
-			String title = titleEditText.toString();
-			String description = descriptionEditText.toString();
-			ArrayList<String> ingredients = parseIngredients(ingredientsEditText);
-			String directions = directionsEditText.toString();
+			String title = titleEditText.getText().toString();
+			String description = descriptionEditText.getText().toString();
+			ArrayList<String> ingredients = 
+					parseIngredients(ingredientsEditText);
+			String directions = directionsEditText.getText().toString();
 			String email = grabEmail();
 			Log.v("main", "testing dawg");
 			Recipe newRecipe = new Recipe(title, description, ingredients,
@@ -87,7 +88,7 @@ public class NewRecipeActivity extends Activity {
 		 * ArrayList of Strings. This assumes that they are separated by new
 		 * lines.
 		 */
-		String ingredientsString = ingredientsEditText.toString();
+		String ingredientsString = ingredientsEditText.getText().toString();
 		ArrayList<String> ingredients = new ArrayList<String>(
 				Arrays.asList(ingredientsString.split("\n")));
 		return ingredients;

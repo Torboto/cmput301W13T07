@@ -23,6 +23,7 @@ public class SqlClient extends SQLiteOpenHelper {
     public static final String TABLE_NAME = "LocalRecipes";
     private static final String COLUMN_NAME_ID = "recipe_id";
     private static final String COLUMN_NAME_CONTENT = "recipe_text";
+	private Gson gson = new Gson();
     
     // GC: Statement for creating a table.
     private static final String SQL_CREATE_ENTRIES =
@@ -55,7 +56,6 @@ public class SqlClient extends SQLiteOpenHelper {
     //TODO: Can we change this to writeRecipe? -ET
     public void addRecipe(Recipe recipe) {
     	String json;
-    	Gson gson = new Gson();
     	
     	// GC: Gets the data repository in write mode
     	SQLiteDatabase db = this.getWritableDatabase();
@@ -77,7 +77,6 @@ public class SqlClient extends SQLiteOpenHelper {
     	Recipe recipe;
     	String json;
     	
-    	Gson gson = new Gson();
     	SQLiteDatabase db = this.getReadableDatabase();
     	
     	// Define a projection that specifies which columns from the database
@@ -172,7 +171,6 @@ public class SqlClient extends SQLiteOpenHelper {
     public ArrayList<Recipe> getAllRecipes() {
     	String json;
     	Recipe tempRecipe = null;
-    	Gson gson = new Gson();
     	
     	ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
     	SQLiteDatabase db = this.getReadableDatabase();
