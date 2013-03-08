@@ -52,6 +52,9 @@ public class UserActivity extends Activity {
 							user.setEmail(mEmail);
 							user.setName(mPersonName);
 							
+							// MA: added this to test for solving the Pantry crashing issue
+							user.setPantry(new Pantry());
+							
 							user.Write(getApplicationContext());
 							launchMainActivity();
 						}
