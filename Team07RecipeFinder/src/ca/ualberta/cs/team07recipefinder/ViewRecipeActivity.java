@@ -19,14 +19,15 @@ public class ViewRecipeActivity extends Activity {
 		if (code == 0){
 			// AS: if came from My Recipes
 			fromMyRecipes();
-		//	Button doneButton = (Button) findViewById(R.id.bDone);
-		//	doneButton.setOnClickListener(new View.OnClickListener() {
-		//		@Override
-		//		public void onClick(View v) {
-					// AS: The done button calls createRecipe
-		//			createRecipe();
-		//		}
-		//	});
+			Button deleteButton = (Button) findViewById(R.id.bDone);
+			deleteButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// AS: The delete button calls deleteRecipe and finishes activity
+					deleteRecipe();
+					finish();
+				}
+			});
 		} else if (code == 1) {
 			// AS: if came from Search
 			fromSearch();
@@ -42,6 +43,16 @@ public class ViewRecipeActivity extends Activity {
 	}
 	
 	private void fromSearch(){
-		
+		Button editButton = (Button) findViewById(R.id.b_recipeEdit);
+		Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
+		editButton.setVisibility(4);
+		deleteButton.setVisibility(4);
+		return;
 	}
+	
+	private void deleteRecipe(){
+		//AS: will need to delete the current recipe
+		return;
+	}
+	
 }
