@@ -58,7 +58,19 @@ public class RecipeController {
 	/*
 	 * Only searches HTTP server
 	 */
-	public RecipeBook searchRecipeTitles(String title) {
+	static public RecipeBook searchRecipeTitle(String title) {
+		// DEBUG
+		ArrayList<String> ingredients = new ArrayList<String>();
+		ingredients.add("fish");
+		ingredients.add("cats");
+
+		// Recipe test_r = new Recipe("test1", "test_desc",
+		// ingredients, "DIRECTINOS", "ern@bleh.com");
+
+		// new WriteRecipeTask().execute(test_r);
+		new SearchRecipeTask().execute("test1");
+		// new SearchRecipeTask().execute("", ingredients);
+		// ENDDEBUG
 		return null;
 	}
 	
