@@ -10,6 +10,9 @@ import java.util.List;
 public class Pantry implements Serializable {
 	ArrayList<String> ingredients;
 	
+	public Pantry() {
+		this.ingredients = new ArrayList<String> ();
+	}
 	/**
 	 * Takes in the new ingredient and appends it to the current ArrayList
 	 * of ingredients
