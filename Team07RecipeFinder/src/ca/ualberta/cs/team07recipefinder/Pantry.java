@@ -6,7 +6,7 @@ import java.util.List;
 /*
  * MA
  */
-public class Pantry {
+public class Pantry implements Serializable {
 	ArrayList<String> ingredients;
 	
 	/**
