@@ -5,7 +5,6 @@
     tools:context=".MainActivity" >
 
     <TabHost
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/tabHost"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent" >
@@ -142,7 +141,7 @@
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/listView_search_result"
+                        android:id="@+id/lvSearchResults"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" >
                     </ListView>
