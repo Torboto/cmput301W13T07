@@ -26,7 +26,7 @@ public class RecipeController {
 		isConnected = checkInternetConnection(context);
 		
 		// GC: Add the recipe to the recipe database.
-		client.addRecipe(recipe);
+		client.addRecipe( recipe );
 		
 		/*  GC: Add the recipe to the webservice if there is an internet
 		 *  connection*/
