@@ -19,8 +19,21 @@ public class RecipeController {
 	public void writeRecipe(Recipe recipe, Context context) {
 		boolean isConnected;
 		
+		HttpClient httpClient = new HttpClient();
+		SqlClient client = new SqlClient(context);
+		
 		// GC: Check if the user is connected to the internet.
 		isConnected = checkInternetConnection(context);
+		
+		// GC: Add the recipe to the recipe database.
+		client.addRecipe( recipe );
+		
+		/*  GC: Add the recipe to the webservice if there is an internet
+		 *  connection*/
+		if( isConnected )
+		{
+			httpClient.writeRecipe( recipe );
+		}
 	}
 
 	/*

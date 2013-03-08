@@ -84,16 +84,12 @@ public class MainActivity extends Activity {
 				Recipe read_recipe;
 				SqlClient client = new SqlClient(MainActivity.this);
 
-
-				
 				ArrayList<String> ingredients = new ArrayList<String>();
 				ArrayList<String> images = new ArrayList<String>();;
 				ingredients.add("fish");
 				ingredients.add("cats");
 				images.add("img1");
 				images.add("img2");
-				
-				
 				
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
 				
