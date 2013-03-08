@@ -41,5 +41,9 @@ public class Recipe {
 	public UUID getRecipeId() {
 		return this.recipeId;
 	}
+	
+	public String getName() {
+		return this.name;
+	}
 
 }

@@ -7,7 +7,9 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 
@@ -70,29 +72,27 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 		
-		//GC: MyRecipes Tab
-		// This stuff is temporary stuff for testing purposes. Dont freak out.
-		// Click listener for the 'cancel' button. The click listener follows
-		// the format of that of the LonelyTwitter app. 
+		// GC: MyRecipes Tab
+		
+		// GC: Show all locally saved recipes in a ListView.
+		populateMyRecipes();
+		
+		/* Clicklistener for the add button. When the add button is clicked the
+		 * NewRecipeActivity is launched.*/
 		Button addButton = (Button) findViewById(R.id.buttonAddRecipe);
 
 		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				String test_string = "blah";
 				Recipe read_recipe;
 				SqlClient client = new SqlClient(MainActivity.this);
 
-
-				
 				ArrayList<String> ingredients = new ArrayList<String>();
 				ArrayList<String> images = new ArrayList<String>();;
 				ingredients.add("fish");
 				ingredients.add("cats");
 				images.add("img1");
 				images.add("img2");
-				
-				
 				
 				Recipe test_r = new Recipe("test1", "test_desc", ingredients, "DIRECTINOS", "ern@bleh.com");
 				
@@ -115,5 +115,28 @@ public class MainActivity extends Activity {
 			}
 		});
 		
+	}
+	
+	// GC: Retrieves all recipes from the cache and lists their names
+	public void populateMyRecipes()
+	{
+		ArrayList<Recipe> recipes = new ArrayList<Recipe>();
+		ArrayList<String> recipeNames = new ArrayList<String>();
+		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
+		
+		// GC: Obtain all the recipes in the cache as an ArrayList
+		SqlClient client = new SqlClient(this);
+		recipes = client.getAllRecipes();
+		
+		// GC: Do not add recipes to the ListView if the cache is empty
+		if (recipes != null) {
+			
+			for(Recipe recipe : recipes){
+				recipeNames.add(recipe.getName());
+			}
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+					R.layout.list_item, recipeNames);
+			recipeListView.setAdapter(adapter);
+		}
 	}
 }

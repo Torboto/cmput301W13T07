@@ -5,6 +5,7 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -20,12 +21,12 @@ public class NewRecipeActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_new_recipe);
-		
+
 		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
 		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
 		ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
 		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
-		
+
 		Button doneButton = (Button) findViewById(R.id.bDone);
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -47,18 +48,19 @@ public class NewRecipeActivity extends Activity {
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
 			 */
-			String title = titleEditText.toString();
-			String description = descriptionEditText.toString();
-			ArrayList<String> ingredients = parseIngredients(ingredientsEditText);
-			String directions = directionsEditText.toString();
+			String title = titleEditText.getText().toString();
+			String description = descriptionEditText.getText().toString();
+			ArrayList<String> ingredients = 
+					parseIngredients(ingredientsEditText);
+			String directions = directionsEditText.getText().toString();
 			String email = grabEmail();
-
+			Log.v("main", "testing dawg");
 			Recipe newRecipe = new Recipe(title, description, ingredients,
 					directions, email);
 
 			// Finally, we can use RecipeController to write this new Recipe
 			RecipeController rc = new RecipeController();
-			rc.writeRecipe(newRecipe);
+			rc.writeRecipe(newRecipe, getApplicationContext());
 		}
 
 		// AS: If one or more fields empty could potentially have a
@@ -87,9 +89,9 @@ public class NewRecipeActivity extends Activity {
 		 * ArrayList of Strings. This assumes that they are separated by new
 		 * lines.
 		 */
-		String ingredientsString = ingredientsEditText.toString();
-		ArrayList<String> ingredients = (ArrayList<String>) Arrays
-				.asList(ingredientsString.split("\n"));
+		String ingredientsString = ingredientsEditText.getText().toString();
+		ArrayList<String> ingredients = new ArrayList<String>(
+				Arrays.asList(ingredientsString.split("\n")));
 		return ingredients;
 	}
 
