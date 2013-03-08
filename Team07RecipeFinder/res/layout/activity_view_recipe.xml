@@ -111,6 +111,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                android:gravity="bottom"
                 android:text="@string/button_edit" />
             
             <Button
@@ -118,6 +119,14 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
+                 android:gravity="bottom"
+                android:text="@string/button_delete"/>
+            <Button 
+                android:id = "@+id/b_recipeSave"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                 android:gravity="bottom"
                 android:text="@string/button_delete"/>
 
         </LinearLayout>
