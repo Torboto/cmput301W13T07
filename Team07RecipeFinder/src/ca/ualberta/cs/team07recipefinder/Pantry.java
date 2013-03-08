@@ -1,14 +1,18 @@
 package ca.ualberta.cs.team07recipefinder;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /*
  * MA
  */
-public class Pantry {
+public class Pantry implements Serializable {
 	ArrayList<String> ingredients;
 	
+	public Pantry() {
+		this.ingredients = new ArrayList<String> ();
+	}
 	/**
 	 * Takes in the new ingredient and appends it to the current ArrayList
 	 * of ingredients
