@@ -1,6 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -174,8 +175,20 @@ public class MainActivity extends Activity {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
-				// Get the recipe id of the Recipe the user clicked.
-			
+				//GC: get the id of the recipe the user selects
+				UUID recipeId = recipes.get(position).getRecipeId();
+				
+				// GC: Start the ViewRecipeActivity
+				Intent viewRecipeIntent = new Intent(getApplicationContext(),
+						ViewRecipeActivity.class);
+				
+				// GC: add code 1 to intent to indicate coming from MyRecipes
+				viewRecipeIntent.putExtra("code", 1);
+				
+				// GC: add recipeId as a string to the intent
+				viewRecipeIntent.putExtra("recipeId", recipeId.toString());
+				startActivity(viewRecipeIntent);
+				
 			}
 
 		});
@@ -188,7 +201,7 @@ public class MainActivity extends Activity {
 		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// //GC: The add button starts the NewRecipeActivity
+				//GC: The add button starts the NewRecipeActivity
 				Intent newRecipeIntent = new Intent(getApplicationContext(),
 						NewRecipeActivity.class);
 				startActivity(newRecipeIntent);
