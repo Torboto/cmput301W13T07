@@ -84,14 +84,14 @@
                         android:orientation="horizontal" >
 
                         <RadioButton
-                            android:id="@+id/radioButton1"
+                            android:id="@+id/rbIngredients"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
                             android:text="@string/search_ingredient" />
 
                         <RadioButton
-                            android:id="@+id/radioButton2"
+                            android:id="@+id/rbName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -103,7 +103,7 @@
                         android:layout_height="wrap_content" >
 
                         <EditText
-                            android:id="@+id/editText1"
+                            android:id="@+id/etSearchIngredient"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
@@ -112,7 +112,7 @@
                             android:inputType="textMultiLine" />
 
                         <Button
-                            android:id="@+id/button1"
+                            android:id="@+id/buttonImportIngredient"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.25"
@@ -124,7 +124,7 @@
                         android:layout_height="wrap_content" >
 
                         <EditText
-                            android:id="@+id/editText2"
+                            android:id="@+id/etSearchName"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.75"
@@ -133,7 +133,7 @@
                             android:inputType="textMultiLine" />
 
                         <Button
-                            android:id="@+id/button2"
+                            android:id="@+id/buttonSearch"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="0.25"
@@ -141,7 +141,7 @@
                     </LinearLayout>
 
                     <ListView
-                        android:id="@+id/listView_search_result"
+                        android:id="@+id/lvSearchResults"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content" >
                     </ListView>
