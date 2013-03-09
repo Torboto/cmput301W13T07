@@ -10,11 +10,13 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
@@ -149,8 +151,19 @@ public class MainActivity extends Activity {
 		// GC: MyRecipes Tab
 
 		// GC: Show all locally saved recipes in a ListView.
-		populateMyRecipes();
+		final ArrayList<Recipe> recipes = populateMyRecipes();
+		
+		// GC: Click listener for items in the recipe listview
+		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
+		recipeListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// Get the recipe id of the Recipe the user clicked.
+			
+			}
 
+		});
 		/*
 		 * Clicklistener for the add button. When the add button is clicked the
 		 * NewRecipeActivity is launched.
@@ -195,8 +208,9 @@ public class MainActivity extends Activity {
 
 	}
 
-	// GC: Retrieves all recipes from the cache and lists their names
-	public void populateMyRecipes() {
+	/* GC: For MyRecipes Tab. Retrieves all recipes from the cache and lists
+	 *  their names and returns the list of retrieved recipes*/
+	public ArrayList<Recipe> populateMyRecipes() {
 		ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 		ArrayList<String> recipeNames = new ArrayList<String>();
 		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
@@ -215,5 +229,7 @@ public class MainActivity extends Activity {
 					R.layout.list_item, recipeNames);
 			recipeListView.setAdapter(adapter);
 		}
+		
+		return recipes;
 	}
 }

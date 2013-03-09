@@ -17,7 +17,6 @@ import com.google.gson.Gson;
  * cached recipes. Recipes can be added to the database, deleted, and
  * updated.
  */
-
 public class SqlClient extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
     public static final String DATABASE_NAME = "RecipeCache.db";
@@ -101,6 +100,9 @@ public class SqlClient extends SQLiteOpenHelper {
     	json = c.getString(1);
     	recipe = gson.fromJson(json, Recipe.class);
     	
+    	db.close();
+		c.close();
+    	
     	// Return entry that has been read from database.
     	return recipe;
     }
@@ -130,6 +132,8 @@ public class SqlClient extends SQLiteOpenHelper {
 
 			db.update(TABLE_NAME, values, selection, selectionArgs);
 		}
+		
+		db.close();
     }
     
     /* GC: Query the database to check if a Recipe exits with the recipeId.
@@ -151,6 +155,9 @@ public class SqlClient extends SQLiteOpenHelper {
     		isExist = true;
     	}
     	
+    	db.close();
+		c.close();
+    	
 		return isExist;
     }
     
@@ -169,6 +176,8 @@ public class SqlClient extends SQLiteOpenHelper {
 			// GC: Delete the row with recipeId from the database.
 			db.delete(TABLE_NAME, selection, selectionArgs);
 		}
+		
+		db.close();
     }
     
     // GC: Find and return all recipes that are saved in the database
@@ -192,6 +201,9 @@ public class SqlClient extends SQLiteOpenHelper {
 			c.moveToNext();
 		}
     	
+		db.close();
+		c.close();
+		
     	return recipeList;
     }
 
