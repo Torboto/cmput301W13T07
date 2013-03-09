@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.UUID;
 
 import org.apache.http.HttpEntity;
@@ -96,34 +97,32 @@ public class HttpClient {
 
 	}
 
-	public ArrayList<Recipe> searchRecipes(ArrayList<String> ingredients) {
+	public Collection<Recipe> searchRecipes(ArrayList<String> ingredients) {
 		HttpPost httpPost = new HttpPost(url + "_search?pretty=1");
 		StringEntity stringEntity;
+		Collection<Recipe> recipeResults = null;
+		HttpResponse response = null;
+		HttpEntity entity = null;
+		BufferedReader buff = null;
+		String output = null;
 
 		String queryString = "";
 		for (String s : ingredients) {
 			queryString += s + " OR ";
 		}
+
 		String query = "{\"query\" : " + "{\"query_string\" : " + "{"
 				+ "\"default_field\" : \"ingredients\"," + "\"query\" : \""
 				+ queryString + "\"}}}";
+
 		try {
 			stringEntity = new StringEntity(query);
 			httpPost.setHeader("Accept", "application/json");
 			httpPost.setEntity(stringEntity);
+			response = httpClient.execute(httpPost);
 		} catch (UnsupportedEncodingException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-
-		HttpResponse response;
-		HttpEntity entity;
-		try {
-			response = httpClient.execute(httpPost);
-			String status = response.getStatusLine().toString();
-			System.out.println(status);
-
-			entity = response.getEntity();
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -132,69 +131,88 @@ public class HttpClient {
 			e.printStackTrace();
 		}
 
-		// InputStream json = response.getEntity().getContent();
-		//
-		// String json = httpClient.execute(reponse,)
-		//
-		// java.lang.reflect.Type elasticSearchResponseType = new
-		// TypeToken<ElasticSearchResponse<Recipe>>() {
-		// }.getType();
-		// ElasticSearchResponse<Recipe> esResponse = gson.fromJson(json,
-		// elasticSearchResponseType);
-		// System.err.println(esResponse);
-		// for (ElasticSearchResponse<Recipe> r : esResponse.getHits()) {
-		// Recipe recipe = r.getSource();
-		// System.err.println(recipe);
-		// }
+		String status = response.getStatusLine().toString();
+		System.out.println(status);
+
+		entity = response.getEntity();
+
+		try {
+			buff = new BufferedReader(
+					new InputStreamReader(entity.getContent()));
+			System.err.println("Output from Server -> ");
+			while ((output = buff.readLine()) != null) {
+				System.err.println(output);
+			}
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+
+		Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Recipe>>() {
+		}.getType();
+		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(output,
+				elasticSearchResponseType);
+		System.err.println(esResponse);
+		for (ElasticSearchResponse<Recipe> esrt : esResponse.getHits()) {
+			recipeResults.add(esrt.getSource());
+		}
 		// TODO Release connection? Consume?
-		return null;
+		return recipeResults;
 	}
 
-	public ArrayList<Recipe> searchRecipes(String name) {
-		ArrayList<Recipe> recipeResults;
-		HttpGet searchRequest;
+	public Collection<Recipe> searchRecipes(String name) {
+		Collection<Recipe> recipeResults = new ArrayList<Recipe>();
+		HttpGet searchRequest = null;
+		BufferedReader buff = null;
+		String output = null;
+		HttpResponse response = null;
+
 		try {
 			searchRequest = new HttpGet(url + "_search?pretty=1&q="
 					+ java.net.URLEncoder.encode(name, "UTF-8"));
 			searchRequest.setHeader("Accept", "application/json");
+			response = httpClient.execute(searchRequest);
 		} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
-		}
-	
-		HttpResponse response;
-		try {
-			response = httpClient.execute(searchRequest);
-		} catch (ClientProtocolException e1) {
+		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		} catch (IOException e1) {
+			e.printStackTrace();
+		} catch (IOException e) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
+			e.printStackTrace();
 		}
+
 		String status = response.getStatusLine().toString();
 		System.out.print(status);
 
 		HttpEntity entity = response.getEntity();
-		BufferedReader buff;
+		StringBuffer sbuff = new StringBuffer();
+		try {
+			buff = new BufferedReader(
+					new InputStreamReader(entity.getContent()));
+			System.err.println("Output from Server -> ");
+			while ((output = buff.readLine()) != null) {
+				System.err.println(output);
+				sbuff.append(output);
+			}
 
-		buff = new BufferedReader(new InputStreamReader(entity.getContent()));
-		String output;
-		System.err.println("Output from Server -> ");
-
-		while ((output = buff.readLine()) != null) {
-			System.err.println(output);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
-		
-		//If there are errors here about the type, that is an Eclipse bug. They are not actually errors.
-		//To get code to compile, go to the Problems tab, and delete the errors involved ElasticSearchResponse not being a valid type.
-		java.lang.reflect.Type elasticSearchResponseType = new TypeToken<ElasticSearchRepsonse<Recipe>>(){}.getType();
-		ElasticSearchResponse<Recipe> esResponse = gson.fromJson(output, elasticSearchResponseType);
+
+		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Recipe>>() {
+		}.getType();
+		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(
+				sbuff.toString(), elasticSearchSearchResponseType);
 		System.err.println(esResponse);
-		for (ElasticSearchResponse<Recipe> r : esResponse.getHits()) {
-			Recipe recipe = r.getSource();
-			recipeResults.add(recipe);
-			System.err.println(recipe);
+
+		for (ElasticSearchResponse<Recipe> esrt : esResponse.getHits()) {
+			recipeResults.add(esrt.getSource());
 		}
 
 		return recipeResults;

@@ -20,7 +20,9 @@ import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+
 public class MainActivity extends Activity {
+	
 
 	private Button addIngredientButton;
 	private User user;
@@ -49,6 +51,19 @@ public class MainActivity extends Activity {
 		tabHost.addTab(spec1);
 		tabHost.addTab(spec2);
 		tabHost.addTab(spec3);
+
+		findViewById(R.id.buttonSearch).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						ListView listView = (ListView) findViewById(R.id.lvSearchResults);
+
+						//ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
+//								this, android.R.layout.simple_list_item_1,
+//								RecipeController.searchRecipeTitle(etSearchName));
+						//listView.setAdapter(adapter);
+					}
+				});
 
 		user = User.getInstance();
 		addIngredientButton = (Button) findViewById(R.id.buttonAdd);
@@ -173,33 +188,7 @@ public class MainActivity extends Activity {
 		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Recipe read_recipe;
-				SqlClient client = new SqlClient(MainActivity.this);
-
-				ArrayList<String> ingredients = new ArrayList<String>();
-				ArrayList<String> images = new ArrayList<String>();
-				;
-				ingredients.add("fish");
-				ingredients.add("cats");
-				images.add("img1");
-				images.add("img2");
-
-				Recipe test_r = new Recipe("test1", "test_desc", ingredients,
-						"DIRECTINOS", "ern@bleh.com");
-
-				HttpClient httpClient = new HttpClient();
-				// httpClient.writeRecipe(test_r);
-
-				// client.addRecipe(test_r);
-				// read_recipe = client.getRecipe(recipe_id);
-
-				// TextView tv_test = (TextView)
-				// findViewById(R.id.textView_GCTesting);
-				// tv_test.setText(String.valueOf(read_recipe.getRecipeId()));
-
-				new WriteRecipeTask().execute(test_r);
-
-				// GC: The add button starts the NewRecipeActivity
+				// //GC: The add button starts the NewRecipeActivity
 				Intent newRecipeIntent = new Intent(getApplicationContext(),
 						NewRecipeActivity.class);
 				startActivity(newRecipeIntent);
