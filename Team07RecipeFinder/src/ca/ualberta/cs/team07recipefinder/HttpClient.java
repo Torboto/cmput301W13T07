@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.List;
 import java.util.UUID;
 
 import org.apache.http.HttpEntity;
@@ -97,10 +98,10 @@ public class HttpClient {
 
 	}
 
-	public Collection<Recipe> searchRecipes(ArrayList<String> ingredients) {
+	public List<Recipe> searchRecipes(List<String> ingredients) {
 		HttpPost httpPost = new HttpPost(url + "_search?pretty=1");
 		StringEntity stringEntity;
-		Collection<Recipe> recipeResults = null;
+		List<Recipe> recipeResults = null;
 		HttpResponse response = null;
 		HttpEntity entity = null;
 		BufferedReader buff = null;
@@ -134,34 +135,30 @@ public class HttpClient {
 		String status = response.getStatusLine().toString();
 		System.out.println(status);
 
-		entity = response.getEntity();
-
+		String json = null;
 		try {
-			buff = new BufferedReader(
-					new InputStreamReader(entity.getContent()));
-			System.err.println("Output from Server -> ");
-			while ((output = buff.readLine()) != null) {
-				System.err.println(output);
-			}
+			json = getEntityContent(response);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
-		Type elasticSearchResponseType = new TypeToken<ElasticSearchResponse<Recipe>>() {
+		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Recipe>>() {
 		}.getType();
-		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(output,
-				elasticSearchResponseType);
+		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(
+				json, elasticSearchSearchResponseType);
 		System.err.println(esResponse);
 		for (ElasticSearchResponse<Recipe> esrt : esResponse.getHits()) {
-			recipeResults.add(esrt.getSource());
+			Recipe recipe = esrt.getSource();
+			recipeResults.add(recipe);
 		}
+		
 		// TODO Release connection? Consume?
 		return recipeResults;
 	}
 
-	public Collection<Recipe> searchRecipes(String name) {
-		Collection<Recipe> recipeResults = new ArrayList<Recipe>();
+	public List<Recipe> searchRecipes(String name) {
+		List<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpGet searchRequest = null;
 		BufferedReader buff = null;
 		String output = null;
@@ -186,20 +183,9 @@ public class HttpClient {
 		String status = response.getStatusLine().toString();
 		System.out.print(status);
 
-		HttpEntity entity = response.getEntity();
-		StringBuffer sbuff = new StringBuffer();
+		String json = null;
 		try {
-			buff = new BufferedReader(
-					new InputStreamReader(entity.getContent()));
-			System.err.println("Output from Server -> ");
-			while ((output = buff.readLine()) != null) {
-				System.err.println(output);
-				sbuff.append(output);
-			}
-
-		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			json = getEntityContent(response);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -208,14 +194,32 @@ public class HttpClient {
 		Type elasticSearchSearchResponseType = new TypeToken<ElasticSearchSearchResponse<Recipe>>() {
 		}.getType();
 		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(
-				sbuff.toString(), elasticSearchSearchResponseType);
+				json, elasticSearchSearchResponseType);
 		System.err.println(esResponse);
 
 		for (ElasticSearchResponse<Recipe> esrt : esResponse.getHits()) {
-			recipeResults.add(esrt.getSource());
+			Recipe recipe = esrt.getSource();
+			recipeResults.add(recipe);
 		}
 
 		return recipeResults;
+	}
+	
+	/**
+	 * get the http response and return json string
+	 */
+	String getEntityContent(HttpResponse response) throws IOException {
+		BufferedReader br = new BufferedReader(
+				new InputStreamReader((response.getEntity().getContent())));
+		String output;
+		System.err.println("Output from Server -> ");
+		String json = "";
+		while ((output = br.readLine()) != null) {
+			System.err.println(output);
+			json += output;
+		}
+		System.err.println("JSON:"+json);
+		return json;
 	}
 
 }

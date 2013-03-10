@@ -1,6 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.UUID;
 
 public class Recipe {
@@ -45,5 +46,10 @@ public class Recipe {
 	public String getName() {
 		return this.name;
 	}
-
+	
+	@Override
+	public String toString() {
+		return this.name + "by " + this.creatorEmail + "\n" +
+				this.description;
+	}
 }
