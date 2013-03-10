@@ -59,6 +59,15 @@ public class RecipeController {
 	}
 
 	/*
+	 * Get the recipe with a given ID
+	 */
+	public Recipe getRecipe(UUID uuid, Context context) {
+		SqlClient client = new SqlClient(context);
+		Recipe recipe = client.getRecipe(uuid);
+		return recipe;
+	}
+	
+	/*
 	 * Only searches HTTP server
 	 */
 	public List<Recipe> searchRecipeIngredients(ArrayList<String> ingredients) {

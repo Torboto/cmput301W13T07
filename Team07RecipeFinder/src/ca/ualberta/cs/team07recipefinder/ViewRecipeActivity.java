@@ -48,7 +48,14 @@ public class ViewRecipeActivity extends Activity {
 	}
 
 	private void fillRecipe(String recipeString) {
-		// TOD
+		// AS: first get the recipe from the database using a recipeController
+		RecipeController rc = new RecipeController();
+		UUID recipeID = UUID.fromString(recipeString);
+		Recipe recipe = rc.getRecipe(recipeID, getApplicationContext());
+		
+		// AS: next, grab the information from the recipe
+		String title = recipe.getName();
+	//	String directions = recipe.g
 		
 	}
 

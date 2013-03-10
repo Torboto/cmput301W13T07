@@ -61,11 +61,11 @@ public class NewRecipeActivity extends Activity {
 			// Finally, we can use RecipeController to write this new Recipe
 			RecipeController rc = new RecipeController();
 			rc.writeRecipe(newRecipe, getApplicationContext());
+			finish();
 		}
 
 		// AS: If one or more fields empty could potentially have a
 		// dialog saying so? Next Iteration of project
-		finish();
 	}
 
 	private boolean isEmpty(EditText etText) {
