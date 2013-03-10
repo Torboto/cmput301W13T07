@@ -98,10 +98,10 @@ public class HttpClient {
 
 	}
 
-	public List<Recipe> searchRecipes(List<String> ingredients) {
+	public ArrayList<Recipe> searchRecipes(List<String> ingredients) {
 		HttpPost httpPost = new HttpPost(url + "_search?pretty=1");
 		StringEntity stringEntity;
-		List<Recipe> recipeResults = null;
+		ArrayList<Recipe> recipeResults = null;
 		HttpResponse response = null;
 		HttpEntity entity = null;
 		BufferedReader buff = null;
@@ -157,8 +157,8 @@ public class HttpClient {
 		return recipeResults;
 	}
 
-	public List<Recipe> searchRecipes(String name) {
-		List<Recipe> recipeResults = new ArrayList<Recipe>();
+	public ArrayList<Recipe> searchRecipes(String name) {
+		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpGet searchRequest = null;
 		BufferedReader buff = null;
 		String output = null;
