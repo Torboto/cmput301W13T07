@@ -1,9 +1,9 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -12,20 +12,18 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
-import android.webkit.DownloadListener;
 import android.widget.AdapterView;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
-import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 public class MainActivity extends Activity {
 
-	private Button addIngredientButton;
 	private User user;
 	private ListView ingredientsLV;
 
@@ -54,7 +52,6 @@ public class MainActivity extends Activity {
 		tabHost.addTab(spec3);
 
 		user = User.getInstance();
-		
 	}
 
 	@Override
@@ -90,7 +87,7 @@ public class MainActivity extends Activity {
 
 		});
 		
-		 // GC: Clicklistener for the add button. When the add button is clicked the NewRecipeActivity is launched.
+		 // GC: Clicklistener for the add recipes button. When the add button is clicked the NewRecipeActivity is launched.
 		findViewById(R.id.buttonAddRecipe).setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -101,7 +98,7 @@ public class MainActivity extends Activity {
 			}
 		});
 
-		// MA: Call addIngredient() when click on Add button
+		// MA: Call addIngredient() when click on Add Ingredients button
 		findViewById(R.id.buttonAddIngredient).setOnClickListener(new View.OnClickListener() {
 			public void onClick(View v) {
 				addIngredient(v);
