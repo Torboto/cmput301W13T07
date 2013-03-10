@@ -15,12 +15,13 @@ public class ViewRecipeActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_view_recipe);
 		
-		// AS: call fillRecipe() to get the information to be displayed about
-		// the current recipe
-		fillRecipe();
-		
 		Bundle extras = getIntent().getExtras();
 		int code = extras.getInt("code");
+		String recipeString = extras.getString("recipeId");
+		
+		// AS: call fillRecipe() to get the information to be displayed about
+		// the current recipe
+		fillRecipe(recipeString);
 		
 		// AS: depending on whether the user came from My Recipes or from a search
 		// we set up different buttons 
@@ -46,7 +47,7 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 
-	private void fillRecipe() {
+	private void fillRecipe(String recipeString) {
 		// TOD
 		
 	}
