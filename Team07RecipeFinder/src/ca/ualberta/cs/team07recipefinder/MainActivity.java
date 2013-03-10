@@ -1,6 +1,8 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 import android.app.Activity;
 import android.app.AlertDialog;
@@ -10,6 +12,7 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
+import android.webkit.DownloadListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,9 +21,7 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
-
 public class MainActivity extends Activity {
-	
 
 	private Button addIngredientButton;
 	private User user;
@@ -54,12 +55,7 @@ public class MainActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						ListView listView = (ListView) findViewById(R.id.lvSearchResults);
-
-						//ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
-//								this, android.R.layout.simple_list_item_1,
-//								RecipeController.searchRecipeTitle(etSearchName));
-						//listView.setAdapter(adapter);
+						populateSearch();
 					}
 				});
 
@@ -72,25 +68,6 @@ public class MainActivity extends Activity {
 				addIngredient(v);
 			}
 		});
-
-		// findViewById(R.id.buttonAddRecipe).setOnClickListener(
-		// new View.OnClickListener() {
-		// @Override
-		// public void onClick(View view) {
-		// verifyUser();
-		// // setError should return null if no flags have be set
-		// // during verifyUser.
-		// if (mEmailView.getError() == null
-		// && mPersonNameView.getError() == null) {
-		// user.setEmail(mEmail);
-		// user.setName(mPersonName);
-		//
-		// user.Write(getApplicationContext());
-		// launchMainActivity();
-		// }
-		// }
-		// });
-
 	}
 
 	// MA: will show a dialog for user to input a ingredient and save it to
@@ -120,7 +97,7 @@ public class MainActivity extends Activity {
 					public void onClick(DialogInterface dialog, int whichButton) {
 					}
 				});
-		alert.show();		
+		alert.show();
 	}
 
 	// MA: will show a dialog says the input is invalid
@@ -204,5 +181,28 @@ public class MainActivity extends Activity {
 					R.layout.list_item, recipeNames);
 			recipeListView.setAdapter(adapter);
 		}
+	}
+
+	public void populateSearch() {
+		EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
+		EditText etSearchIngredientsView = (EditText) findViewById(R.id.etIngredientsList);
+		//TODO Convert everything to search ingredients with a string, instead of an array
+		SearchRecipeTask search = new SearchRecipeTask(etSearchNameView.getText().toString(), null);
+
+		search.setDataDownloadListener(
+				new DataDownloadListener() {
+					@SuppressWarnings("unchecked")
+					public void dataDownloadedSuccessfully(List<Recipe> data) {
+						setSearch(data);
+					}
+				});
+		search.execute("");
+	}
+
+	public void setSearch(List<Recipe> data) {
+		ListView listView = (ListView) findViewById(R.id.lvSearchResults);
+		ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
+				getBaseContext(), android.R.layout.simple_list_item_1, data);
+		listView.setAdapter(adapter);
 	}
 }

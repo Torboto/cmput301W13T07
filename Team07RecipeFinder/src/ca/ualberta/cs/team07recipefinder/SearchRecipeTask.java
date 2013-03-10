@@ -1,20 +1,44 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import android.os.AsyncTask;
 
 public class SearchRecipeTask extends
-		AsyncTask<String, ArrayList<String>, Void> {
+		AsyncTask<String, List<String>, Void> {
+	DataDownloadListener mahDataListenerThing;
+	List<Recipe> recipeResults;
+	String recipeName;
+	List<String> ingredients;
+	
 
+	SearchRecipeTask(String recipeName, List<String> ingredients){
+		this.recipeName = recipeName;
+		this.ingredients = ingredients;
+	}
+	
+	public void setDataDownloadListener(DataDownloadListener downloadListener) {
+		this.mahDataListenerThing = downloadListener;
+	}
+	
 	@Override
 	protected Void doInBackground(String... arg0) {
+		List<Recipe> results = new ArrayList<Recipe>();
 		HttpClient httpClient = new HttpClient();
-		if (arg0[0] == "") {
-			httpClient.searchRecipes(arg0[1]);
+		if (recipeName == "") {
+			results = httpClient.searchRecipes(ingredients);
 		} else {
-			httpClient.searchRecipes(arg0[0]);
+			results = httpClient.searchRecipes(recipeName);
 		}
+		recipeResults = results;
+
 		return null;
 	}
+	@Override
+	protected void onPostExecute(Void result) {
+		mahDataListenerThing.dataDownloadedSuccessfully(this.recipeResults);
+	}
+
+	
 }
