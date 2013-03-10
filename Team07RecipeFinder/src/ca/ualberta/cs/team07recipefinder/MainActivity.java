@@ -10,11 +10,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -25,6 +31,7 @@ public class MainActivity extends Activity {
 
 	private User user;
 	private ListView ingredientsLV;
+	private Button addIngredientButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,20 +58,61 @@ public class MainActivity extends Activity {
 		tabHost.addTab(spec3);
 
 		user = User.getInstance();
+		addIngredientButton = (Button) findViewById(R.id.buttonAddIngredient);
+		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
+		registerForContextMenu(ingredientsLV);
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 
-		// GC: MyRecipes Tab
-
-		// GC: Show all locally saved recipes in a ListView.
-		final ArrayList<Recipe> recipes = populateMyRecipes();
-
 		// GC: Click listener for items in the recipe listview
 		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
-		recipeListView.setOnItemClickListener(new OnItemClickListener() {
+		ArrayList<Recipe> recipes = populateMyRecipes();
+		setListViewOnClickListener(recipeListView, recipes);
+
+		// GC: Clicklistener for the add recipes button. When the add button is
+		// clicked the NewRecipeActivity is launched.
+		findViewById(R.id.buttonAddRecipe).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// GC: The add button starts the NewRecipeActivity
+						Intent newRecipeIntent = new Intent(
+								getApplicationContext(),
+								NewRecipeActivity.class);
+						startActivity(newRecipeIntent);
+					}
+				});
+
+		// MA: Call addIngredient() when click on Add Ingredients button
+		findViewById(R.id.buttonAddIngredient).setOnClickListener(
+				new View.OnClickListener() {
+					public void onClick(View v) {
+						addIngredient(v);
+					}
+				});
+
+		// ET: listener for Search button
+		findViewById(R.id.buttonSearch).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						populateSearch();
+					}
+				});
+
+	}
+
+	/*
+	 * ET:
+	 * Takes in a listview view, and an array of recipes to bind to an onItemClickListener
+	 * These variables must be passed in as final so that the listener declared inside may access them.
+	 */
+	protected void setListViewOnClickListener(final ListView listView, final ArrayList<Recipe> recipes) {
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
 			public void onItemClick(AdapterView<?> parent, View view,
 					int position, long id) {
@@ -81,38 +129,8 @@ public class MainActivity extends Activity {
 				// GC: add recipeId as a string to the intent
 				viewRecipeIntent.putExtra("recipeId", recipeId.toString());
 				startActivity(viewRecipeIntent);
-
-			}
-
-		});
-		
-		 // GC: Clicklistener for the add recipes button. When the add button is clicked the NewRecipeActivity is launched.
-		findViewById(R.id.buttonAddRecipe).setOnClickListener(new View.OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				// GC: The add button starts the NewRecipeActivity
-				Intent newRecipeIntent = new Intent(getApplicationContext(),
-						NewRecipeActivity.class);
-				startActivity(newRecipeIntent);
 			}
 		});
-
-		// MA: Call addIngredient() when click on Add Ingredients button
-		findViewById(R.id.buttonAddIngredient).setOnClickListener(new View.OnClickListener() {
-			public void onClick(View v) {
-				addIngredient(v);
-			}
-		});
-		
-		// ET: listener for Search button
-		findViewById(R.id.buttonSearch).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View view) {
-						populateSearch();
-					}
-				});
-
 	}
 
 	/*
@@ -161,6 +179,65 @@ public class MainActivity extends Activity {
 			}
 		});
 		alert.show();
+	}
+	
+	/**
+	 * MA: show a dialog with a EditText and update the ingredient of the given
+	 * index
+	 */
+	private void editIngredient(final int index) {
+		final EditText et = new EditText(this);
+		et.setText(user.getPantry().getIngredient(index));
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Edit Ingredient");
+		alert.setView(et);
+		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				user.getPantry().updateIngredient(index, et.getText().toString());
+				onStart();
+			}
+		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		alert.show();
+	}
+
+	@Override
+	/**
+	 * MA: long press on item in the pantry listview and this menu will show
+	 */
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.setHeaderTitle(getString(R.string.menu_pantry_title));
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_edit_pantry, menu);
+	}
+
+	@Override
+	/**
+	 * MA: click on an item in the ConetextMenu and the corresponding method will
+	 * be called
+	 */
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		int index = info.position;
+		switch (item.getItemId()) {
+		case R.id.menu_delete_ingredient:
+			user.getPantry().removeIngredient(index);
+			onStart();
+			return true;
+		case R.id.menu_edit_ingredient:
+			editIngredient(index);
+			onStart();
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
 	}
 
 	@Override
@@ -215,7 +292,7 @@ public class MainActivity extends Activity {
 	 * task, as well as defining a DataDownloadListener which is a type that
 	 * will pass the data from the async task back to setSearch method.
 	 */
-	public void populateSearch() {
+	protected void populateSearch() {
 		EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
 		EditText etSearchIngredientsView = (EditText) findViewById(R.id.etIngredientsList);
 		// TODO Convert everything to search ingredients with a string, instead
@@ -225,7 +302,7 @@ public class MainActivity extends Activity {
 
 		search.setDataDownloadListener(new DataDownloadListener() {
 			@SuppressWarnings("unchecked")
-			public void dataDownloadedSuccessfully(List<Recipe> data) {
+			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
 				setSearch(data);
 			}
 		});
@@ -236,10 +313,12 @@ public class MainActivity extends Activity {
 	 * ET: This method is called by the async task once it has completed it's
 	 * call from the server.
 	 */
-	public void setSearch(List<Recipe> data) {
-		ListView listView = (ListView) findViewById(R.id.lvSearchResults);
+	public void setSearch(ArrayList<Recipe> recipes) {
+		ListView searchListView = (ListView) findViewById(R.id.lvSearchResults);
 		ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
-				getBaseContext(), android.R.layout.simple_list_item_1, data);
-		listView.setAdapter(adapter);
+				getBaseContext(), android.R.layout.simple_list_item_1, recipes);
+		searchListView.setAdapter(adapter);
+		
+		setListViewOnClickListener(searchListView, recipes);
 	}
 }

@@ -8,7 +8,7 @@ import android.os.AsyncTask;
 public class SearchRecipeTask extends
 		AsyncTask<String, List<String>, Void> {
 	DataDownloadListener mahDataListenerThing;
-	List<Recipe> recipeResults;
+	ArrayList<Recipe> recipeResults;
 	String recipeName;
 	List<String> ingredients;
 	
@@ -24,7 +24,7 @@ public class SearchRecipeTask extends
 	
 	@Override
 	protected Void doInBackground(String... arg0) {
-		List<Recipe> results = new ArrayList<Recipe>();
+		ArrayList<Recipe> results = new ArrayList<Recipe>();
 		HttpClient httpClient = new HttpClient();
 		if (recipeName == "") {
 			results = httpClient.searchRecipes(ingredients);
