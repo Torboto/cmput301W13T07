@@ -1,11 +1,13 @@
 package ca.ualberta.cs.team07recipefinder;
 
+import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.TextView;
 
 public class ViewRecipeActivity extends Activity {
 	/* */
@@ -21,7 +23,7 @@ public class ViewRecipeActivity extends Activity {
 		
 		// AS: call fillRecipe() to get the information to be displayed about
 		// the current recipe
-		fillRecipe(recipeString);
+		fillRecipeInfo(recipeString);
 		
 		// AS: depending on whether the user came from My Recipes or from a search
 		// we set up different buttons 
@@ -47,7 +49,10 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 
-	private void fillRecipe(String recipeString) {
+	private void fillRecipeInfo(String recipeString) {
+		// AS: grabs the recipe corresponding to recipeString then takes out
+		// its information and calls fillTextViews
+		
 		// AS: first get the recipe from the database using a recipeController
 		RecipeController rc = new RecipeController();
 		UUID recipeID = UUID.fromString(recipeString);
@@ -55,10 +60,39 @@ public class ViewRecipeActivity extends Activity {
 		
 		// AS: next, grab the information from the recipe
 		String title = recipe.getName();
-	//	String directions = recipe.g
+		String directions = recipe.getDirections();
+		String description = recipe.getDescription();
+		String ingredients = convertList(recipe.getIngredients());
+		
+		fillTextViews(title, description, directions, ingredients);
+	}
+
+	private void fillTextViews(String title, String description,
+			String directions, String ingredients) {
+		// AS: sets the information into the appropriate text views
+		TextView tvTitle = (TextView)findViewById(R.id.tvRecipeTitle);
+		TextView tvDescription = (TextView)findViewById(R.id.tvRecipeDescription);
+		TextView tvDirections = (TextView)findViewById(R.id.tvDirectionsList);
+		TextView tvIngredients = (TextView)findViewById(R.id.tvIngredientsList);
+		
+		tvTitle.setText(title);
+		tvDescription.setText(description);
+		tvDirections.setText(directions);
+		tvIngredients.setText(ingredients);
+		return;
 		
 	}
 
+	private String convertList(ArrayList<String> ingredientsList){
+		// AS: takes an ArrayList of ingredients and returns them as a single 
+		// string with newline characters between each
+		String ingredients = "";
+		for (String s : ingredientsList) {
+			ingredients += (s + "\n");
+		}
+		return ingredients;
+	}
+	
 	private void fromMyRecipes(){
 		// AS: hides the save button since it is not available when we are viewing
 		// one of our own recipes
@@ -81,7 +115,7 @@ public class ViewRecipeActivity extends Activity {
 		//AS: delete the current recipe specified by a string representation of a UUID
 		UUID recipeID = UUID.fromString(recipeString);
 		RecipeController rc = new RecipeController();
-		rc.deleteRecipe(recipeID);
+		rc.deleteRecipe(recipeID, getApplicationContext());
 		return;
 	}
 	
