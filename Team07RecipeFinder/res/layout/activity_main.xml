@@ -50,24 +50,11 @@
                         </ListView>
                     </LinearLayout>
 
-                    <LinearLayout
+                    <Button
+                        android:id="@+id/buttonAddIngredient"
                         android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" >
-
-                        <Button
-                            android:id="@+id/buttonAddIngredient"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/add" />
-
-                        <Button
-                            android:id="@+id/buttonEdit"
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_weight="1"
-                            android:text="@string/edit" />
-                    </LinearLayout>
+                        android:layout_height="wrap_content"
+                        android:text="@string/add" />
                 </LinearLayout>
 
                 <!-- Search Tab -->
