@@ -3,7 +3,7 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
+import java.util.UUID;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -13,11 +13,13 @@ import android.text.TextUtils;
 import android.view.Menu;
 import android.view.View;
 import android.webkit.DownloadListener;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
+import android.widget.AdapterView.OnItemClickListener;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
@@ -141,8 +143,31 @@ public class MainActivity extends Activity {
 		// GC: MyRecipes Tab
 
 		// GC: Show all locally saved recipes in a ListView.
-		populateMyRecipes();
+		final ArrayList<Recipe> recipes = populateMyRecipes();
+		
+		// GC: Click listener for items in the recipe listview
+		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
+		recipeListView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				//GC: get the id of the recipe the user selects
+				UUID recipeId = recipes.get(position).getRecipeId();
+				
+				// GC: Start the ViewRecipeActivity
+				Intent viewRecipeIntent = new Intent(getApplicationContext(),
+						ViewRecipeActivity.class);
+				
+				// GC: add code 1 to intent to indicate coming from MyRecipes
+				viewRecipeIntent.putExtra("code", 1);
+				
+				// GC: add recipeId as a string to the intent
+				viewRecipeIntent.putExtra("recipeId", recipeId.toString());
+				startActivity(viewRecipeIntent);
+				
+			}
 
+		});
 		/*
 		 * Clicklistener for the add button. When the add button is clicked the
 		 * NewRecipeActivity is launched.
@@ -152,7 +177,7 @@ public class MainActivity extends Activity {
 		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// //GC: The add button starts the NewRecipeActivity
+				//GC: The add button starts the NewRecipeActivity
 				Intent newRecipeIntent = new Intent(getApplicationContext(),
 						NewRecipeActivity.class);
 				startActivity(newRecipeIntent);
@@ -161,8 +186,9 @@ public class MainActivity extends Activity {
 
 	}
 
-	// GC: Retrieves all recipes from the cache and lists their names
-	public void populateMyRecipes() {
+	/* GC: For MyRecipes Tab. Retrieves all recipes from the cache and lists
+	 *  their names and returns the list of retrieved recipes*/
+	public ArrayList<Recipe> populateMyRecipes() {
 		ArrayList<Recipe> recipes = new ArrayList<Recipe>();
 		ArrayList<String> recipeNames = new ArrayList<String>();
 		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
@@ -181,6 +207,8 @@ public class MainActivity extends Activity {
 					R.layout.list_item, recipeNames);
 			recipeListView.setAdapter(adapter);
 		}
+		
+		return recipes;
 	}
 
 	public void populateSearch() {
