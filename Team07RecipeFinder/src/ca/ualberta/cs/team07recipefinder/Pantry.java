@@ -5,18 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author xiaohui
+ * @author xiaohuim
  * 
  *         This is the Pantry class has only one variable, ingredients, which is
  *         a array list of strings.
- */
-/**
- * @author xiaohui
- *
- */
-/**
- * @author xiaohui
- *
  */
 public class Pantry implements Serializable {
 	ArrayList<String> ingredients;
