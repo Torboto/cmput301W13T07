@@ -4,6 +4,11 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
+/**
+ * Data class that contains the components of a Recipe.
+ * @author gcoomber
+ *
+ */
 public class Recipe {
 	String name;
 	String description;

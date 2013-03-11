@@ -8,14 +8,25 @@ import android.content.Context;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
+/**
+ * Writes and deletes recipes to the local database (cache) and the 
+ * webservice. Also contains the logic that determines if the device
+ * is connected to the internet. Without internet access, no Recipes write
+ * to the webservice.
+ * @author gcoomber
+ *
+ */
 public class RecipeController {
 
 	public RecipeController() {
 	}
 
-	/*
-	 * Writes to SQL local database, and if it has internet access also writes
-	 * to HTTP.
+	/**
+	 * Writes Recipe to SQL local database, and if it has internet
+	 * access also writes the Recipe to the webservice.
+	 * @param recipe
+	 * @param context
+	 * @author gcoomber
 	 */
 	public void writeRecipe(Recipe recipe, Context context) {
 		boolean isConnected;
@@ -26,7 +37,7 @@ public class RecipeController {
 		isConnected = checkInternetConnection(context);
 
 		// GC: Add the recipe to the recipe database.
-		client.addRecipe(recipe);
+		client.writeRecipe(recipe);
 
 		/*
 		 * GC: Add the recipe to the webservice if there is an internet
@@ -46,8 +57,11 @@ public class RecipeController {
 
 	}
 
-	/*
-	 * Only deletes from SQL local database
+	/**
+	 * Deletes Recipes from the local database. Recipes cannot be
+	 * deleted from the webservice.
+	 * @param uuid
+	 * @param context
 	 */
 	public void deleteRecipe(UUID uuid, Context context) {
 		SqlClient client = new SqlClient(context);
@@ -61,12 +75,15 @@ public class RecipeController {
 	public void updateRecipe(Recipe recipe) {
 	}
 
-	/*
-	 * Get the recipe with a given ID
+	/**
+	 * Retrives a recipe from the local database based on recipeId.
+	 * @param uuid
+	 * @param context
+	 * @return
 	 */
 	public Recipe getRecipeSQL(UUID uuid, Context context) {
 		SqlClient sqlClient = new SqlClient(context);
-		Recipe recipe = sqlClient.getRecipe(uuid);
+		Recipe recipe = sqlClient.readRecipe(uuid);
 		return recipe;
 	}
 	
@@ -115,10 +132,12 @@ public class RecipeController {
 //		search.execute("");
 	}
 
-	/*
+	/**
 	 * GC: Check for an active internet connection. Follows format from stack
 	 * overflow post: http://stackoverflow.com/questions/4238921/
 	 * android-detect-whether-there-is-an-internet-connection-available
+	 * @param context
+	 * @return
 	 */
 	private boolean checkInternetConnection(Context context) {
 		boolean isConnected = false;

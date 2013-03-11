@@ -11,11 +11,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 
 import com.google.gson.Gson;
 
-/*
- * GC:
+/**
  * A helper class for the Sqlite database that stores the user's locally
  * cached recipes. Recipes can be added to the database, deleted, and
  * updated.
+ * @author gcoomber
+ *
  */
 public class SqlClient extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
@@ -55,9 +56,11 @@ public class SqlClient extends SQLiteOpenHelper {
         onUpgrade(db, oldVersion, newVersion);
     }
     
-    // GC: Add recipe to database.
-    //TODO: Can we change this to writeRecipe? -ET
-    public void addRecipe(Recipe recipe) {
+    /**
+     * Write a Recipe to the local database (the cache).
+     * @param recipe
+     */
+    public void writeRecipe(Recipe recipe) {
     	String json;
     	
     	// GC: Gets the data repository in write mode
@@ -74,9 +77,13 @@ public class SqlClient extends SQLiteOpenHelper {
         db.close();
     }
    
-    // GC: Get a Recipe from database based on recipe ID.
-    //TODO: Can we change this to readRecipe? -ET
-    public Recipe getRecipe(UUID id) {
+    /**
+     * Retrieve a recipe from the local database using recipeId as
+     * the key.
+     * @param id
+     * @return
+     */
+    public Recipe readRecipe(UUID id) {
     	Recipe recipe;
     	String json;
     	
@@ -107,7 +114,12 @@ public class SqlClient extends SQLiteOpenHelper {
     	return recipe;
     }
     
-    // GC: update an existing recipe in the database.
+    /**
+     * Update an existing Recipe in the local database by overwriting 
+     * the Recipe.
+     * @param recipeId
+     * @param temp_recipe
+     */
     public void updateRecipe( UUID recipeId, Recipe temp_recipe ) {
     	String json;
     	boolean isExists;
@@ -135,9 +147,13 @@ public class SqlClient extends SQLiteOpenHelper {
 		
 		db.close();
     }
-    
-    /* GC: Query the database to check if a Recipe exits with the recipeId.
-     * 	   Return true if row exists, false if row does not exist.*/
+
+    /**
+     * Query the database to check if a Recipe exits with the recipeId.
+     * Return true if row exists, false if row does not exist.
+     * @param recipeId
+     * @return
+     */
     public boolean checkRow(UUID recipeId) {
 		boolean isExist = false;
 		SQLiteDatabase db = this.getReadableDatabase();
@@ -161,7 +177,10 @@ public class SqlClient extends SQLiteOpenHelper {
 		return isExist;
     }
     
-    // GC:  Delete an existing recipe from the local database.
+    /**
+     * Delete a Recipe from the local database, if the Recipe exists.
+     * @param recipeId
+     */
     public void deleteRecipe(UUID recipeId) {
     	boolean isExists = false;
     	isExists = checkRow(recipeId);
@@ -180,7 +199,10 @@ public class SqlClient extends SQLiteOpenHelper {
 		db.close();
     }
     
-    // GC: Find and return all recipes that are saved in the database
+    /**
+     * Find and return all recipes that are saved in the local database.
+     * @return
+     */
     public ArrayList<Recipe> getAllRecipes() {
     	String json;
     	Recipe tempRecipe = null;
