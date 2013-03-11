@@ -10,6 +10,15 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+/**
+ * The NewRecipeActvity displays EditTexts for the user to enter a recipe title,
+ * description, ingredients list, and directions. If the user fills in every EditText
+ * then hits the 'done' button, a new Recipe is written to the user's database with the
+ * entered information.
+ * 
+ * @author Adam St. Arnaud
+ *
+ */
 public class NewRecipeActivity extends Activity {
 
 	EditText titleEditText;
@@ -37,8 +46,12 @@ public class NewRecipeActivity extends Activity {
 		});
 	}
 
-	// AS: Stuff below here will be factored out into View
 
+	/**
+	 * This method checks that the Edit Texts are all non empty, and if so,
+	 * calls grabRecipeInfo and writeRecipe to form and write a new recipe
+	 * to the user's database.
+	 */
 	private void createRecipe() {
 
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
@@ -48,20 +61,8 @@ public class NewRecipeActivity extends Activity {
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
 			 */
-			String title = titleEditText.getText().toString();
-			String description = descriptionEditText.getText().toString();
-			ArrayList<String> ingredients = 
-					parseIngredients(ingredientsEditText);
-			String directions = directionsEditText.getText().toString();
-			String email = grabEmail();
-			Log.v("main", "testing dawg");
-			Recipe newRecipe = new Recipe(title, description, ingredients,
-					directions, email);
-
-			// Finally, we can use RecipeController to write this new Recipe
-			RecipeController rc = new RecipeController();
-			rc.writeRecipe(newRecipe, getApplicationContext());
-			
+			Recipe newRecipe = grabRecipeInfo();
+			writeRecipe(newRecipe);
 			finish();
 		}
 
@@ -69,6 +70,44 @@ public class NewRecipeActivity extends Activity {
 		// dialog saying so? Next Iteration of project
 	}
 
+	/**
+	 * This method forms and returns a new Recipe object by getting the
+	 * necessary information from the Activity's EditTexts.
+	 * 
+	 * @return the newly created Recipe.
+	 */
+	private Recipe grabRecipeInfo() {
+		String title = titleEditText.getText().toString();
+		String description = descriptionEditText.getText().toString();
+		ArrayList<String> ingredients = 
+				parseIngredients(ingredientsEditText);
+		String directions = directionsEditText.getText().toString();
+		String email = grabEmail();
+		Recipe newRecipe = new Recipe(title, description, ingredients,
+				directions, email);
+		return newRecipe;
+		
+	}
+
+
+	/**
+	 * This method takes a recipe and writes it to the user's database.
+	 * 
+	 * @param newRecipe the recipe to be written
+	 */
+	private void writeRecipe(Recipe newRecipe) {
+		RecipeController rc = new RecipeController();
+		rc.writeRecipe(newRecipe, getApplicationContext());
+		return;
+	}
+
+
+	/**
+	 * This method takes an EditText and returns true if it is empty and false otherwise.
+	 * 
+	 * @param etText the EditText to be tested
+	 * @return       True: if empty, false: otherwise.
+	 */
 	private boolean isEmpty(EditText etText) {
 		// AS: returns if an Edit Text is empty or not
 		if (etText.getText().toString().trim().length() > 0)
@@ -77,19 +116,26 @@ public class NewRecipeActivity extends Activity {
 			return true;
 	}
 
+	/**
+	 * This method gets and instance of the User singleton and then extracts
+	 * the user's email.
+	 * 
+	 * @return the user's email as a string
+	 */
 	private String grabEmail() {
-		// AS: gets the email address of the user
 		User theUser = User.getInstance();
 		String email = theUser.getEmail();
 		return email;
 	}
 
+	/**
+	 * This method takes the ingredients as an EditText and returns them as an
+	 * ArrayList of strings. It assumes that they are separated by newline characters.
+	 * 
+	 * @param ingredientsEditText the ingredients as an EditText
+	 * @return                    the ingredients as an ArrayList of strings
+	 */
 	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
-		/*
-		 * AS: takes the ingredients as an Edit Text and returns them as and
-		 * ArrayList of Strings. This assumes that they are separated by new
-		 * lines.
-		 */
 		String ingredientsString = ingredientsEditText.getText().toString();
 		ArrayList<String> ingredients = new ArrayList<String>(
 				Arrays.asList(ingredientsString.split("\n")));

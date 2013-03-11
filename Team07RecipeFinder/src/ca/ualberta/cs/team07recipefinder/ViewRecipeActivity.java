@@ -180,6 +180,7 @@ public class ViewRecipeActivity extends Activity {
 	 * This method takes a string representation of a recipe UUID and deletes the
 	 * corresponding recipe from the database. The string is first converted to a
 	 * UUID object, and is used by a RecipeController object to delete the recipe.
+	 * 
 	 * @param recipeString the string representation of a recipe UUID
 	 */
 	private void deleteRecipe(String recipeString){
