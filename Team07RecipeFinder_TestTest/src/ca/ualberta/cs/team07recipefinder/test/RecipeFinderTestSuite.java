@@ -1,5 +1,6 @@
 package ca.ualberta.cs.team07recipefinder.test;
 
+import junit.framework.TestResult;
 import junit.framework.TestSuite;
 
 import org.junit.runner.RunWith;
@@ -7,7 +8,7 @@ import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
-@SuiteClasses({ TEST.class })
+@SuiteClasses({ HttpTestCase.class })
 public class RecipeFinderTestSuite extends TestSuite {
 	
 	/**
@@ -15,7 +16,8 @@ public class RecipeFinderTestSuite extends TestSuite {
 	 */
 	RecipeFinderTestSuite(){
 		TestSuite suite= new TestSuite(HttpTestCase.class);
+		TestResult result = null;
 		//suite.addTestSuite(RecipeTestCase.class);
-		suite.addTestSuite(SqlClientTestCase.class);
+		suite.run(result);
 	}
 }

@@ -144,7 +144,7 @@ public class HttpClient {
 		return null;
 	}
 
-	public void updateRecipe() {
+	public void updateRecipe(Recipe recipe) {
 
 	}
 

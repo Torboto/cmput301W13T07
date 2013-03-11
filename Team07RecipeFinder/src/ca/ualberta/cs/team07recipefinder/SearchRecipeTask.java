@@ -82,6 +82,7 @@ public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
 	@Override
 	protected void onPostExecute(Void result) {
 		dataListener.dataDownloadedSuccessfully(this.recipeResults);
+		
 	}
 
 }

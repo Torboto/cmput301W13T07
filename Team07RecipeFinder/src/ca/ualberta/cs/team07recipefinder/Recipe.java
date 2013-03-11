@@ -10,6 +10,7 @@ import java.util.UUID;
  *
  */
 public class Recipe {
+
 	String name;
 	String description;
 	ArrayList<String> ingredients;
@@ -63,10 +64,27 @@ public class Recipe {
 	public ArrayList<String> getIngredients() {
 		return this.ingredients;
 	}
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public void setIngredients(ArrayList<String> ingredients) {
+		this.ingredients = ingredients;
+	}
+
+	public void setDirections(String directions) {
+		this.directions = directions;
+	}
 	
 	@Override
 	public String toString() {
 		return this.name + " by " + this.creatorEmail + "\n" +
 				this.description;
 	}
+	
+	
 }
