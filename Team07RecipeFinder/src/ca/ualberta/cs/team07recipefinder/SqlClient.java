@@ -228,5 +228,11 @@ public class SqlClient extends SQLiteOpenHelper {
 		
     	return recipeList;
     }
+    
+    // Drops the table from the database if it exists.
+    public void dropTable() {
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	db.execSQL(SQL_DELETE_ENTRIES);
+    }
 
 }
