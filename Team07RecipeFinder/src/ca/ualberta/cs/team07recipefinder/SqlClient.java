@@ -164,11 +164,11 @@ public class SqlClient extends SQLiteOpenHelper {
     // GC:  Delete an existing recipe from the local database.
     public void deleteRecipe(UUID recipeId) {
     	boolean isExists = false;
+		isExists = checkRow(recipeId);
+		
     	SQLiteDatabase db = this.getReadableDatabase();
     	
 		// GC: Only delete the recipe from the database if the row exists.
-		isExists = checkRow(recipeId);
-
 		if (isExists == true) {
 			String selection = COLUMN_NAME_ID + " LIKE ?";
 			String[] selectionArgs = { String.valueOf(recipeId) };
