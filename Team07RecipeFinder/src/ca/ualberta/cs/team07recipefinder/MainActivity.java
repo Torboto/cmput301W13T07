@@ -10,11 +10,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.view.ContextMenu;
+import android.view.ContextMenu.ContextMenuInfo;
 import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
+import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -25,6 +31,7 @@ public class MainActivity extends Activity {
 
 	private User user;
 	private ListView ingredientsLV;
+	private Button addIngredientButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -51,6 +58,9 @@ public class MainActivity extends Activity {
 		tabHost.addTab(spec3);
 
 		user = User.getInstance();
+		addIngredientButton = (Button) findViewById(R.id.buttonAddIngredient);
+		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
+		registerForContextMenu(ingredientsLV);
 	}
 
 	@Override
@@ -169,6 +179,65 @@ public class MainActivity extends Activity {
 			}
 		});
 		alert.show();
+	}
+	
+	/**
+	 * MA: show a dialog with a EditText and update the ingredient of the given
+	 * index
+	 */
+	private void editIngredient(final int index) {
+		final EditText et = new EditText(this);
+		et.setText(user.getPantry().getIngredient(index));
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Edit Ingredient");
+		alert.setView(et);
+		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				user.getPantry().updateIngredient(index, et.getText().toString());
+				onStart();
+			}
+		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		alert.show();
+	}
+
+	@Override
+	/**
+	 * MA: long press on item in the pantry listview and this menu will show
+	 */
+	public void onCreateContextMenu(ContextMenu menu, View v,
+			ContextMenuInfo menuInfo) {
+		super.onCreateContextMenu(menu, v, menuInfo);
+		menu.setHeaderTitle(getString(R.string.menu_pantry_title));
+		MenuInflater inflater = getMenuInflater();
+		inflater.inflate(R.menu.activity_edit_pantry, menu);
+	}
+
+	@Override
+	/**
+	 * MA: click on an item in the ConetextMenu and the corresponding method will
+	 * be called
+	 */
+	public boolean onContextItemSelected(MenuItem item) {
+		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
+				.getMenuInfo();
+		int index = info.position;
+		switch (item.getItemId()) {
+		case R.id.menu_delete_ingredient:
+			user.getPantry().removeIngredient(index);
+			onStart();
+			return true;
+		case R.id.menu_edit_ingredient:
+			editIngredient(index);
+			onStart();
+			return true;
+		default:
+			return super.onContextItemSelected(item);
+		}
 	}
 
 	@Override

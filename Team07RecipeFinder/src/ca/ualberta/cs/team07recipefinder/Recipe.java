@@ -47,6 +47,18 @@ public class Recipe {
 		return this.name;
 	}
 	
+	public String getDirections() {
+		return this.directions;
+	}
+	
+	public String getDescription() {
+		return this.description;
+	}
+	
+	public ArrayList<String> getIngredients() {
+		return this.ingredients;
+	}
+	
 	@Override
 	public String toString() {
 		return this.name + "by " + this.creatorEmail + "\n" +

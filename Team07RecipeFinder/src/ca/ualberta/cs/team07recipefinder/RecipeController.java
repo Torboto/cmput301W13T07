@@ -49,7 +49,10 @@ public class RecipeController {
 	/*
 	 * Only deletes from SQL local database
 	 */
-	public void deleteRecipe(UUID uuid) {
+	public void deleteRecipe(UUID uuid, Context context) {
+		SqlClient client = new SqlClient(context);
+		client.deleteRecipe(uuid);
+		return;
 	}
 
 	/*
@@ -58,6 +61,15 @@ public class RecipeController {
 	public void updateRecipe(Recipe recipe) {
 	}
 
+	/*
+	 * Get the recipe with a given ID
+	 */
+	public Recipe getRecipe(UUID uuid, Context context) {
+		SqlClient client = new SqlClient(context);
+		Recipe recipe = client.getRecipe(uuid);
+		return recipe;
+	}
+	
 	/*
 	 * Only searches HTTP server
 	 */
