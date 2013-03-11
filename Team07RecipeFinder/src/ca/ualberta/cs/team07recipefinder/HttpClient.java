@@ -23,9 +23,9 @@ import android.os.NetworkOnMainThreadException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-/*
- * GC:
- * methods for saving recipes, deleting recipes, and searching for recipes from
+/**
+ * @author Torboto
+ * Methods for saving recipes, deleting recipes, and searching for recipes from
  * webservice: http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
  */
 public class HttpClient {
@@ -34,6 +34,10 @@ public class HttpClient {
 	private Gson gson = new Gson();
 	private String url = "http://cmput301.softwareprocess.es:8080/cmput301w13t07/recipes/";
 
+	/**
+	 * Writes recipe object to elastic search on the internet.
+	 * @param recipe
+	 */
 	public void writeRecipe(Recipe recipe) {
 		HttpPost httpPost = new HttpPost(url + recipe.getRecipeId());
 		StringEntity stringEntity = null;
@@ -90,16 +94,20 @@ public class HttpClient {
 
 	}
 
+	/**
+	 * Reads in the identified recipe by it's given id.
+	 * @param uuid identifying id for recipe to be found
+	 * @return recipe object
+	 */
 	public Recipe readRecipe(UUID uuid) {
+		HttpPost httpPost = new HttpPost(url + uuid + "?pretty=1");
+		//HttpGet httpPost = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
 
-		HttpGet getRequest = new HttpGet(
-				"http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");// S4bRPFsuSwKUDSJImbCE2g?pretty=1
-
-		getRequest.addHeader("Accept", "application/json");
+		httpPost.addHeader("Accept", "application/json");
 
 		HttpResponse response = null;
 		try {
-			response = httpClient.execute(getRequest);
+			response = httpClient.execute(httpPost);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -126,17 +134,25 @@ public class HttpClient {
 		ElasticSearchResponse<Recipe> esResponse = gson.fromJson(json,
 				elasticSearchResponseType);
 		// We get the recipe from it!
+		if (esResponse != null){
 		Recipe recipe = esResponse.getSource();
 		System.out.println(recipe.toString());
 		// TODO consume?
 
 		return recipe;
+		}
+		return null;
 	}
 
 	public void updateRecipe() {
 
 	}
 
+	/**
+	 * Searches for recipes containing any of the ingredients given.
+	 * @param ingredients list of ingredients
+	 * @return list of matching recipes
+	 */
 	public ArrayList<Recipe> searchRecipes(List<String> ingredients) {
 		HttpPost httpPost = new HttpPost(url + "_search?pretty=1");
 		StringEntity stringEntity;
@@ -196,6 +212,12 @@ public class HttpClient {
 		return recipeResults;
 	}
 
+	/**
+	 * Searches for recipes based on titles.
+	 * @param name title of recipe to search
+	 * @param recipeId 
+	 * @return
+	 */
 	public ArrayList<Recipe> searchRecipes(String name, UUID recipeId) {
 		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpGet searchRequest = null;
@@ -250,8 +272,12 @@ public class HttpClient {
 		return recipeResults;
 	}
 
+
 	/**
-	 * get the http response and return json string
+	 * Get the response from elastic search, and return json string.
+	 * @param response
+	 * @return json response string
+	 * @throws IOException
 	 */
 	String getEntityContent(HttpResponse response) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
