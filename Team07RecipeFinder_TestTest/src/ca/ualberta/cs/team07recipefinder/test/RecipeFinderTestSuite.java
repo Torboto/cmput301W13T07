@@ -8,14 +8,13 @@ import org.junit.runners.Suite.SuiteClasses;
 
 @RunWith(Suite.class)
 @SuiteClasses({ TEST.class })
-public class RecipeTestSuite extends TestSuite {
-	RecipeTestSuite(){
-	}
-	public void RecipeModelTest(){
-		
-	}
+public class RecipeFinderTestSuite extends TestSuite {
 	
-	public void UserModelTest(){
-		
+	/**
+	 * Add your test case to the suite
+	 */
+	RecipeFinderTestSuite(){
+		TestSuite suite= new TestSuite(HttpTestCase.class);
+		//suite.addTestSuite(RecipeTestCase.class);
 	}
 }
