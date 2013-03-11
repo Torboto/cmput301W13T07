@@ -16,5 +16,6 @@ public class RecipeFinderTestSuite extends TestSuite {
 	RecipeFinderTestSuite(){
 		TestSuite suite= new TestSuite(HttpTestCase.class);
 		//suite.addTestSuite(RecipeTestCase.class);
+		suite.addTestSuite(SqlClientTestCase.class);
 	}
 }

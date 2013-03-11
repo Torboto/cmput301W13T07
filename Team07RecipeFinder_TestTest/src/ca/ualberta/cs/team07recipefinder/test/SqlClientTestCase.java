@@ -40,18 +40,92 @@ public class SqlClientTestCase extends TestCase {
 		uId = testRecipe.getRecipeId();
 	}
 	
-	// Test if the Client has been instantiated.
+	@Test
 	public void testConnection() {
 		assertTrue(testClient != null);
 	}
 
-	
+	@Test
 	public void testWriteRecipe() {
 		assertTrue(testClient.checkRow(uId) == false);
 		testClient.writeRecipe(testRecipe);
 		assertTrue(testClient.checkRow(uId) == true);
 	}
-
+	
+	@Test
+	public void testReadRecipe() {
+		Recipe tempRecipe;
+		
+		assertTrue(testClient.checkRow(uId) == true);
+		
+		tempRecipe = testClient.readRecipe(uId);
+		
+		assertTrue(tempRecipe.getName() == testRecipe.getName());
+		assertTrue(tempRecipe.getDescription() == testRecipe.getDescription());
+		assertTrue(tempRecipe.getIngredients().get(0) 
+				== testRecipe.getIngredients().get(0));
+		assertTrue(tempRecipe.getIngredients().get(1) 
+				== testRecipe.getIngredients().get(1));
+		assertTrue(String.valueOf(tempRecipe.getRecipeId()) ==
+				String.valueOf(testRecipe.getRecipeId()));
+		assertTrue(tempRecipe.getDirections() == testRecipe.getDirections());
+	}
+	
+	@Test
+	public void testDeleteRecipe() {
+		assertTrue(testClient.checkRow(uId) == true);
+		testClient.deleteRecipe(uId);
+		assertTrue(testClient.checkRow(uId) == false);
+	}
+	
+	@Test
+	public void testUpdateRecipe() {
+		assertTrue(testClient.checkRow(uId) == false);
+		testClient.writeRecipe(testRecipe);
+		assertTrue(testClient.checkRow(uId) == true);
+		
+		ArrayList<String> ingredients = new ArrayList<String>();
+		ingredients.add("ingredient1");
+		ingredients.add("ingredient2");
+		
+		Recipe newRecipe = new Recipe("Title2", "Description2", 
+				ingredients, "Directions2", "Email2");
+		
+		testClient.updateRecipe(uId, testRecipe);
+		
+		assertTrue(testClient.checkRow(uId) == true);
+		
+		Recipe tempRecipe = testClient.readRecipe(uId);
+		
+		assertTrue(tempRecipe.getName() == newRecipe.getName());
+		assertTrue(tempRecipe.getDescription() == newRecipe.getDescription());
+		assertTrue(tempRecipe.getIngredients().get(0) 
+				== newRecipe.getIngredients().get(0));
+		assertTrue(tempRecipe.getIngredients().get(1) 
+				== newRecipe.getIngredients().get(1));
+		assertTrue(String.valueOf(tempRecipe.getRecipeId()) ==
+				String.valueOf(newRecipe.getRecipeId()));
+		assertTrue(tempRecipe.getDirections() == newRecipe.getDirections());
+		
+		testClient.deleteRecipe(uId);
+		assertTrue(testClient.checkRow(uId) == false);	
+	}
+	
+	@Test
+	public void testGetAllRecipe() {
+		ArrayList<Recipe> recipes = null;
+		
+		assertTrue(testClient.checkRow(uId) == false);
+		recipes = testClient.getAllRecipes();
+		assertTrue(recipes == null);
+		
+		testClient.writeRecipe(testRecipe);
+		assertTrue(testClient.checkRow(uId) == true);
+		recipes = testClient.getAllRecipes();
+		assertTrue(recipes != null);
+		assertTrue(recipes.size() == 1);
+	}
+	
 	private Context getTestContext() {
 		try {
 			Method getTestContext = ServiceTestCase.class
