@@ -10,6 +10,7 @@ import ca.ualberta.cs.team07recipefinder.SqlClient;
 
 import java.lang.reflect.Method;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import android.content.Context;
 import android.test.ServiceTestCase;
@@ -22,6 +23,7 @@ public class SqlClientTestCase extends TestCase {
 	private SqlClient testClient;
 	Recipe testRecipe;
 	String recipeId;
+	UUID uId;
 	
 	@Before
 	public void setUp() throws Exception {
@@ -35,6 +37,7 @@ public class SqlClientTestCase extends TestCase {
 				ingredients, "Directions", "Email");
 		
 		recipeId = String.valueOf(testRecipe.getRecipeId());
+		uId = testRecipe.getRecipeId();
 	}
 	
 	// Test if the Client has been instantiated.
@@ -44,8 +47,9 @@ public class SqlClientTestCase extends TestCase {
 
 	
 	public void testWriteRecipe() {
-		
-		assertTrue(testClient != null);
+		assertTrue(testClient.checkRow(uId) == false);
+		testClient.writeRecipe(testRecipe);
+		assertTrue(testClient.checkRow(uId) == true);
 	}
 
 	private Context getTestContext() {
