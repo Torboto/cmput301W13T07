@@ -5,40 +5,66 @@ import java.util.List;
 
 import android.os.AsyncTask;
 
-public class SearchRecipeTask extends
-		AsyncTask<String, List<String>, Void> {
-	DataDownloadListener mahDataListenerThing;
+/**
+ * @author Torboto
+ * Async task to get search results from elastic search server. 
+ * Has a DataDownloadListener type to allow the passing of data back to the activity.
+ * DataDownloadListener calls DownloadSuccessful method when the task is
+ * complete, which then calls a method inside of Main Activity.
+ * 
+ * @param dataListener types that is overridden so as to call a method inside the calling activity to pass results back.
+ * @param recipeResults list of recipes that is returned from the call to the elastic search server.
+ * @param recipeTitleKeyword keyword to search for in titles of recipes
+ * @param ingrdients list of ingredients to search for in recipes
+ */
+public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
+	DataDownloadListener dataListener;
 	ArrayList<Recipe> recipeResults;
-	String recipeName;
-	List<String> ingredients;
-	
+	String recipeTitleKeyword;
+	List<String> recipeIngredients;
 
-	SearchRecipeTask(String recipeName, List<String> ingredients){
-		this.recipeName = recipeName;
-		this.ingredients = ingredients;
-	}
 	
+	/**
+	 * Constructor that sets member variables
+	 * @param recipeTitleKeyword keyword to search for in recipe titles
+	 * @param ingredients list of ingredients to search for in recipe
+	 */
+	SearchRecipeTask(String recipeTitleKeyword, List<String> ingredients) {
+		this.recipeTitleKeyword = recipeTitleKeyword;
+		this.recipeIngredients = ingredients;
+	}
+
+	/**
+	 * Create a DataDownloadListener type to pass data out of async task.
+	 * @param downloadListener object to trigger when async task is done and pass data back out
+	 */
 	public void setDataDownloadListener(DataDownloadListener downloadListener) {
-		this.mahDataListenerThing = downloadListener;
+		this.dataListener = downloadListener;
 	}
-	
+
+	/* (non-Javadoc)
+	 * @see android.os.AsyncTask#doInBackground(Params[])
+	 */
 	@Override
 	protected Void doInBackground(String... arg0) {
 		ArrayList<Recipe> results = new ArrayList<Recipe>();
 		HttpClient httpClient = new HttpClient();
-		if (recipeName == "") {
-			results = httpClient.searchRecipes(ingredients);
+		if (recipeTitleKeyword == "") {
+			results = httpClient.searchRecipes(recipeIngredients);
 		} else {
-			results = httpClient.searchRecipes(recipeName);
+			results = httpClient.searchRecipes(recipeTitleKeyword);
 		}
 		recipeResults = results;
 
 		return null;
 	}
+
+	/* (non-Javadoc)
+	 * @see android.os.AsyncTask#onPostExecute(java.lang.Object)
+	 */
 	@Override
 	protected void onPostExecute(Void result) {
-		mahDataListenerThing.dataDownloadedSuccessfully(this.recipeResults);
+		dataListener.dataDownloadedSuccessfully(this.recipeResults);
 	}
 
-	
 }
