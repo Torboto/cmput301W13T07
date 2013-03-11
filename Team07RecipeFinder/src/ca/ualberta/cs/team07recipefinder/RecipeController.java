@@ -64,28 +64,55 @@ public class RecipeController {
 	/*
 	 * Get the recipe with a given ID
 	 */
-	public Recipe getRecipe(UUID uuid, Context context) {
-		SqlClient client = new SqlClient(context);
-		Recipe recipe = client.getRecipe(uuid);
+	public Recipe getRecipeSQL(UUID uuid, Context context) {
+		SqlClient sqlClient = new SqlClient(context);
+		Recipe recipe = sqlClient.getRecipe(uuid);
 		return recipe;
+	}
+	
+	/**
+	 * @author Torboto
+	 * Get recipe object from database.	
+	 * @param uuid
+	 * @param context
+	 * @return
+	 */
+	public void getRecipeHTTP(UUID uuid, Context context) {
+
+//		SearchRecipeTask search = new SearchRecipeTask(null, null, uuid);
+//
+//		search.setDataDownloadListener(new DataDownloadListener() {
+//			@SuppressWarnings("unchecked")
+//			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
+//				//context.returnSearchResultstoActivity(data);
+//			}
+//		});
+//		search.execute("");
 	}
 	
 	/*
 	 * Only searches HTTP server
 	 */
-	public List<Recipe> searchRecipeIngredients(ArrayList<String> ingredients) {
+	public void searchRecipeIngredients(ArrayList<String> ingredients) {
 		// new SearchRecipeTask().execute(ingredients);
-		return null;
+
 	}
 
 	/*
 	 * Only searches HTTP server
 	 */
-	static public List<Recipe> searchRecipeTitle(String title) {
-		List<Recipe> recipeResults = new ArrayList<Recipe>();
-		//new SearchRecipeTask().execute("test1");
-
-		return recipeResults;
+	static public void searchRecipeTitle(String title, Context context) {
+//		List<Recipe> recipeResults = new ArrayList<Recipe>();
+//		new SearchRecipeTask(title, null, null).execute("title");
+//		SearchRecipeTask search = new SearchRecipeTask(null, null, uuid);
+//
+//		search.setDataDownloadListener(new DataDownloadListener() {
+//			@SuppressWarnings("unchecked")
+//			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
+//				//context.
+//			}
+//		});
+//		search.execute("");
 	}
 
 	/*

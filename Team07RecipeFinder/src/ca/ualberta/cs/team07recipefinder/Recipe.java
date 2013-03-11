@@ -61,7 +61,7 @@ public class Recipe {
 	
 	@Override
 	public String toString() {
-		return this.name + "by " + this.creatorEmail + "\n" +
+		return this.name + " by " + this.creatorEmail + "\n" +
 				this.description;
 	}
 }

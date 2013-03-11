@@ -27,6 +27,13 @@ import android.widget.TabHost;
 import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
+/**
+ * @author Torboto
+ * @author gcoomber
+ * @author xiaohuim
+ * 
+ * Main activity that is launched when user has an account. It handles the pantry, searching, and viewing local recipes.
+ */
 public class MainActivity extends Activity {
 
 	private User user;
@@ -67,10 +74,8 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 
-		// GC: Click listener for items in the recipe listview
-		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
-		ArrayList<Recipe> recipes = populateMyRecipes();
-		setListViewOnClickListener(recipeListView, recipes);
+		// GC: Populate and set click listener for items in the myRecipes listview
+		populateMyRecipes();
 
 		// GC: Clicklistener for the add recipes button. When the add button is
 		// clicked the NewRecipeActivity is launched.
@@ -105,10 +110,15 @@ public class MainActivity extends Activity {
 
 	}
 
-	/*
-	 * ET:
-	 * Takes in a listview view, and an array of recipes to bind to an onItemClickListener
+	/**
+	 * @author Torboto
+	 * @author gcoomber
+	 * 
+	 * Takes in a listview, and an array of recipes to bind to an onItemClickListener
 	 * These variables must be passed in as final so that the listener declared inside may access them.
+	 * 
+	 * @param listView listview to bind to recipes param
+	 * @param recipes list of recipes to bind to given listview
 	 */
 	protected void setListViewOnClickListener(final ListView listView, final ArrayList<Recipe> recipes) {
 
@@ -137,6 +147,14 @@ public class MainActivity extends Activity {
 				startActivity(viewRecipeIntent);
 			}
 		});
+		
+
+		// GC: Do not add recipes to the ListView if the cache is empty
+		if (recipes != null) {
+		ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
+				getBaseContext(), android.R.layout.simple_list_item_1, recipes);
+		listView.setAdapter(adapter);
+		}
 	}
 
 	/*
@@ -144,7 +162,6 @@ public class MainActivity extends Activity {
 	 * pantry
 	 */
 	protected void addIngredient(final View v) {
-
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Add New Ingredient");
 		final EditText input = new EditText(this);
@@ -270,31 +287,21 @@ public class MainActivity extends Activity {
 	 * GC: For MyRecipes Tab. Retrieves all recipes from the cache and lists
 	 * their names and returns the list of retrieved recipes
 	 */
-	public ArrayList<Recipe> populateMyRecipes() {
+	public void populateMyRecipes() {
 		ArrayList<Recipe> recipes = new ArrayList<Recipe>();
-		ArrayList<String> recipeNames = new ArrayList<String>();
+
 		ListView recipeListView = (ListView) findViewById(R.id.lvMyRecipes);
 
 		// GC: Obtain all the recipes in the cache as an ArrayList
 		SqlClient client = new SqlClient(this);
 		recipes = client.getAllRecipes();
 
-		// GC: Do not add recipes to the ListView if the cache is empty
-		if (recipes != null) {
-
-			for (Recipe recipe : recipes) {
-				recipeNames.add(recipe.getName());
-			}
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-					R.layout.list_item, recipeNames);
-			recipeListView.setAdapter(adapter);
-		}
-
-		return recipes;
+		setListViewOnClickListener(recipeListView, recipes);
 	}
 
-	/*
-	 * ET: This method is called when a search is done, it creates an async
+	/**
+	 * @author Torboto
+	 * This method is called when a search is done, it creates an async
 	 * task, as well as defining a DataDownloadListener which is a type that
 	 * will pass the data from the async task back to setSearch method.
 	 */
@@ -315,9 +322,11 @@ public class MainActivity extends Activity {
 		search.execute("");
 	}
 
-	/*
-	 * ET: This method is called by the async task once it has completed it's
+	/**
+	 * 	 * @author Torboto
+	 * This method is called by the async task once it has completed it's
 	 * call from the server.
+	 * @param recipes receives list of recipes that matched the search
 	 */
 	public void setSearch(ArrayList<Recipe> recipes) {
 		ListView searchListView = (ListView) findViewById(R.id.lvSearchResults);

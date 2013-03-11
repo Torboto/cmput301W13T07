@@ -2,6 +2,7 @@ package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 import android.os.AsyncTask;
 
@@ -29,6 +30,7 @@ public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
 	 * list of ingredients to search for in recipes
 	 */
 	List<String> recipeIngredients;
+	UUID recipeId;
 
 	
 	/**
@@ -39,6 +41,10 @@ public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
 	SearchRecipeTask(String recipeTitleKeyword, List<String> ingredients) {
 		this.recipeTitleKeyword = recipeTitleKeyword;
 		this.recipeIngredients = ingredients;
+	}
+
+	public SearchRecipeTask(UUID recipeId) {
+		this.recipeId = recipeId;
 	}
 
 	/**
@@ -56,10 +62,14 @@ public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
 	protected Void doInBackground(String... arg0) {
 		ArrayList<Recipe> results = new ArrayList<Recipe>();
 		HttpClient httpClient = new HttpClient();
-		if (recipeTitleKeyword == "") {
+		if (recipeTitleKeyword != null ) {
+			results = httpClient.searchRecipes(recipeTitleKeyword, null);
+		}
+		else if (recipeIngredients != null){
 			results = httpClient.searchRecipes(recipeIngredients);
-		} else {
-			results = httpClient.searchRecipes(recipeTitleKeyword);
+		}
+		else if (recipeId != null){
+			results = httpClient.searchRecipes(null, recipeId);
 		}
 		recipeResults = results;
 
