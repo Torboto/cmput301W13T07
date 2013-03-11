@@ -123,9 +123,15 @@ public class MainActivity extends Activity {
 				Intent viewRecipeIntent = new Intent(getApplicationContext(),
 						ViewRecipeActivity.class);
 
+				if(listView.getId() == R.id.lvMyRecipes){
 				// GC: add code 1 to intent to indicate coming from MyRecipes
 				viewRecipeIntent.putExtra("code", 1);
-
+				}
+				if(listView.getId() == R.id.lvSearchResults){
+				// ET: add code 2 to intent to indicate coming from Search tab
+				viewRecipeIntent.putExtra("code", 2);
+				}
+				
 				// GC: add recipeId as a string to the intent
 				viewRecipeIntent.putExtra("recipeId", recipeId.toString());
 				startActivity(viewRecipeIntent);
