@@ -10,6 +10,14 @@ import java.util.List;
  *         This is the Pantry class has only one variable, ingredients, which is
  *         a array list of strings.
  */
+/**
+ * @author xiaohui
+ *
+ */
+/**
+ * @author xiaohui
+ *
+ */
 public class Pantry implements Serializable {
 	ArrayList<String> ingredients;
 
@@ -42,6 +50,10 @@ public class Pantry implements Serializable {
 		removeNullIngredients();
 	}
 
+	/**
+	 * This method will remove all ingredients that is null.
+	 * 
+	 */
 	public void removeNullIngredients() {
 		
 		for (int i = 0; i < this.ingredients.size(); i ++)
