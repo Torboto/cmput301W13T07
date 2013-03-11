@@ -50,4 +50,8 @@
     <string name="button_delete">Delete</string>
     <string name="hello_world">Hello world!</string>
 
+    <!-- EditPantryMenu -->
+    <string name="menu_delete_ingredient">Delete</string>
+    <string name="menu_edit_ingredient">Edit</string>
+    <string name="menu_pantry_title">Menu</string>
 </resources>

@@ -166,9 +166,9 @@ public class SqlClient extends SQLiteOpenHelper {
     	boolean isExists = false;
     	isExists = checkRow(recipeId);
     	
+    	SQLiteDatabase db = this.getReadableDatabase();
+    	
 		// GC: Only delete the recipe from the database if the row exists.
-		SQLiteDatabase db = this.getReadableDatabase();
-		
 		if (isExists == true) {
 			String selection = COLUMN_NAME_ID + " LIKE ?";
 			String[] selectionArgs = { String.valueOf(recipeId) };

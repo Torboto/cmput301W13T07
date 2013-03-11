@@ -1,6 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import android.content.Context;
@@ -11,35 +12,47 @@ public class RecipeController {
 
 	public RecipeController() {
 	}
-	
+
 	/*
 	 * Writes to SQL local database, and if it has internet access also writes
 	 * to HTTP.
 	 */
 	public void writeRecipe(Recipe recipe, Context context) {
 		boolean isConnected;
-		
-		HttpClient httpClient = new HttpClient();
+
 		SqlClient client = new SqlClient(context);
-		
+
 		// GC: Check if the user is connected to the internet.
 		isConnected = checkInternetConnection(context);
-		
+
 		// GC: Add the recipe to the recipe database.
-		client.addRecipe( recipe );
-		
-		/*  GC: Add the recipe to the webservice if there is an internet
-		 *  connection*/
-		if( isConnected )
-		{
-			httpClient.writeRecipe( recipe );
+		client.addRecipe(recipe);
+
+		/*
+		 * GC: Add the recipe to the webservice if there is an internet
+		 * connection
+		 * ET: You must call the async task to write as it makes an outside network call.
+		 */
+		if (isConnected) {
+			// DEBUG
+			// ArrayList<String> ingredients = new ArrayList<String>();
+			// ingredients.add("fish");
+			// ingredients.add("cats");
+			// recipe = new Recipe("test1", "test_desc",
+			// ingredients, "DIRECTINOS", "ern@bleh.com");
+			// ENDDEBUG
+			new WriteRecipeTask().execute(recipe);
 		}
+
 	}
 
 	/*
 	 * Only deletes from SQL local database
 	 */
-	public void deleteRecipe(UUID uuid) {
+	public void deleteRecipe(UUID uuid, Context context) {
+		SqlClient client = new SqlClient(context);
+		client.deleteRecipe(uuid);
+		return;
 	}
 
 	/*
@@ -49,34 +62,62 @@ public class RecipeController {
 	}
 
 	/*
-	 * Only searches HTTP server
+	 * Get the recipe with a given ID
 	 */
-	public RecipeBook searchRecipeIngredients(ArrayList<String> ingredients) {
-		return null;
+	public Recipe getRecipeSQL(UUID uuid, Context context) {
+		SqlClient sqlClient = new SqlClient(context);
+		Recipe recipe = sqlClient.getRecipe(uuid);
+		return recipe;
 	}
-
-	/*
-	 * Only searches HTTP server
+	
+	/**
+	 * @author Torboto
+	 * Get recipe object from database.	
+	 * @param uuid
+	 * @param context
+	 * @return
 	 */
-	static public RecipeBook searchRecipeTitle(String title) {
-		// DEBUG
-		ArrayList<String> ingredients = new ArrayList<String>();
-		ingredients.add("fish");
-		ingredients.add("cats");
+	public void getRecipeHTTP(UUID uuid, Context context) {
 
-		// Recipe test_r = new Recipe("test1", "test_desc",
-		// ingredients, "DIRECTINOS", "ern@bleh.com");
-
-		// new WriteRecipeTask().execute(test_r);
-		new SearchRecipeTask().execute("test1");
-		// new SearchRecipeTask().execute("", ingredients);
-		// ENDDEBUG
-		return null;
+//		SearchRecipeTask search = new SearchRecipeTask(null, null, uuid);
+//
+//		search.setDataDownloadListener(new DataDownloadListener() {
+//			@SuppressWarnings("unchecked")
+//			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
+//				//context.returnSearchResultstoActivity(data);
+//			}
+//		});
+//		search.execute("");
 	}
 	
 	/*
-	 * GC: Check for an active internet connection. Follows format from 
-	 * stack overflow post: http://stackoverflow.com/questions/4238921/
+	 * Only searches HTTP server
+	 */
+	public void searchRecipeIngredients(ArrayList<String> ingredients) {
+		// new SearchRecipeTask().execute(ingredients);
+
+	}
+
+	/*
+	 * Only searches HTTP server
+	 */
+	static public void searchRecipeTitle(String title, Context context) {
+//		List<Recipe> recipeResults = new ArrayList<Recipe>();
+//		new SearchRecipeTask(title, null, null).execute("title");
+//		SearchRecipeTask search = new SearchRecipeTask(null, null, uuid);
+//
+//		search.setDataDownloadListener(new DataDownloadListener() {
+//			@SuppressWarnings("unchecked")
+//			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
+//				//context.
+//			}
+//		});
+//		search.execute("");
+	}
+
+	/*
+	 * GC: Check for an active internet connection. Follows format from stack
+	 * overflow post: http://stackoverflow.com/questions/4238921/
 	 * android-detect-whether-there-is-an-internet-connection-available
 	 */
 	private boolean checkInternetConnection(Context context) {
