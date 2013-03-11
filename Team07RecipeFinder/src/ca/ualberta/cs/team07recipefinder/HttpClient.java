@@ -100,15 +100,14 @@ public class HttpClient {
 	 * @return recipe object
 	 */
 	public Recipe readRecipe(UUID uuid) {
+		HttpPost httpPost = new HttpPost(url + uuid + "?pretty=1");
+		//HttpGet httpPost = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
 
-		HttpGet getRequest = new HttpGet(
-				"http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");// S4bRPFsuSwKUDSJImbCE2g?pretty=1
-
-		getRequest.addHeader("Accept", "application/json");
+		httpPost.addHeader("Accept", "application/json");
 
 		HttpResponse response = null;
 		try {
-			response = httpClient.execute(getRequest);
+			response = httpClient.execute(httpPost);
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -135,11 +134,14 @@ public class HttpClient {
 		ElasticSearchResponse<Recipe> esResponse = gson.fromJson(json,
 				elasticSearchResponseType);
 		// We get the recipe from it!
+		if (esResponse != null){
 		Recipe recipe = esResponse.getSource();
 		System.out.println(recipe.toString());
 		// TODO consume?
 
 		return recipe;
+		}
+		return null;
 	}
 
 	public void updateRecipe() {

@@ -69,7 +69,7 @@ public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
 			results = httpClient.searchRecipes(recipeIngredients);
 		}
 		else if (recipeId != null){
-			results = httpClient.searchRecipes(null, recipeId);
+			results.add(httpClient.readRecipe(recipeId));
 		}
 		recipeResults = results;
 
