@@ -102,6 +102,10 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 	
+	/**
+	 * Converts all data from recipe object into strings to be added to textviews.
+	 * @param recipe
+	 */
 	private void parseRecipe(Recipe recipe){
 		// AS: next, grab the information from the recipe
 				String title = recipe.getName();

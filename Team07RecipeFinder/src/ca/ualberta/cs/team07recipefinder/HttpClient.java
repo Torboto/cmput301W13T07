@@ -23,9 +23,9 @@ import android.os.NetworkOnMainThreadException;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
-/*
- * GC:
- * methods for saving recipes, deleting recipes, and searching for recipes from
+/**
+ * @author Torboto
+ * Methods for saving recipes, deleting recipes, and searching for recipes from
  * webservice: http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
  */
 public class HttpClient {
@@ -34,6 +34,10 @@ public class HttpClient {
 	private Gson gson = new Gson();
 	private String url = "http://cmput301.softwareprocess.es:8080/cmput301w13t07/recipes/";
 
+	/**
+	 * Writes recipe object to elastic search on the internet.
+	 * @param recipe
+	 */
 	public void writeRecipe(Recipe recipe) {
 		HttpPost httpPost = new HttpPost(url + recipe.getRecipeId());
 		StringEntity stringEntity = null;
@@ -90,6 +94,11 @@ public class HttpClient {
 
 	}
 
+	/**
+	 * Reads in the identified recipe by it's given id.
+	 * @param uuid identifying id for recipe to be found
+	 * @return recipe object
+	 */
 	public Recipe readRecipe(UUID uuid) {
 
 		HttpGet getRequest = new HttpGet(
@@ -137,6 +146,11 @@ public class HttpClient {
 
 	}
 
+	/**
+	 * Searches for recipes containing any of the ingredients given.
+	 * @param ingredients list of ingredients
+	 * @return list of matching recipes
+	 */
 	public ArrayList<Recipe> searchRecipes(List<String> ingredients) {
 		HttpPost httpPost = new HttpPost(url + "_search?pretty=1");
 		StringEntity stringEntity;
@@ -196,6 +210,12 @@ public class HttpClient {
 		return recipeResults;
 	}
 
+	/**
+	 * Searches for recipes based on titles.
+	 * @param name title of recipe to search
+	 * @param recipeId 
+	 * @return
+	 */
 	public ArrayList<Recipe> searchRecipes(String name, UUID recipeId) {
 		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpGet searchRequest = null;
@@ -250,8 +270,12 @@ public class HttpClient {
 		return recipeResults;
 	}
 
+
 	/**
-	 * get the http response and return json string
+	 * Get the response from elastic search, and return json string.
+	 * @param response
+	 * @return json response string
+	 * @throws IOException
 	 */
 	String getEntityContent(HttpResponse response) throws IOException {
 		BufferedReader br = new BufferedReader(new InputStreamReader(
