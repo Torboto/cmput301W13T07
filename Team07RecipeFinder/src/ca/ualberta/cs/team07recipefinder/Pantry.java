@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author xiaohuim
+ * @author xiaohui
  * 
  *         This is the Pantry class has only one variable, ingredients, which is
  *         a array list of strings.
@@ -52,7 +52,7 @@ public class Pantry implements Serializable {
 	}
 
 	/**
-	 * Returns all ingredients as an array list of  strings.
+	 * Returns all ingredients as an array list of strings.
 	 * 
 	 * @return All Ingredients
 	 */
