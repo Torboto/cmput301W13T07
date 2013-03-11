@@ -166,6 +166,9 @@ public class MainActivity extends Activity {
 
 		// GC: MyRecipes Tab
 
+		//SqlClient test = new SqlClient(getApplicationContext());
+		
+		
 		// GC: Show all locally saved recipes in a ListView.
 		final ArrayList<Recipe> recipes = populateMyRecipes();
 		
