@@ -4,8 +4,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/*
- * MA
+/**
+ * @author xiaohui
+ * 
+ *         This is the Pantry class has only one variable, ingredients, which is
+ *         a array list of strings.
  */
 public class Pantry implements Serializable {
 	ArrayList<String> ingredients;
@@ -16,7 +19,9 @@ public class Pantry implements Serializable {
 
 	/**
 	 * Takes in the new ingredient and appends it to the current ArrayList of
-	 * ingredients
+	 * ingredients.
+	 * 
+	 * @param ingredient
 	 */
 	public void addIngredient(String ingredient) {
 
@@ -37,7 +42,7 @@ public class Pantry implements Serializable {
 	}
 
 	/**
-	 * this function will remove ingredient at the given index.
+	 * This function will remove ingredient at the given index.
 	 * 
 	 * @param index
 	 */
@@ -47,7 +52,7 @@ public class Pantry implements Serializable {
 	}
 
 	/**
-	 * Returns all ingredients as a string.
+	 * Returns all ingredients as an array list of  strings.
 	 * 
 	 * @return All Ingredients
 	 */
@@ -55,17 +60,18 @@ public class Pantry implements Serializable {
 
 		return this.ingredients;
 	}
-	
+
 	/**
 	 * Returns the ingredient at the given index as a string.
 	 * 
 	 * @param index
+	 * @return ingredient
 	 */
 	public String getIngredient(int index) {
 
 		return this.ingredients.get(index);
 	}
-	
+
 	/**
 	 * Returns the ingredient at the given index as a string.
 	 * 
