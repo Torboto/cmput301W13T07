@@ -70,16 +70,12 @@ public class ViewRecipeActivity extends Activity {
 
 	/**
 	 * Takes a recipe ID as a string and fills in the recipe's information
-	 * to the appropriate text views by calling fillTextViews. It uses a
-	 * RecipeController object to extract the recipe from the database,
-	 * then extracts the needed information into Strings. fillTextViews is then called.
+	 * to the appropriate text views by calling parseRecipe. It first extracts the recipe
+	 * from either the user's database or the server, then calls parseRecipe.
 	 * 
 	 * @param recipeString a string representation of a recipe UUID
 	 */
 	private void fillRecipeInfo(String recipeString) {
-		// AS: grabs the recipe corresponding to recipeString then takes out
-		// its information and calls fillTextViews
-
 		// AS: first get the recipe from the database using a recipeController
 		RecipeController rc = new RecipeController();
 		UUID recipeID = UUID.fromString(recipeString);
@@ -103,11 +99,12 @@ public class ViewRecipeActivity extends Activity {
 	}
 	
 	/**
-	 * Converts all data from recipe object into strings to be added to textviews.
-	 * @param recipe
+	 * This method takes a recipe, puts the title, directions, description,
+	 * and ingredients, then calls fillTextViews with this information.
+	 * 
+	 * @param recipe the recipe with information to gather
 	 */
 	private void parseRecipe(Recipe recipe){
-		// AS: next, grab the information from the recipe
 				String title = recipe.getName();
 				String directions = recipe.getDirections();
 				String description = recipe.getDescription();
@@ -120,9 +117,9 @@ public class ViewRecipeActivity extends Activity {
 	 * This method takes Strings of a recipe's needed information then sets
 	 * the corresponding text views with this information.
 	 * 
-	 * @param title the title of the recipe
+	 * @param title       the title of the recipe
 	 * @param description the description of the recipe
-	 * @param directions the directions of the recipe
+	 * @param directions  the directions of the recipe
 	 * @param ingredients the ingredients of the recipe
 	 */
 	private void fillTextViews(String title, String description,
