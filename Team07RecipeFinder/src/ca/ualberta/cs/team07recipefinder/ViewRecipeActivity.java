@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 public class ViewRecipeActivity extends Activity {
 	/* */
-
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -19,7 +18,7 @@ public class ViewRecipeActivity extends Activity {
 		
 		Bundle extras = getIntent().getExtras();
 		int code = extras.getInt("code");
-		String recipeString = extras.getString("recipeId");
+		final String recipeString = extras.getString("recipeId");
 		
 		// AS: call fillRecipe() to get the information to be displayed about
 		// the current recipe
@@ -35,8 +34,8 @@ public class ViewRecipeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// AS: The delete button calls deleteRecipe and finishes activity
-					Bundle extras = getIntent().getExtras();
-					String recipeString = extras.getString("recipeID");
+					//Bundle extras = getIntent().getExtras();
+					//String recipeString = extras.getString("recipeID");
 					deleteRecipe(recipeString);
 					finish();
 				}
