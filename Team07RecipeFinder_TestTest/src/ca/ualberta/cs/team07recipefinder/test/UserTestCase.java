@@ -9,12 +9,13 @@ import org.junit.Before;
 import org.junit.Test;
 
 import android.content.Context;
+import android.test.AndroidTestCase;
 import android.test.ServiceTestCase;
 import ca.ualberta.cs.team07recipefinder.Pantry;
 import ca.ualberta.cs.team07recipefinder.Recipe;
 import ca.ualberta.cs.team07recipefinder.User;
 
-public class UserTestCase extends TestCase {
+public class UserTestCase extends AndroidTestCase {
 	Recipe recipe;
 	User user;
 
@@ -33,19 +34,8 @@ public class UserTestCase extends TestCase {
 
 	@Test
 	public void testWrite() {
-		user.Write(getTestContext());
+		user.Write(getContext());
 		User returnedUser = User.getInstance();
 		assert(returnedUser == user);
-	}
-
-	private Context getTestContext() {
-		try {
-			Method getTestContext = ServiceTestCase.class
-					.getMethod("getTestContext");
-			return (Context) getTestContext.invoke(this);
-		} catch (final Exception exception) {
-			exception.printStackTrace();
-			return null;
-		}
 	}
 }

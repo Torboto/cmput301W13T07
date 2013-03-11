@@ -13,13 +13,14 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.content.Context;
+import android.test.AndroidTestCase;
 import android.test.ServiceTestCase;
 import junit.framework.TestCase;
 
 /* Test class for the SqlClient class. Tests adding, updating, and deleting
  * Recipes from the local SqlDatabase
  */
-public class SqlClientTestCase extends TestCase {
+public class SqlClientTestCase extends AndroidTestCase {
 	private SqlClient testClient;
 	Recipe testRecipe;
 	String recipeId;
@@ -27,7 +28,7 @@ public class SqlClientTestCase extends TestCase {
 	
 	@Before
 	public void setUp() throws Exception {
-		testClient = new SqlClient(getTestContext());
+		testClient = new SqlClient(getContext());
 		
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("ingredient1");
@@ -124,16 +125,5 @@ public class SqlClientTestCase extends TestCase {
 		recipes = testClient.getAllRecipes();
 		assertTrue(recipes != null);
 		assertTrue(recipes.size() == 1);
-	}
-	
-	private Context getTestContext() {
-		try {
-			Method getTestContext = ServiceTestCase.class
-					.getMethod("getTestContext");
-			return (Context) getTestContext.invoke(this);
-		} catch (final Exception exception) {
-			exception.printStackTrace();
-			return null;
-		}
 	}
 }
