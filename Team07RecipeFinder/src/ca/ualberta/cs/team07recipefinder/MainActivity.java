@@ -1,7 +1,6 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -32,13 +31,13 @@ import android.widget.TextView;
  * @author gcoomber
  * @author xiaohuim
  * 
- * Main activity that is launched when user has an account. It handles the pantry, searching, and viewing local recipes.
+ *         Main activity that is launched when user has an account. It handles
+ *         the pantry, searching, and viewing local recipes.
  */
 public class MainActivity extends Activity {
 
 	private User user;
 	private ListView ingredientsLV;
-	private Button addIngredientButton;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +64,6 @@ public class MainActivity extends Activity {
 		tabHost.addTab(spec3);
 
 		user = User.getInstance();
-		addIngredientButton = (Button) findViewById(R.id.buttonAddIngredient);
 		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
 		registerForContextMenu(ingredientsLV);
 	}
@@ -74,7 +72,8 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 
-		// GC: Populate and set click listener for items in the myRecipes listview
+		// GC: Populate and set click listener for items in the myRecipes
+		// listview
 		populateMyRecipes();
 
 		// GC: Clicklistener for the add recipes button. When the add button is
@@ -114,13 +113,17 @@ public class MainActivity extends Activity {
 	 * @author Torboto
 	 * @author gcoomber
 	 * 
-	 * Takes in a listview, and an array of recipes to bind to an onItemClickListener
-	 * These variables must be passed in as final so that the listener declared inside may access them.
+	 *         Takes in a listview, and an array of recipes to bind to an
+	 *         onItemClickListener These variables must be passed in as final so
+	 *         that the listener declared inside may access them.
 	 * 
-	 * @param listView listview to bind to recipes param
-	 * @param recipes list of recipes to bind to given listview
+	 * @param listView
+	 *            listview to bind to recipes param
+	 * @param recipes
+	 *            list of recipes to bind to given listview
 	 */
-	protected void setListViewOnClickListener(final ListView listView, final ArrayList<Recipe> recipes) {
+	protected void setListViewOnClickListener(final ListView listView,
+			final ArrayList<Recipe> recipes) {
 
 		listView.setOnItemClickListener(new OnItemClickListener() {
 			@Override
@@ -133,33 +136,41 @@ public class MainActivity extends Activity {
 				Intent viewRecipeIntent = new Intent(getApplicationContext(),
 						ViewRecipeActivity.class);
 
-				if(listView.getId() == R.id.lvMyRecipes){
-				// GC: add code 1 to intent to indicate coming from MyRecipes
-				viewRecipeIntent.putExtra("code", 1);
+				if (listView.getId() == R.id.lvMyRecipes) {
+					// GC: add code 1 to intent to indicate coming from
+					// MyRecipes
+					viewRecipeIntent.putExtra("code", 1);
 				}
-				if(listView.getId() == R.id.lvSearchResults){
-				// ET: add code 2 to intent to indicate coming from Search tab
-				viewRecipeIntent.putExtra("code", 2);
+				if (listView.getId() == R.id.lvSearchResults) {
+					// ET: add code 2 to intent to indicate coming from Search
+					// tab
+					viewRecipeIntent.putExtra("code", 2);
 				}
-				
+
 				// GC: add recipeId as a string to the intent
 				viewRecipeIntent.putExtra("recipeId", recipeId.toString());
 				startActivity(viewRecipeIntent);
 			}
 		});
-		
 
 		// GC: Do not add recipes to the ListView if the cache is empty
 		if (recipes != null) {
-		ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
-				getBaseContext(), android.R.layout.simple_list_item_1, recipes);
-		listView.setAdapter(adapter);
+			ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
+					getBaseContext(), android.R.layout.simple_list_item_1,
+					recipes);
+			listView.setAdapter(adapter);
 		}
 	}
 
-	/*
-	 * MA: will show a dialog for user to input a ingredient and save it to
-	 * pantry
+	/**
+	 * @author xiaohuim
+	 * 
+	 *         This will show a dialog for user to input a ingredient and save
+	 *         it to the pantry. If the input is null, it will call the
+	 *         showInvalidInputWaring() to show warn the user.
+	 * 
+	 * @param v
+	 * 
 	 */
 	protected void addIngredient(final View v) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -188,8 +199,10 @@ public class MainActivity extends Activity {
 		alert.show();
 	}
 
-	/*
-	 * MA: Will show a dialog says the input is invalid
+	/**
+	 * @author xiaohuim
+	 * 
+	 *         Will show a dialog says the input is invalid
 	 */
 	protected void showInvalidInputWaring() {
 		TextView tv = new TextView(this);
@@ -203,10 +216,15 @@ public class MainActivity extends Activity {
 		});
 		alert.show();
 	}
-	
+
 	/**
-	 * MA: show a dialog with a EditText and update the ingredient of the given
-	 * index
+	 * @author xiaohuim
+	 * 
+	 *         This will show a dialog with a EditText and update the ingredient
+	 *         of the given index
+	 * 
+	 * @param index
+	 * 
 	 */
 	private void editIngredient(final int index) {
 		final EditText et = new EditText(this);
@@ -216,7 +234,8 @@ public class MainActivity extends Activity {
 		alert.setView(et);
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				user.getPantry().updateIngredient(index, et.getText().toString());
+				user.getPantry().updateIngredient(index,
+						et.getText().toString());
 				onStart();
 			}
 		});
@@ -230,7 +249,9 @@ public class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * MA: long press on item in the pantry listview and this menu will show
+	 * @author xiaohuim
+	 * 
+	 * If user long-press on item in the pantry listview and this menu will show.
 	 */
 	public void onCreateContextMenu(ContextMenu menu, View v,
 			ContextMenuInfo menuInfo) {
@@ -242,8 +263,10 @@ public class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * MA: click on an item in the ConetextMenu and the corresponding method will
-	 * be called
+	 * @author xiaohuim
+	 * 
+	 * If click on an item in the ConetextMenu and the corresponding method will
+	 * be called.
 	 */
 	public boolean onContextItemSelected(MenuItem item) {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
@@ -264,8 +287,10 @@ public class MainActivity extends Activity {
 	}
 
 	@Override
-	/*
-	 * MA: Will load and show all ingredients in the ListView under Pantry tab.
+	/**
+	 * @author xiaohuim
+	 * 
+	 * This will load and show all ingredients in the ListView under Pantry tab.
 	 */
 	protected void onStart() {
 		super.onStart();
@@ -300,10 +325,10 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author Torboto
-	 * This method is called when a search is done, it creates an async
-	 * task, as well as defining a DataDownloadListener which is a type that
-	 * will pass the data from the async task back to setSearch method.
+	 * @author Torboto This method is called when a search is done, it creates
+	 *         an async task, as well as defining a DataDownloadListener which
+	 *         is a type that will pass the data from the async task back to
+	 *         setSearch method.
 	 */
 	protected void populateSearch() {
 		EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
@@ -323,17 +348,18 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * 	 * @author Torboto
-	 * This method is called by the async task once it has completed it's
-	 * call from the server.
-	 * @param recipes receives list of recipes that matched the search
+	 * * @author Torboto This method is called by the async task once it has
+	 * completed it's call from the server.
+	 * 
+	 * @param recipes
+	 *            receives list of recipes that matched the search
 	 */
 	public void setSearch(ArrayList<Recipe> recipes) {
 		ListView searchListView = (ListView) findViewById(R.id.lvSearchResults);
 		ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
 				getBaseContext(), android.R.layout.simple_list_item_1, recipes);
 		searchListView.setAdapter(adapter);
-		
+
 		setListViewOnClickListener(searchListView, recipes);
 	}
 }
