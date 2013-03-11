@@ -11,16 +11,23 @@ import android.os.AsyncTask;
  * Has a DataDownloadListener type to allow the passing of data back to the activity.
  * DataDownloadListener calls DownloadSuccessful method when the task is
  * complete, which then calls a method inside of Main Activity.
- * 
- * @param dataListener types that is overridden so as to call a method inside the calling activity to pass results back.
- * @param recipeResults list of recipes that is returned from the call to the elastic search server.
- * @param recipeTitleKeyword keyword to search for in titles of recipes
- * @param ingrdients list of ingredients to search for in recipes
  */
 public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
+	/**
+	 * type that is overridden so as to call a method inside the calling activity to pass results back.
+	 */
 	DataDownloadListener dataListener;
+	/**
+	 *  list of recipes that is returned from the call to the elastic search server.
+	 */
 	ArrayList<Recipe> recipeResults;
+	/**
+	 * keyword to search for in titles of recipes
+	 */
 	String recipeTitleKeyword;
+	/**
+	 * list of ingredients to search for in recipes
+	 */
 	List<String> recipeIngredients;
 
 	
