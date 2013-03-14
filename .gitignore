@@ -18,3 +18,15 @@ local.properties
 # Eclipse project files
 .classpath
 .project
+
+# temporary files
+*~
+*.swp
+*.swo
+
+# DS_STORE files
+.DS_Store
+
+.gitignore
+
+notes
