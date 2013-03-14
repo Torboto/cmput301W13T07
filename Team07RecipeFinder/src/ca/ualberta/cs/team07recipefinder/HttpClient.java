@@ -91,7 +91,6 @@ public class HttpClient {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
 	/**
@@ -100,8 +99,8 @@ public class HttpClient {
 	 * @return recipe object
 	 */
 	public Recipe readRecipe(UUID uuid) {
-		HttpPost httpPost = new HttpPost(url + uuid + "?pretty=1");
-		//HttpGet httpPost = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
+		//HttpPost httpPost = new HttpPost(url + uuid + "?pretty=1");
+		HttpGet httpPost = new HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
 
 		httpPost.addHeader("Accept", "application/json");
 
