@@ -74,7 +74,7 @@ public class SqlClient extends SQLiteOpenHelper {
     	values.put(COLUMN_NAME_CONTENT, json);
     	
         db.insert(TABLE_NAME, null, values);
-        db.close();
+        //db.close();
     }
    
     /**
@@ -107,7 +107,7 @@ public class SqlClient extends SQLiteOpenHelper {
     	json = c.getString(1);
     	recipe = gson.fromJson(json, Recipe.class);
     	
-    	db.close();
+    	//db.close();
 		c.close();
     	
     	// Return entry that has been read from database.
@@ -120,32 +120,58 @@ public class SqlClient extends SQLiteOpenHelper {
      * @param recipeId
      * @param temp_recipe
      */
-    public void updateRecipe( UUID recipeId, Recipe temp_recipe ) {
-    	String json;
+    public void updateRecipe( UUID recipeId, Recipe updatedRecipe ) {
     	boolean isExists;
-    	Gson gson = new Gson();
-    	SQLiteDatabase db = this.getReadableDatabase();
+    	String newRecipeId = String.valueOf(updatedRecipe.getRecipeId());
     	
-    	json = gson.toJson( temp_recipe );
+    	// Check that the new recipe id is the same as the old recipe id
+    	assert(String.valueOf(recipeId).equals(newRecipeId));
     	
     	// GC: Only query the database if the row exists.
     	isExists = checkRow( recipeId );
     	
+    	if(isExists == true)
+    	{
+    		// Delete the old recipe from the database
+    		deleteRecipe(recipeId);
+    		
+    		// Write the new recipe to the database
+    		writeRecipe(updatedRecipe);
+    	}
+    	
+    	
+    	/*
+    	if (isExists == true) {
+			// New value for one column
+			ContentValues values = new ContentValues();
+
+			// values.put(COLUMN_NAME_ID, String.valueOf( recipeId ));
+			values.put(COLUMN_NAME_CONTENT, json);
+			db.execSQL("UPDATE " + TABLE_NAME + " SET " + COLUMN_NAME_CONTENT
+					+ " = " + "\"" + json + "\"" + " WHERE " + COLUMN_NAME_ID + " = " + "\""
+					+ String.valueOf(recipeId) + "\"");
+			db.update(TABLE_NAME, values, COLUMN_NAME_ID + " =? " + "\'"
+					+ String.valueOf(recipeId) + "\'", null);
+					
+		}/
+    
+		
+		/*
 		if (isExists == true) {
 			// New value for one column
 			ContentValues values = new ContentValues();
 
-			values.put(COLUMN_NAME_ID, String.valueOf( recipeId ));
+			//values.put(COLUMN_NAME_ID, String.valueOf( recipeId ));
 			values.put(COLUMN_NAME_CONTENT, json);
 
 			// Which row to update, based on the ID
 			String selection = COLUMN_NAME_ID + " LIKE ?";
 			String[] selectionArgs = { String.valueOf( recipeId ) };
 
-			db.update(TABLE_NAME, values, selection, selectionArgs);
-		}
+			int count = db.update(TABLE_NAME, values, selection, selectionArgs);
+		}*/
 		
-		db.close();
+		//db.close();
     }
 
     /**
@@ -167,11 +193,9 @@ public class SqlClient extends SQLiteOpenHelper {
     			null, null, null, null);
     	
     	// GC: if the cursor not null, a rows exist with the given recipeId
-    	if(c != null) {
-    		isExist = true;
-    	}
+    	isExist = (c.getCount() > 0);
     	
-    	db.close();
+    	//db.close();
 		c.close();
     	
 		return isExist;
@@ -196,7 +220,7 @@ public class SqlClient extends SQLiteOpenHelper {
 			db.delete(TABLE_NAME, selection, selectionArgs);
 		}
 		
-		db.close();
+		//db.close();
     }
     
     /**
@@ -206,14 +230,19 @@ public class SqlClient extends SQLiteOpenHelper {
     public ArrayList<Recipe> getAllRecipes() {
     	String json;
     	Recipe tempRecipe = null;
+    	int size = 0;
     	
     	ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
     	SQLiteDatabase db = this.getReadableDatabase();
     	
+		size = recipeList.size();
+    	
     	// GC: Query the database for all the rows.
     	Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
     			
-    	c.moveToFirst();
+    	if(c != null) {
+    		c.moveToFirst();
+    	}
 
 		// Add each id to the array
 		while (!c.isAfterLast()) {
@@ -223,16 +252,18 @@ public class SqlClient extends SQLiteOpenHelper {
 			c.moveToNext();
 		}
     	
-		db.close();
+		//db.close();
 		c.close();
+		
+		size = recipeList.size();
 		
     	return recipeList;
     }
     
-    // Drops the table from the database if it exists.
-    public void dropTable() {
-    	SQLiteDatabase db = this.getReadableDatabase();
-    	db.execSQL(SQL_DELETE_ENTRIES);
+    // Deletes all data from the table
+    public void deleteAllRows() {
+    	SQLiteDatabase db = this.getWritableDatabase();
+    	db.execSQL("DELETE FROM " + TABLE_NAME);
     }
 
 }
