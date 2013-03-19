@@ -80,6 +80,10 @@ public class Recipe {
 		this.directions = directions;
 	}
 	
+	public String getCreatorEmail(){
+		return this.creatorEmail;
+	}
+	
 	@Override
 	public String toString() {
 		return this.name + " by " + this.creatorEmail + "\n" +

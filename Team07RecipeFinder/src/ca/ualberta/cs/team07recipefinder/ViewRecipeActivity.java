@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ArrayAdapter;
@@ -27,6 +28,7 @@ import android.widget.TextView;
  */
 public class ViewRecipeActivity extends Activity {
 	int sourceCode;
+	String creatorEmail;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,24 +44,45 @@ public class ViewRecipeActivity extends Activity {
 		fillRecipeInfo(recipeString);
 
 		// AS: depending on whether the user came from My Recipes or from a
-		// search
-		// we set up different buttons
+		// search we set up different buttons
 		if (sourceCode == 1) {
 			// AS: if came from My Recipes
 			fromMyRecipes();
 			Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
+			Button editButton = (Button) findViewById(R.id.b_recipeEdit);
+			
 			deleteButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					// AS: The delete button calls deleteRecipe and finishes
 					// activity
-					// Bundle extras = getIntent().getExtras();
-					// String recipeString = extras.getString("recipeID");
-					// AS: The delete button calls deleteRecipe and finishes activity
 					deleteRecipe(recipeString);
 					finish();
 				}
 			});
+			
+			editButton.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					// AS: if the recipe is editable to this user then
+					// the edit button will launch the edit activity
+					if (editableRecipe()){
+						Intent editRecipeIntent = new Intent(getApplicationContext(),
+								EditRecipeActivity.class);
+					
+						// AS: Put the recipeId into the intent before launching activity
+						editRecipeIntent.putExtra("recipeId", recipeString);
+						startActivity(editRecipeIntent);
+						
+					}
+					// AS: if  not editable then nothing happens (inform user here)
+					// for testing put finish() here
+					else{
+						finish();
+					}
+				}
+			});
+			
 		} else if (sourceCode == 2) {
 			// AS: if came from Search
 			fromSearch();
@@ -109,6 +132,9 @@ public class ViewRecipeActivity extends Activity {
 				String directions = recipe.getDirections();
 				String description = recipe.getDescription();
 				String ingredients = convertList(recipe.getIngredients());
+				
+				// AS: get the creator email from the recipe
+				creatorEmail = recipe.getCreatorEmail();
 
 				fillTextViews(title, description, directions, ingredients);
 	}
@@ -189,5 +215,25 @@ public class ViewRecipeActivity extends Activity {
 		rc.deleteRecipe(recipeID, getApplicationContext());
 		return;
 	}
+	
+	/**
+	 * This method gets and instance of the User singleton and then extracts
+	 * the user's email.
+	 * 
+	 * @return the user's email as a string
+	 */
+	private String grabEmail() {
+		User theUser = User.getInstance();
+		String email = theUser.getEmail();
+		return email;
+	}
 
+	private boolean editableRecipe(){
+		String userEmail = grabEmail();
+		if (userEmail == creatorEmail){
+			return true;
+		}
+		return false;
+	}
+	
 }
