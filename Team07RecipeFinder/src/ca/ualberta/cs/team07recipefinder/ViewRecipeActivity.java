@@ -67,8 +67,7 @@ public class ViewRecipeActivity extends Activity {
 					// AS: if the recipe is editable to this user then
 					// the edit button will change the editTexts and buttons
 					if (editableRecipe()){
-						// do edit stuff
-						
+						editMode();
 					}
 					// AS: if  not editable then nothing happens (inform user here)
 					// for testing put finish() here
@@ -197,6 +196,10 @@ public class ViewRecipeActivity extends Activity {
 		return;
 	}
 	
+	private void editMode(){
+		
+	}
+	
 	/**
 	 * This method takes a string representation of a recipe UUID and deletes the
 	 * corresponding recipe from the database. The string is first converted to a
@@ -223,6 +226,12 @@ public class ViewRecipeActivity extends Activity {
 		return email;
 	}
 
+	/**
+	 * This method determines if the current recipe is editable. If the user's email matches
+	 * the creator of the recipe's email, then it is.
+	 * 
+	 * @return true if editable or false otherwise
+	 */
 	private boolean editableRecipe(){
 		String userEmail = grabEmail();
 		if (userEmail == creatorEmail){
