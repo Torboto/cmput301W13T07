@@ -65,14 +65,9 @@ public class ViewRecipeActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					// AS: if the recipe is editable to this user then
-					// the edit button will launch the edit activity
+					// the edit button will change the editTexts and buttons
 					if (editableRecipe()){
-						Intent editRecipeIntent = new Intent(getApplicationContext(),
-								EditRecipeActivity.class);
-					
-						// AS: Put the recipeId into the intent before launching activity
-						editRecipeIntent.putExtra("recipeId", recipeString);
-						startActivity(editRecipeIntent);
+						// do edit stuff
 						
 					}
 					// AS: if  not editable then nothing happens (inform user here)
