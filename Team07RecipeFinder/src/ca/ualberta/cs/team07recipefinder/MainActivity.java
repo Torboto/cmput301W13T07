@@ -89,7 +89,21 @@ public class MainActivity extends Activity {
 						startActivity(newRecipeIntent);
 					}
 				});
-
+		
+		// GC: Clicklistener for the synch button. Currently being used to 
+		// test the camera.
+		findViewById(R.id.buttonSynch).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						// GC: The add button starts the NewRecipeActivity
+						Intent newRecipeIntent = new Intent(
+								getApplicationContext(),
+								NewRecipeActivity.class);
+						startActivity(newRecipeIntent);
+					}
+				});
+		
 		// MA: Call addIngredient() when click on Add Ingredients button
 		findViewById(R.id.buttonAddIngredient).setOnClickListener(
 				new View.OnClickListener() {
