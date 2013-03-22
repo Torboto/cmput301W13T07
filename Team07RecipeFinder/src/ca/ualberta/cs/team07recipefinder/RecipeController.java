@@ -72,7 +72,10 @@ public class RecipeController {
 	/*
 	 * Write over old recipe with the same UUID
 	 */
-	public void updateRecipe(Recipe recipe) {
+	public void updateRecipe(UUID uuid, Recipe recipe, Context context) {
+		SqlClient client = new SqlClient (context);
+		client.updateRecipe(uuid, recipe);
+		return;
 	}
 
 	/**

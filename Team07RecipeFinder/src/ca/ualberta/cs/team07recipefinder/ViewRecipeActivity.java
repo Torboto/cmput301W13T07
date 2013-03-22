@@ -53,7 +53,7 @@ public class ViewRecipeActivity extends Activity {
 		// search we set up different buttons
 		if (sourceCode == 1) {
 			// AS: if came from My Recipes
-			fromMyRecipes();
+			hideSave();
 			Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
 			Button editButton = (Button) findViewById(R.id.b_recipeEdit);
 			
@@ -74,6 +74,22 @@ public class ViewRecipeActivity extends Activity {
 					// the edit button will change the editTexts and buttons
 					if (true){
 						editTextMode();
+						hideEditDelete();
+						showSave();
+						
+						Button saveButton = (Button) findViewById(R.id.b_recipeSave);
+						saveButton.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								// AS: The save button calls editRecipe then finishes
+								editRecipe(recipeString);
+								finish();
+							}
+
+							
+						});
+										
+						
 					}
 					// AS: if  not editable then nothing happens (inform user here)
 					// for testing put finish() here
@@ -85,7 +101,7 @@ public class ViewRecipeActivity extends Activity {
 			
 		} else if (sourceCode == 2) {
 			// AS: if came from Search
-			fromSearch();
+			hideEditDelete();
 		} else {
 			// AS: the code should not get here
 		}
@@ -199,9 +215,15 @@ public class ViewRecipeActivity extends Activity {
 	 * This method hides the save button. It is called the user is viewing one of
 	 * their own recipes, so the save button is not needed.
 	 */
-	private void fromMyRecipes(){
+	private void hideSave(){
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 		saveButton.setVisibility(4);
+		return;
+	}
+	
+	private void showSave(){
+		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
+		saveButton.setVisibility(1);
 		return;
 	}
 	
@@ -209,7 +231,7 @@ public class ViewRecipeActivity extends Activity {
 	 * This method hides the edit and delete buttons. It is called if the user is
 	 * viewing a searched recipe from the internet, so there is no editing or deleting.
 	 */
-	private void fromSearch(){
+	private void hideEditDelete(){
 		Button editButton = (Button) findViewById(R.id.b_recipeEdit);
 		Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
 		editButton.setVisibility(4);
@@ -217,6 +239,9 @@ public class ViewRecipeActivity extends Activity {
 		return;
 	}
 	
+	/**
+	 * This method changes the edit texts to now be editable for the user.
+	 */
 	private void editTextMode(){
 		EditText etTitle = (EditText)findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText)findViewById(R.id.etRecipeDescription);
@@ -245,6 +270,11 @@ public class ViewRecipeActivity extends Activity {
 		RecipeController rc = new RecipeController();
 		rc.deleteRecipe(recipeID, getApplicationContext());
 		return;
+	}
+	
+	private void editRecipe(String recipeString) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	/**
