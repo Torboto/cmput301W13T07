@@ -6,6 +6,7 @@ import java.util.UUID;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -29,6 +30,11 @@ import android.widget.TextView;
 public class ViewRecipeActivity extends Activity {
 	int sourceCode;
 	String creatorEmail;
+	KeyListener titleListener;
+	KeyListener descriptionListener;
+	KeyListener ingredientsListener;
+	KeyListener directionsListener;
+	
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -67,7 +73,7 @@ public class ViewRecipeActivity extends Activity {
 					// AS: if the recipe is editable to this user then
 					// the edit button will change the editTexts and buttons
 					if (true){
-						editMode();
+						editTextMode();
 					}
 					// AS: if  not editable then nothing happens (inform user here)
 					// for testing put finish() here
@@ -136,7 +142,8 @@ public class ViewRecipeActivity extends Activity {
 
 	/**
 	 * This method takes Strings of a recipe's needed information then sets
-	 * the corresponding text views with this information.
+	 * the corresponding edit texts with this information. It also makes the
+	 * edit texts non editable and saves the key listeners of the edit texts.
 	 * 
 	 * @param title       the title of the recipe
 	 * @param description the description of the recipe
@@ -156,6 +163,12 @@ public class ViewRecipeActivity extends Activity {
 		etDescription.setText(description);
 		etDirections.setText(directions);
 		etIngredients.setText(ingredients);
+		
+		// AS: save the original key listeners
+		titleListener = etTitle.getKeyListener();
+		descriptionListener = etDescription.getKeyListener();
+		directionsListener = etDirections.getKeyListener();
+		ingredientsListener = etIngredients.getKeyListener();
 		
 		// AS: then set them to be uneditable
 		etTitle.setKeyListener(null);
@@ -204,8 +217,18 @@ public class ViewRecipeActivity extends Activity {
 		return;
 	}
 	
-	private void editMode(){
+	private void editTextMode(){
+		EditText etTitle = (EditText)findViewById(R.id.etRecipeTitle);
+		EditText etDescription = (EditText)findViewById(R.id.etRecipeDescription);
+		EditText etDirections = (EditText)findViewById(R.id.etDirectionsList);
+		EditText etIngredients = (EditText)findViewById(R.id.etIngredientsList);
 		
+		etTitle.setKeyListener(titleListener);
+		etDescription.setKeyListener(descriptionListener);
+		etDirections.setKeyListener(directionsListener);
+		etIngredients.setKeyListener(ingredientsListener);
+		
+		return;
 	}
 	
 	
@@ -242,7 +265,7 @@ public class ViewRecipeActivity extends Activity {
 	 * 
 	 * @return true if editable or false otherwise
 	 */
-	private boolean editableRecipe(){
+	private boolean isEditableRecipe(){
 		String userEmail = grabEmail();
 		if (userEmail == creatorEmail)
 			return true;
