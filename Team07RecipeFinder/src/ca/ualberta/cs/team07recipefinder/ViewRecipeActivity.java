@@ -66,7 +66,7 @@ public class ViewRecipeActivity extends Activity {
 				public void onClick(View v) {
 					// AS: if the recipe is editable to this user then
 					// the edit button will change the editTexts and buttons
-					if (editableRecipe()){
+					if (true){
 						editMode();
 					}
 					// AS: if  not editable then nothing happens (inform user here)
@@ -115,6 +115,7 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 	
+	
 	/**
 	 * This method takes a recipe, puts the title, directions, description,
 	 * and ingredients, then calls fillTextViews with this information.
@@ -129,7 +130,7 @@ public class ViewRecipeActivity extends Activity {
 				
 				// AS: get the creator email from the recipe
 				creatorEmail = recipe.getCreatorEmail();
-
+				
 				fillTextViews(title, description, directions, ingredients);
 	}
 
@@ -144,17 +145,24 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private void fillTextViews(String title, String description,
 			String directions, String ingredients) {
-		// AS: first create the text view objects
-		TextView tvTitle = (TextView)findViewById(R.id.tvRecipeTitle);
-		TextView tvDescription = (TextView)findViewById(R.id.tvRecipeDescription);
-		TextView tvDirections = (TextView)findViewById(R.id.tvDirectionsList);
-		TextView tvIngredients = (TextView)findViewById(R.id.tvIngredientsList);
+		// AS: first create the edit text objects
+		EditText etTitle = (EditText)findViewById(R.id.etRecipeTitle);
+		EditText etDescription = (EditText)findViewById(R.id.etRecipeDescription);
+		EditText etDirections = (EditText)findViewById(R.id.etDirectionsList);
+		EditText etIngredients = (EditText)findViewById(R.id.etIngredientsList);
 		
 		// AS: then set the text views
-		tvTitle.setText(title);
-		tvDescription.setText(description);
-		tvDirections.setText(directions);
-		tvIngredients.setText(ingredients);
+		etTitle.setText(title);
+		etDescription.setText(description);
+		etDirections.setText(directions);
+		etIngredients.setText(ingredients);
+		
+		// AS: then set them to be uneditable
+		etTitle.setKeyListener(null);
+		etDescription.setKeyListener(null);
+		etDirections.setKeyListener(null);
+		etIngredients.setKeyListener(null);
+		
 		return;
 
 	}
@@ -200,6 +208,8 @@ public class ViewRecipeActivity extends Activity {
 		
 	}
 	
+	
+	
 	/**
 	 * This method takes a string representation of a recipe UUID and deletes the
 	 * corresponding recipe from the database. The string is first converted to a
@@ -234,10 +244,11 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private boolean editableRecipe(){
 		String userEmail = grabEmail();
-		if (userEmail == creatorEmail){
+		if (userEmail == creatorEmail)
 			return true;
-		}
-		return false;
+		else 
+			return false;
+		
 	}
 	
 }

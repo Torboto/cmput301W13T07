@@ -5,8 +5,8 @@
         android:orientation="vertical">
             
         <!-- Recipe title. -GC -->
-        <TextView
-			android:id="@+id/tvRecipeTitle"
+        <EditText
+			android:id="@+id/etRecipeTitle"
             android:layout_width="wrap_content"
             android:layout_height="40dp"
             android:layout_gravity="center_horizontal"
@@ -47,8 +47,8 @@
                 		android:src="@drawable/ic_launcher" />
 
              		<!-- Recipe description. -GC -->
-            		<TextView
-                		android:id="@+id/tvRecipeDescription"
+            		<EditText
+                		android:id="@+id/etRecipeDescription"
                 		android:layout_width="220dp"
                 		android:layout_height="80dp"
                 		android:paddingTop="5dp"
@@ -68,8 +68,8 @@
            			android:textStyle="bold"
            			android:text="@string/recipe_ingredients" />
         		
-        		<TextView
-            		android:id="@+id/tvIngredientsList"
+        		<EditText
+            		android:id="@+id/etIngredientsList"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
            			android:paddingTop="2dp"
@@ -87,8 +87,8 @@
            			android:textStyle="bold"
            			android:text="@string/recipe_directions" />
         		
-        		<TextView
-            		android:id="@+id/tvDirectionsList"
+        		<EditText
+            		android:id="@+id/etDirectionsList"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
            			android:paddingTop="2dp"
