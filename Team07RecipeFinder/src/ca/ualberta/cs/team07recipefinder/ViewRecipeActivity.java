@@ -5,6 +5,8 @@ import java.util.Arrays;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.KeyListener;
@@ -77,7 +79,7 @@ public class ViewRecipeActivity extends Activity {
 						editTextMode();
 						hideEditDelete();
 						showSave();
-						
+						showThatEditable();
 						Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 						saveButton.setOnClickListener(new View.OnClickListener() {
 							@Override
@@ -345,4 +347,17 @@ public class ViewRecipeActivity extends Activity {
 		return ingredients;
 	}
 	
+	
+	private void showThatEditable() {
+		TextView tv = new TextView(this);
+		tv.setText("You may now edit this recipe!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Edit Mode");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
+	}
 }
