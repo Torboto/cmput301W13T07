@@ -1,6 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.UUID;
 
 import android.app.Activity;
@@ -257,7 +258,6 @@ public class ViewRecipeActivity extends Activity {
 	}
 	
 	
-	
 	/**
 	 * This method takes a string representation of a recipe UUID and deletes the
 	 * corresponding recipe from the database. The string is first converted to a
@@ -273,7 +273,34 @@ public class ViewRecipeActivity extends Activity {
 	}
 	
 	private void editRecipe(String recipeString) {
-		// TODO Auto-generated method stub
+		UUID recipeID = UUID.fromString(recipeString);
+		Recipe newRecipe = grabRecipeInfo();
+		RecipeController rc = new RecipeController();
+		rc.updateRecipe(recipeID, newRecipe, getApplicationContext());
+		return;
+	}
+	
+	/**
+	 * This method forms and returns a new Recipe object by getting the
+	 * necessary information from the Activity's EditTexts.
+	 * 
+	 * @return the newly created Recipe.
+	 */
+	private Recipe grabRecipeInfo() {
+		EditText etTitle = (EditText)findViewById(R.id.etRecipeTitle);
+		EditText etDescription = (EditText)findViewById(R.id.etRecipeDescription);
+		EditText etDirections = (EditText)findViewById(R.id.etDirectionsList);
+		EditText etIngredients = (EditText)findViewById(R.id.etIngredientsList);
+		
+		String title = etTitle.getText().toString();
+		String description = etDescription.getText().toString();
+		ArrayList<String> ingredients = 
+				parseIngredients(etIngredients);
+		String directions = etDirections.getText().toString();
+		String email = grabEmail();
+		Recipe newRecipe = new Recipe(title, description, ingredients,
+				directions, email);
+		return newRecipe;
 		
 	}
 	
@@ -302,6 +329,20 @@ public class ViewRecipeActivity extends Activity {
 		else 
 			return false;
 		
+	}
+	
+	/**
+	 * This method takes the ingredients as an EditText and returns them as an
+	 * ArrayList of strings. It assumes that they are separated by newline characters.
+	 * 
+	 * @param ingredientsEditText the ingredients as an EditText
+	 * @return                    the ingredients as an ArrayList of strings
+	 */
+	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
+		String ingredientsString = ingredientsEditText.getText().toString();
+		ArrayList<String> ingredients = new ArrayList<String>(
+				Arrays.asList(ingredientsString.split("\n")));
+		return ingredients;
 	}
 	
 }
