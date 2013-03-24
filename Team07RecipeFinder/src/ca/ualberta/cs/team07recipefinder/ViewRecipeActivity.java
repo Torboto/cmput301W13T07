@@ -75,7 +75,7 @@ public class ViewRecipeActivity extends Activity {
 				public void onClick(View v) {
 					// AS: if the recipe is editable to this user then
 					// the edit button will change the editTexts and buttons
-					if (true){
+					if (isEditableRecipe()){
 						editTextMode();
 						hideEditDelete();
 						showSave();
@@ -88,16 +88,12 @@ public class ViewRecipeActivity extends Activity {
 								editRecipe(recipeString);
 								finish();
 							}
-
-							
-						});
-										
-						
+						});						
 					}
-					// AS: if  not editable then nothing happens (inform user here)
-					// for testing put finish() here
+					
+					// AS: if not editable then nothing happens (inform user here)
 					else{
-						finish();
+						showThatNotEditable();
 					}
 				}
 			});
@@ -326,7 +322,7 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private boolean isEditableRecipe(){
 		String userEmail = grabEmail();
-		if (userEmail == creatorEmail)
+		if (userEmail.equalsIgnoreCase(creatorEmail))
 			return true;
 		else 
 			return false;
@@ -348,11 +344,33 @@ public class ViewRecipeActivity extends Activity {
 	}
 	
 	
+	/**
+	 * This method creates a dialog which informs that user that they can now
+	 * edit the current recipe.
+	 */
 	private void showThatEditable() {
 		TextView tv = new TextView(this);
 		tv.setText("You may now edit this recipe!");
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Edit Mode");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
+	}
+	
+	
+	/**
+	 * This method creates a dialog which informs the user that only the original
+	 * creator can edit their recipe.
+	 */
+	private void showThatNotEditable() {
+		TextView tv = new TextView(this);
+		tv.setText("Only the original creator may edit their recipe!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Sorry");
 		alert.setView(tv);
 		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
