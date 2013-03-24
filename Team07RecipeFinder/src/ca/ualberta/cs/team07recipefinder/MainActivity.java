@@ -97,10 +97,10 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(View v) {
 						// GC: The add button starts the NewRecipeActivity
-						Intent newRecipeIntent = new Intent(
+						Intent cameraIntent = new Intent(
 								getApplicationContext(),
-								NewRecipeActivity.class);
-						startActivity(newRecipeIntent);
+								CameraActivity.class);
+						startActivity(cameraIntent);
 					}
 				});
 		

@@ -4,12 +4,14 @@
     android:versionCode="1"
     android:versionName="1.0" >
 
-    <uses-sdk
-        android:minSdkVersion="7"/>
+    <uses-sdk android:minSdkVersion="7" />
+
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     
-    <uses-feature android:name="android.hardware.camera" />
+    <uses-feature android:name="android.hardware.camera" android:required="false" />
 
     <application
         android:allowBackup="true"
@@ -37,6 +39,14 @@
         <activity
             android:name="ca.ualberta.cs.team07recipefinder.NewRecipeActivity"
             android:label="@string/title_activity_new_recipe" >
+        </activity>
+        <activity
+            android:name="ca.ualberta.cs.team07recipefinder.BogoPicGenActivity"
+            android:label="@string/title_activity_bogo_pic_gen" >
+        </activity>
+        <activity
+            android:name="ca.ualberta.cs.team07recipefinder.CameraActivity"
+            android:label="@string/title_activity_camera" >
         </activity>
     </application>
 

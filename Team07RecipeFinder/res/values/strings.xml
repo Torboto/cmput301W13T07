@@ -16,6 +16,11 @@
     <!-- EditTextHint Strings -->
     <string name="title_activity_main">Recipe Finder</string>
     <string name="title_activity_new_recipe">NewRecipeActivity</string>
+    
+    <!-- Camera Strings -->
+    <string name="status">status</string>
+    <string name="title_activity_bogo_pic_gen">BogoPicGen</string>
+    <string name="title_activity_camera">Camera</string>
 
     <!-- NewRecipeActivity Strings -->
     <!-- TextView Strings -->
@@ -54,4 +59,5 @@
     <string name="menu_delete_ingredient">Delete</string>
     <string name="menu_edit_ingredient">Edit</string>
     <string name="menu_pantry_title">Menu</string>
+
 </resources>
