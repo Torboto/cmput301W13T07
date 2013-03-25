@@ -115,9 +115,7 @@ public class ViewRecipeActivity extends Activity {
 		} else if (sourceCode == 2) {
 			// AS: if came from Search
 			hideEditDelete();
-		} else {
-			// AS: the code should not get here
-		}
+		} 
 	}
 
 	/**
@@ -361,7 +359,6 @@ public class ViewRecipeActivity extends Activity {
 			return true;
 		else 
 			return false;
-		
 	}
 	
 	/**
@@ -440,6 +437,7 @@ public class ViewRecipeActivity extends Activity {
 		startActivity(Intent.createChooser(i, "Send mail..."));
 	}
 
+	//TODO: ET - factor this out into another class
 	private String convertToEmail() {
 		String title = currentRecipe.getName();
 		String directions = currentRecipe.getDirections();
