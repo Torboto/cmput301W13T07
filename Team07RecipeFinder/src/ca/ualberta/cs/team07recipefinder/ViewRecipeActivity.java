@@ -37,6 +37,7 @@ public class ViewRecipeActivity extends Activity {
 	KeyListener descriptionListener;
 	KeyListener ingredientsListener;
 	KeyListener directionsListener;
+	//TODO: ET- if currentRecipe is a member variable, it should need to be passed into any functions like ParseRecipe
 	Recipe currentRecipe;
 	
 
@@ -52,7 +53,7 @@ public class ViewRecipeActivity extends Activity {
 		// AS: call fillCurrentRecipe() to get the recipe from either the local databse
 		// or server.
 		fillCurrentRecipe(recipeString);
-		parseRecipe(currentRecipe);
+		
 
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);	
 		emailButton.setOnClickListener(new View.OnClickListener() {
@@ -132,6 +133,7 @@ public class ViewRecipeActivity extends Activity {
 
 		if (sourceCode == 1) {
 			currentRecipe = rc.getRecipeSQL(recipeID, getApplicationContext());
+			parseRecipe(currentRecipe);
 		}
 		if (sourceCode == 2){
 			SearchRecipeTask search = new SearchRecipeTask(recipeID);
@@ -140,6 +142,7 @@ public class ViewRecipeActivity extends Activity {
 				@SuppressWarnings("unchecked")
 				public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
 					currentRecipe = data.get(0);
+					parseRecipe(currentRecipe);
 				}
 			});
 			search.execute("");
