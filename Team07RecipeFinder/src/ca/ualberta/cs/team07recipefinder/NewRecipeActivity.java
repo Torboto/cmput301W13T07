@@ -60,7 +60,8 @@ public class NewRecipeActivity extends Activity {
 				Intent cameraIntent = new Intent(
 						getApplicationContext(),
 						CameraActivity.class);
-				cameraIntent.putExtra("recipeId", newRecipe.getRecipeId());
+				cameraIntent.putExtra("recipeId",
+						String.valueOf(newRecipe.getRecipeId()));
 				startActivity(cameraIntent);
 			}
 		});

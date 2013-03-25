@@ -24,12 +24,14 @@ public class Recipe {
 	 * access.
 	 */
 	public Recipe(String name, String description,
-			ArrayList<String> ingredients, String directions, String creatorEmail) {
+			ArrayList<String> ingredients, String directions,
+			ArrayList<String> images, String creatorEmail) {
 
 		this.name = name;
 		this.description = description;
 		this.ingredients = ingredients;
 		this.directions = directions;
+		this.images = images;
 		this.creatorEmail = creatorEmail;
 		this.recipeId = UUID.randomUUID();
 	}
@@ -43,12 +45,12 @@ public class Recipe {
 	}
 
 	/*
-	 * Add an image to the collection of images for the recipe
+	 * Add an array of images to the recipe
 	 */
-	public void setImage(String image) {
-		this.images.add(image);
+	public void setImages(ArrayList<String> images) {
+		this.images = images;
 	}
-
+	
 	public UUID getRecipeId() {
 		return this.recipeId;
 	}

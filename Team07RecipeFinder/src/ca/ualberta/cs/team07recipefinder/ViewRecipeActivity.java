@@ -318,9 +318,17 @@ public class ViewRecipeActivity extends Activity {
 		ArrayList<String> ingredients = 
 				parseIngredients(etIngredients);
 		String directions = etDirections.getText().toString();
+		// Temporarily sending temp string for images to Recipe
+		ArrayList<String> images = new ArrayList<String>();
+		images.add("testing_image_path");
 		String email = grabEmail();
-		Recipe newRecipe = new Recipe(title, description, ingredients,
-				directions, email);
+		Recipe newRecipe = new Recipe();
+		newRecipe.setName(title);
+		newRecipe.setDescription(description);
+		newRecipe.setDirections(directions);
+		newRecipe.setIngredients(ingredients);
+		newRecipe.setImages(images);
+		newRecipe.setCreatorEmail(email);
 		return newRecipe;
 		
 	}
