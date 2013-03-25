@@ -431,7 +431,7 @@ public class ViewRecipeActivity extends Activity {
 		
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
-		i.putExtra(Intent.EXTRA_EMAIL  , "ajstarna@ualberta.ca");
+		i.putExtra(Intent.EXTRA_EMAIL  , userEmail);
 		i.putExtra(Intent.EXTRA_SUBJECT, "Recipe");
 		i.putExtra(Intent.EXTRA_TEXT   , emailBody);
 		startActivity(Intent.createChooser(i, "Send mail..."));
@@ -442,8 +442,8 @@ public class ViewRecipeActivity extends Activity {
 		String directions = currentRecipe.getDirections();
 		String description = currentRecipe.getDescription();
 		String ingredients = convertList(currentRecipe.getIngredients());	
-		return "Recipe Title:\n" + title + "\nRecipe Description:\n" + description + 
-				"\nIngredients:\n" + ingredients + "\nDirections:\n" + directions;
+		return "Recipe Title:\n" + title + "\n\nRecipe Description:\n" + description + 
+				"\n\nIngredients:\n" + ingredients + "\n\nDirections:\n" + directions;
 	}
 	
 }
