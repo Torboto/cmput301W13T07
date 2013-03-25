@@ -40,8 +40,8 @@
             		android:paddingTop="10dp" >
 
              		<!-- Recipe picture. -GC -->
-            		<ImageView
-                		android:id="@+id/ivRecipe"
+            		<ImageButton
+                		android:id="@+id/ibRecipe"
                 		android:layout_width="90dp"
                 		android:layout_height="90dp"
                 		android:paddingLeft="10dp"

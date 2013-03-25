@@ -92,7 +92,7 @@ public class MainActivity extends Activity {
 		
 		// GC: Clicklistener for the synch button. Currently being used to 
 		// test the camera.
-		findViewById(R.id.buttonSynch).setOnClickListener(
+		/*findViewById(R.id.buttonSynch).setOnClickListener(
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View v) {
@@ -102,7 +102,7 @@ public class MainActivity extends Activity {
 								CameraActivity.class);
 						startActivity(cameraIntent);
 					}
-				});
+				});*/
 		
 		// MA: Call addIngredient() when click on Add Ingredients button
 		findViewById(R.id.buttonAddIngredient).setOnClickListener(

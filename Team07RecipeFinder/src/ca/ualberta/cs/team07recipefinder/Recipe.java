@@ -33,6 +33,10 @@ public class Recipe {
 		this.creatorEmail = creatorEmail;
 		this.recipeId = UUID.randomUUID();
 	}
+	
+	public Recipe() {
+		this.recipeId = UUID.randomUUID();
+	}
 
 	public ArrayList<String> getImages() {
 		return this.images;
@@ -82,6 +86,10 @@ public class Recipe {
 	
 	public String getCreatorEmail(){
 		return this.creatorEmail;
+	}
+	
+	public void setCreatorEmail(String creatorEmail){
+		this.creatorEmail = creatorEmail;
 	}
 	
 	@Override

@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.Arrays;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 
 /**
  * The NewRecipeActvity displays EditTexts for the user to enter a recipe title,
@@ -25,6 +27,9 @@ public class NewRecipeActivity extends Activity {
 	EditText descriptionEditText;
 	EditText ingredientsEditText;
 	EditText directionsEditText;
+	
+	// New recipe that will be populated with the info entered by the user
+	Recipe newRecipe = new Recipe();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -42,6 +47,18 @@ public class NewRecipeActivity extends Activity {
 			public void onClick(View v) {
 				// AS: The done button calls createRecipe
 				createRecipe();
+			}
+		});
+		
+		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
+		pictureButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent cameraIntent = new Intent(
+						getApplicationContext(),
+						CameraActivity.class);
+				cameraIntent.putExtra("recipeId", newRecipe.getRecipeId());
+				startActivity(cameraIntent);
 			}
 		});
 	}
@@ -83,8 +100,11 @@ public class NewRecipeActivity extends Activity {
 				parseIngredients(ingredientsEditText);
 		String directions = directionsEditText.getText().toString();
 		String email = grabEmail();
-		Recipe newRecipe = new Recipe(title, description, ingredients,
-				directions, email);
+		newRecipe.setDescription(description);
+		newRecipe.setIngredients(ingredients);
+		newRecipe.setName(title);
+		newRecipe.setDirections(directions);
+		newRecipe.setCreatorEmail(email);
 		return newRecipe;
 		
 	}
