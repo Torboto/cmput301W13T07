@@ -5,12 +5,15 @@ import java.util.Arrays;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.TextView;
 
 /**
  * The NewRecipeActvity displays EditTexts for the user to enter a recipe title,
@@ -82,9 +85,8 @@ public class NewRecipeActivity extends Activity {
 			writeRecipe(newRecipe);
 			finish();
 		}
-
-		// AS: If one or more fields empty could potentially have a
-		// dialog saying so? Next Iteration of project
+		else
+			missingFields();
 	}
 
 	/**
@@ -160,6 +162,24 @@ public class NewRecipeActivity extends Activity {
 		ArrayList<String> ingredients = new ArrayList<String>(
 				Arrays.asList(ingredientsString.split("\n")));
 		return ingredients;
+	}
+	
+	
+	/**
+	 * This method creates a dialog which informs the user that they are missing one
+	 * or more fields in the recipe they tried to create.
+	 */
+	private void missingFields() {
+		TextView tv = new TextView(this);
+		tv.setText("You must fill in all fields to create a recipe!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Sorry");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
 	}
 
 }

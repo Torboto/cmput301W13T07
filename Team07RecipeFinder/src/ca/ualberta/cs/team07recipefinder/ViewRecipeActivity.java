@@ -16,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * The ViewRecipeActivity displays the information about a particular Recipe.
@@ -32,11 +33,11 @@ import android.widget.TextView;
  */
 public class ViewRecipeActivity extends Activity {
 	int sourceCode;
-	String creatorEmail;
 	KeyListener titleListener;
 	KeyListener descriptionListener;
 	KeyListener ingredientsListener;
 	KeyListener directionsListener;
+	Recipe currentRecipe;
 	
 
 	@Override
@@ -48,15 +49,27 @@ public class ViewRecipeActivity extends Activity {
 		sourceCode = extras.getInt("code");
 		final String recipeString = extras.getString("recipeId");
 
-		// AS: call fillRecipe() to get the information to be displayed about
-		// the current recipe
-		fillRecipeInfo(recipeString);
+		// AS: call fillCurrentRecipe() to get the recipe from either the local databse
+		// or server.
+		fillCurrentRecipe(recipeString);
+		parseRecipe(currentRecipe);
 
+		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);	
+		emailButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// AS: The email button calls emailToSelf() and emailDialog()
+				emailToSelf();
+				emailDialog();
+			}
+
+		});
 		// AS: depending on whether the user came from My Recipes or from a
 		// search we set up different buttons
 		if (sourceCode == 1) {
 			// AS: if came from My Recipes
 			hideSave();
+			//hideEmail(); commented out for testing
 			Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
 			Button editButton = (Button) findViewById(R.id.b_recipeEdit);
 			
@@ -75,7 +88,7 @@ public class ViewRecipeActivity extends Activity {
 				public void onClick(View v) {
 					// AS: if the recipe is editable to this user then
 					// the edit button will change the editTexts and buttons
-					if (true){
+					if (isEditableRecipe()){
 						editTextMode();
 						hideEditDelete();
 						showSave();
@@ -88,16 +101,12 @@ public class ViewRecipeActivity extends Activity {
 								editRecipe(recipeString);
 								finish();
 							}
-
-							
-						});
-										
-						
+						});						
 					}
-					// AS: if  not editable then nothing happens (inform user here)
-					// for testing put finish() here
+					
+					// AS: if not editable then nothing happens (inform user here)
 					else{
-						finish();
+						showThatNotEditable();
 					}
 				}
 			});
@@ -111,21 +120,18 @@ public class ViewRecipeActivity extends Activity {
 	}
 
 	/**
-	 * Takes a recipe ID as a string and fills in the recipe's information
-	 * to the appropriate text views by calling parseRecipe. It first extracts the recipe
-	 * from either the user's database or the server, then calls parseRecipe.
+	 * Takes a recipe ID as a string and extracts the recipe
+	 * from either the user's database or the server to set currentRecipe.
 	 * 
 	 * @param recipeString a string representation of a recipe UUID
 	 */
-	private void fillRecipeInfo(String recipeString) {
+	private void fillCurrentRecipe(String recipeString) {
 		// AS: first get the recipe from the database using a recipeController
 		RecipeController rc = new RecipeController();
 		UUID recipeID = UUID.fromString(recipeString);
-		Recipe recipe = null;
 
 		if (sourceCode == 1) {
-			recipe = rc.getRecipeSQL(recipeID, getApplicationContext());
-			parseRecipe(recipe);	
+			currentRecipe = rc.getRecipeSQL(recipeID, getApplicationContext());
 		}
 		if (sourceCode == 2){
 			SearchRecipeTask search = new SearchRecipeTask(recipeID);
@@ -133,7 +139,7 @@ public class ViewRecipeActivity extends Activity {
 			search.setDataDownloadListener(new DataDownloadListener() {
 				@SuppressWarnings("unchecked")
 				public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
-					parseRecipe(data.get(0));
+					currentRecipe = data.get(0);
 				}
 			});
 			search.execute("");
@@ -152,9 +158,6 @@ public class ViewRecipeActivity extends Activity {
 				String directions = recipe.getDirections();
 				String description = recipe.getDescription();
 				String ingredients = convertList(recipe.getIngredients());
-				
-				// AS: get the creator email from the recipe
-				creatorEmail = recipe.getCreatorEmail();
 				
 				fillTextViews(title, description, directions, ingredients);
 	}
@@ -199,6 +202,7 @@ public class ViewRecipeActivity extends Activity {
 
 	}
 
+	
 	/**
 	 * This method takes and ArrayList of ingredients and returns them as a
 	 * single string with newline characters between each.
@@ -214,6 +218,7 @@ public class ViewRecipeActivity extends Activity {
 		return ingredients;
 	}
 	
+	
 	/**
 	 * This method hides the save button. It is called the user is viewing one of
 	 * their own recipes, so the save button is not needed.
@@ -224,6 +229,20 @@ public class ViewRecipeActivity extends Activity {
 		return;
 	}
 	
+	/**
+	 * This method hides the email button. It is called the user is viewing one of
+	 * their own recipes, so the email button is not needed.
+	 */
+	private void hideEmail(){
+		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
+		emailButton.setVisibility(4);
+		return;
+	}
+	
+	
+	/**
+	 * This method makes the save button visible again, for when the user enters edit mode.
+	 */
 	private void showSave(){
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 		saveButton.setVisibility(1);
@@ -326,7 +345,8 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private boolean isEditableRecipe(){
 		String userEmail = grabEmail();
-		if (userEmail == creatorEmail)
+		String creatorEmail = currentRecipe.getCreatorEmail();
+		if (userEmail.equalsIgnoreCase(creatorEmail))
 			return true;
 		else 
 			return false;
@@ -348,6 +368,10 @@ public class ViewRecipeActivity extends Activity {
 	}
 	
 	
+	/**
+	 * This method creates a dialog which informs that user that they can now
+	 * edit the current recipe.
+	 */
 	private void showThatEditable() {
 		TextView tv = new TextView(this);
 		tv.setText("You may now edit this recipe!");
@@ -360,4 +384,58 @@ public class ViewRecipeActivity extends Activity {
 		});
 		alert.show();
 	}
+	
+	
+	/**
+	 * This method creates a dialog which informs the user that only the original
+	 * creator can edit their recipe.
+	 */
+	private void showThatNotEditable() {
+		TextView tv = new TextView(this);
+		tv.setText("Only the original creator may edit their recipe!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Sorry");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
+	}
+	
+	
+	private void emailDialog() {
+		TextView tv = new TextView(this);
+		tv.setText("Email sent to your account!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Email");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
+	}
+	
+	private void emailToSelf() {
+		String userEmail = grabEmail();
+		String emailBody = convertToEmail();
+		
+		Intent i = new Intent(Intent.ACTION_SEND);
+		i.setType("message/rfc822");
+		i.putExtra(Intent.EXTRA_EMAIL  , "ajstarna@ualberta.ca");
+		i.putExtra(Intent.EXTRA_SUBJECT, "Recipe");
+		i.putExtra(Intent.EXTRA_TEXT   , emailBody);
+		startActivity(Intent.createChooser(i, "Send mail..."));
+	}
+
+	private String convertToEmail() {
+		String title = currentRecipe.getName();
+		String directions = currentRecipe.getDirections();
+		String description = currentRecipe.getDescription();
+		String ingredients = convertList(currentRecipe.getIngredients());	
+		return "Recipe Title:\n" + title + "\nRecipe Description:\n" + description + 
+				"\nIngredients:\n" + ingredients + "\nDirections:\n" + directions;
+	}
+	
 }
