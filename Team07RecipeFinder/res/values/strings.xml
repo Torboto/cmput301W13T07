@@ -53,6 +53,7 @@
     <!-- Button Strings -->
     <string name="button_edit">Edit</string>
     <string name="button_delete">Delete</string>
+    <string name="button_email">Email</string>
     <string name="hello_world">Hello world!</string>
 
     <!-- EditPantryMenu -->
