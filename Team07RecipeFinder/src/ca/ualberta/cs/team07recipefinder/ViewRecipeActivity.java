@@ -37,6 +37,7 @@ public class ViewRecipeActivity extends Activity {
 	KeyListener descriptionListener;
 	KeyListener ingredientsListener;
 	KeyListener directionsListener;
+	//TODO: ET- if currentRecipe is a member variable, it should need to be passed into any functions like ParseRecipe
 	Recipe currentRecipe;
 	
 
@@ -52,7 +53,7 @@ public class ViewRecipeActivity extends Activity {
 		// AS: call fillCurrentRecipe() to get the recipe from either the local databse
 		// or server.
 		fillCurrentRecipe(recipeString);
-		parseRecipe(currentRecipe);
+		
 
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);	
 		emailButton.setOnClickListener(new View.OnClickListener() {
@@ -114,9 +115,7 @@ public class ViewRecipeActivity extends Activity {
 		} else if (sourceCode == 2) {
 			// AS: if came from Search
 			hideEditDelete();
-		} else {
-			// AS: the code should not get here
-		}
+		} 
 	}
 
 	/**
@@ -132,6 +131,7 @@ public class ViewRecipeActivity extends Activity {
 
 		if (sourceCode == 1) {
 			currentRecipe = rc.getRecipeSQL(recipeID, getApplicationContext());
+			parseRecipe(currentRecipe);
 		}
 		if (sourceCode == 2){
 			SearchRecipeTask search = new SearchRecipeTask(recipeID);
@@ -140,6 +140,7 @@ public class ViewRecipeActivity extends Activity {
 				@SuppressWarnings("unchecked")
 				public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
 					currentRecipe = data.get(0);
+					parseRecipe(currentRecipe);
 				}
 			});
 			search.execute("");
@@ -354,7 +355,6 @@ public class ViewRecipeActivity extends Activity {
 			return true;
 		else 
 			return false;
-		
 	}
 	
 	/**
@@ -427,19 +427,20 @@ public class ViewRecipeActivity extends Activity {
 		
 		Intent i = new Intent(Intent.ACTION_SEND);
 		i.setType("message/rfc822");
-		i.putExtra(Intent.EXTRA_EMAIL  , "ajstarna@ualberta.ca");
+		i.putExtra(Intent.EXTRA_EMAIL  , userEmail);
 		i.putExtra(Intent.EXTRA_SUBJECT, "Recipe");
 		i.putExtra(Intent.EXTRA_TEXT   , emailBody);
 		startActivity(Intent.createChooser(i, "Send mail..."));
 	}
 
+	//TODO: ET - factor this out into another class
 	private String convertToEmail() {
 		String title = currentRecipe.getName();
 		String directions = currentRecipe.getDirections();
 		String description = currentRecipe.getDescription();
 		String ingredients = convertList(currentRecipe.getIngredients());	
-		return "Recipe Title:\n" + title + "\nRecipe Description:\n" + description + 
-				"\nIngredients:\n" + ingredients + "\nDirections:\n" + directions;
+		return "Recipe Title:\n" + title + "\n\nRecipe Description:\n" + description + 
+				"\n\nIngredients:\n" + ingredients + "\n\nDirections:\n" + directions;
 	}
 	
 }
