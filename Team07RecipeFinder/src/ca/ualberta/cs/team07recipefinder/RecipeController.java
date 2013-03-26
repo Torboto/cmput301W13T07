@@ -204,4 +204,18 @@ public class RecipeController {
 		}
 		return bmp;
 	}
+	
+	/**
+	 * Deletes the recipe image file located at the file path.
+	 * @param path
+	 */
+	public void deleteImage(String path) {
+		File file = new File(path);
+		try {
+			file.delete();
+		} catch(Exception e) {
+			// No file exists with that path
+			Log.w("Delete image", "Recipe image cannot be deleted");
+		}
+	}
 }
