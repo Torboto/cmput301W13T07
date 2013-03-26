@@ -16,7 +16,7 @@
     <!-- EditTextHint Strings -->
     <string name="title_activity_main">Recipe Finder</string>
     <string name="title_activity_new_recipe">NewRecipeActivity</string>
-    
+
     <!-- Camera Strings -->
     <string name="status">status</string>
     <string name="title_activity_bogo_pic_gen">BogoPicGen</string>
@@ -37,7 +37,7 @@
     <!-- EditTextHint Strings -->
     <string name="search_ingredient">Ingredients</string>
     <string name="search_recipe">Recipe</string>
-    <string name="pantry_search"> Using My Pantry</string>
+    <string name="pantry_search"> Search Using My Pantry</string>
     <string name="title_activity_view_recipe">ViewRecipe</string>
     <string name="enter_keywords">Enter Keywords</string>
     <string name="enter_ingredient">Enter Ingredients</string>
@@ -60,5 +60,6 @@
     <string name="menu_delete_ingredient">Delete</string>
     <string name="menu_edit_ingredient">Edit</string>
     <string name="menu_pantry_title">Menu</string>
+    <string name="title_activity_search_by_pantry">SearchByPantryActivity</string>
 
 </resources>

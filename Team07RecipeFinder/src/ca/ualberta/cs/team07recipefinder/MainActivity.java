@@ -122,6 +122,17 @@ public class MainActivity extends Activity {
 							populateSearch();
 					}
 				});
+		
+		// AS: listener for Pantry Search button
+				findViewById(R.id.buttonPantrySearch).setOnClickListener(
+						new View.OnClickListener() {
+							@Override
+							public void onClick(View view) {
+								Intent pantrySearchIntent = new Intent(getApplicationContext(),
+										SearchByPantryActivity.class);
+									startActivity(pantrySearchIntent);
+							}
+						});
 
 	}
 
