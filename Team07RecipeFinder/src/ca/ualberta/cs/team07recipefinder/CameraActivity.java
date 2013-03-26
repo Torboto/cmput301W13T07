@@ -56,8 +56,7 @@ public class CameraActivity extends Activity {
 	public void takeAPhoto() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-		String folder = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + "/tmp/" + folderName;
+		String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp/" + folderName;
 		File folderF = new File(folder);
 		if (!folderF.exists()) {
 			folderF.mkdir();
@@ -87,4 +86,5 @@ public class CameraActivity extends Activity {
 			}
 		}
 	}
+
 }

@@ -67,14 +67,31 @@ public class NewRecipeActivity extends Activity {
 		});
 	}
 
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		// Check if the recipe has any images saved on the sd card and get
+		// the bitmap for the imagebutton
+		RecipeController controller = new RecipeController();
+		ArrayList<String> imagePaths = 
+				controller.getRecipeImages(newRecipe.getRecipeId());
 
+		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
+
+		// Set the image of the imagebutton to the first image in the folder
+		if (imagePaths.size() > 0)
+			pictureButton
+					.setImageBitmap(controller.getBitmap(imagePaths.get(0)));
+	}
+	
 	/**
 	 * This method checks that the Edit Texts are all non empty, and if so,
 	 * calls grabRecipeInfo and writeRecipe to form and write a new recipe
 	 * to the user's database.
 	 */
 	private void createRecipe() {
-
+		
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
 				&& (!isEmpty(ingredientsEditText))
 				&& (!isEmpty(directionsEditText))) {

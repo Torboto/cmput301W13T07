@@ -15,7 +15,7 @@ public class Recipe {
 	String description;
 	ArrayList<String> ingredients;
 	String directions;
-	ArrayList<String> images;
+	Boolean isImagesExist;
 	UUID recipeId;
 	String creatorEmail;
 
@@ -25,30 +25,28 @@ public class Recipe {
 	 */
 	public Recipe(String name, String description,
 			ArrayList<String> ingredients, String directions,
-			ArrayList<String> images, String creatorEmail) {
+			String creatorEmail) {
 
 		this.name = name;
 		this.description = description;
 		this.ingredients = ingredients;
 		this.directions = directions;
-		this.images = images;
+		this.isImagesExist = false;
 		this.creatorEmail = creatorEmail;
 		this.recipeId = UUID.randomUUID();
 	}
 	
 	public Recipe() {
+		this.isImagesExist = false;
 		this.recipeId = UUID.randomUUID();
 	}
 
-	public ArrayList<String> getImages() {
-		return this.images;
+	public Boolean getIsImagesExist() {
+		return this.isImagesExist;
 	}
 
-	/*
-	 * Add an array of images to the recipe
-	 */
-	public void setImages(ArrayList<String> images) {
-		this.images = images;
+	public void setIsImagesExist(Boolean exists) {
+		this.isImagesExist = exists;
 	}
 	
 	public UUID getRecipeId() {
