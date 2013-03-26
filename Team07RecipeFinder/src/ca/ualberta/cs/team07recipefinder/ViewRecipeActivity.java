@@ -10,10 +10,13 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.KeyListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -116,6 +119,25 @@ public class ViewRecipeActivity extends Activity {
 			// AS: if came from Search
 			hideEditDelete();
 		} 
+	}
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+		
+		// Check if the recipe has any images saved on the sd card and get
+		// the bitmap for the imagebutton
+		RecipeController controller = new RecipeController();
+		ArrayList<String> imagePaths = 
+				controller.getRecipeImages(currentRecipe.getRecipeId());
+
+		ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
+		
+		// Set the image of the imagebutton to the first image in the folder
+		if (imagePaths.size() > 0) {
+			pictureButton
+					.setImageBitmap(controller.getBitmap(imagePaths.get(0)));
+		}
 	}
 
 	/**
