@@ -117,7 +117,9 @@ public class MainActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
-						populateSearch();
+						EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
+						if (!isEmpty(etSearchNameView))
+							populateSearch();
 					}
 				});
 
@@ -346,7 +348,6 @@ public class MainActivity extends Activity {
 	 */
 	protected void populateSearch() {
 		EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
-		EditText etSearchIngredientsView = (EditText) findViewById(R.id.etIngredientsList);
 		// TODO Convert everything to search ingredients with a string, instead
 		// of an array
 		SearchRecipeTask search = new SearchRecipeTask(etSearchNameView
@@ -375,5 +376,18 @@ public class MainActivity extends Activity {
 		searchListView.setAdapter(adapter);
 
 		setListViewOnClickListener(searchListView, recipes);
+	}
+	
+	/**
+	 * @author AS This method takes an EditText and returns true if it is empty and false otherwise.
+	 * 
+	 * @param etText the EditText to be tested
+	 * @return       True: if empty, false: otherwise.
+	 */
+	private boolean isEmpty(EditText etText) {
+		if (etText.getText().toString().trim().length() > 0)
+			return false;
+		else
+			return true;
 	}
 }
