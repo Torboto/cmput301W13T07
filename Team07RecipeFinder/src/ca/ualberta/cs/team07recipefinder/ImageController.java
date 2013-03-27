@@ -76,4 +76,19 @@ public class ImageController {
 		
 		}
 	}
+	
+	// Gets the number of images that a recipe has saved on the sdcard
+	static public int getNumberImages(UUID uuid, Recipe.Location location) {
+		int maxImageNumber = -1;
+		
+		if(location == Recipe.Location.LOCAL) {
+			// get the paths of all images saved locally
+			ArrayList<String> imagePaths = getAllRecipeImages(uuid, location);
+			maxImageNumber = imagePaths.size();
+		} else if(location == Recipe.Location.SERVER) {
+			// TODO: SERVERSTUFF
+		}
+		
+		return maxImageNumber;
+	}
 }

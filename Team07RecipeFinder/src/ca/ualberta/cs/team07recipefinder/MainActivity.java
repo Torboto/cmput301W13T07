@@ -362,8 +362,7 @@ public class MainActivity extends Activity {
 		EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
 		// TODO Convert everything to search ingredients with a string, instead
 		// of an array
-		SearchRecipeTask search = new SearchRecipeTask(etSearchNameView
-				.getText().toString(), null);
+		SearchRecipeTask search = new SearchRecipeTask(etSearchNameView.getText().toString(), null);
 
 		search.setDataDownloadListener(new DataDownloadListener() {
 			@SuppressWarnings("unchecked")

@@ -13,6 +13,7 @@ import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -53,6 +54,19 @@ public class ViewRecipeActivity extends Activity {
 		// or server.
 		fillCurrentRecipe(recipeString);
 
+		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
+		pictureButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent galleryIntent = new Intent(getApplicationContext(),
+						GalleryViewActivity.class);
+				galleryIntent.putExtra("code", sourceCode);
+				galleryIntent.putExtra("recipeId",
+						String.valueOf(currentRecipe.getRecipeId()));
+				startActivity(galleryIntent);
+			}
+		});
+		
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
 		emailButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -123,22 +137,21 @@ public class ViewRecipeActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 	}
-	
-	public void populateImages(){
+
+	public void populateImages() {
 		// Check if the recipe has any images saved on the sd card and get
 		// the bitmap for the imagebutton
-		if (currentRecipe.getIsImagesExist()) {
-			ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
-					currentRecipe.getRecipeId(), currentRecipe.location);
+		ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
+				currentRecipe.getRecipeId(), currentRecipe.location);
 
-			ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
+		ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
 
-			// Set the image of the imagebutton to the first image in the folder
-			if (imagePaths.size() > 0) {
-				pictureButton.setImageBitmap(ImageController.getThumbnailImage(
-						imagePaths.get(0), currentRecipe.location));
-			}	
+		// Set the image of the imagebutton to the first image in the folder
+		if (imagePaths.size() > 0) {
+			pictureButton.setImageBitmap(ImageController.getThumbnailImage(
+					imagePaths.get(0), currentRecipe.location));
 		}
+
 	}
 
 	/**
