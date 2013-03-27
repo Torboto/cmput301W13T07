@@ -6,7 +6,7 @@
     <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:layout_gravity="right"
+        android:layout_gravity="bottom"
         android:layout_weight="2"
         android:gravity="right"
         android:orientation="horizontal" >
