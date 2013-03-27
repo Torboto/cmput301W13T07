@@ -41,6 +41,7 @@ public class HttpClient {
 	 * @param recipe
 	 */
 	public void writeRecipe(Recipe recipe) {
+		recipe.location = Recipe.Location.SERVER;
 		HttpPost httpPost = new HttpPost(url + recipe.getRecipeId());
 		StringEntity stringEntity = null;
 
@@ -107,7 +108,6 @@ public class HttpClient {
 		// HttpGet httpPost = new
 		// HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
 
-
 		HttpResponse response = null;
 		try {
 			response = httpClient.execute(httpGet);
@@ -167,11 +167,10 @@ public class HttpClient {
 		System.out.println(status);
 
 		HttpEntity entity = response.getEntity();
-		
+
 		BufferedReader br;
 		try {
-			br = new BufferedReader(new InputStreamReader(
-					entity.getContent()));
+			br = new BufferedReader(new InputStreamReader(entity.getContent()));
 			String output;
 			System.err.println("Output from Server -> ");
 			while ((output = br.readLine()) != null) {
