@@ -136,8 +136,7 @@ public class NewRecipeActivity extends Activity {
 	 * @param newRecipe the recipe to be written
 	 */
 	private void writeRecipe(Recipe newRecipe) {
-		RecipeController rc = new RecipeController();
-		rc.writeRecipe(newRecipe, getApplicationContext());
+		RecipeController.writeRecipe(newRecipe, getApplicationContext());
 		return;
 	}
 
