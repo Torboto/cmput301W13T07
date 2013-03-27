@@ -17,6 +17,7 @@ import android.widget.AdapterView.OnItemClickListener;
 public class SearchByPantryActivity extends Activity {
 	ListView ingredientsLV;
 	User user;
+	ArrayList<String> ingredientsToSearch;
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -48,9 +49,11 @@ public class SearchByPantryActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		ingredientsLV = (ListView) findViewById(R.id.lvPantry1);
+		ingredientsLV.setChoiceMode(ListView.CHOICE_MODE_MULTIPLE);
 		ArrayList<String> ingredients = user.getPantry().getAllIngredients();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item, ingredients);
+				R.layout.simple_list_item_multiple_choice, ingredients);
+		
 		ingredientsLV.setAdapter(adapter);
 	}
 
