@@ -55,6 +55,7 @@
     <string name="button_delete">Delete</string>
     <string name="button_email">Email</string>
     <string name="hello_world">Hello world!</string>
+    <string name="button_cancel">Cancel</string>
 
     <!-- EditPantryMenu -->
     <string name="menu_delete_ingredient">Delete</string>
