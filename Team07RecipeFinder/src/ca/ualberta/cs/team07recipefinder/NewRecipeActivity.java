@@ -75,14 +75,14 @@ public class NewRecipeActivity extends Activity {
 		// the bitmap for the imagebutton
 		RecipeController controller = new RecipeController();
 		ArrayList<String> imagePaths = 
-				controller.getRecipeImages(newRecipe.getRecipeId());
+				ImageController.getAllRecipeImages(newRecipe.getRecipeId(), newRecipe.location);
 
 		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 
 		// Set the image of the imagebutton to the first image in the folder
 		if (imagePaths.size() > 0)
 			pictureButton
-					.setImageBitmap(controller.getBitmap(imagePaths.get(0)));
+					.setImageBitmap(ImageController.getThumbnailImage(imagePaths.get(0), newRecipe.location));
 	}
 	
 	/**
