@@ -53,6 +53,7 @@ public class ViewRecipeActivity extends Activity {
 		// or server.
 		fillCurrentRecipe(recipeString);
 
+		// MA: start GalleryViewActivity when click on the thumbnail.
 		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 		pictureButton.setOnClickListener(new View.OnClickListener() {
 			@Override
