@@ -16,11 +16,11 @@ public class Recipe {
 	String description;
 	ArrayList<String> ingredients;
 	String directions;
-	Boolean isImagesExist;
 	UUID recipeId;
 	String creatorEmail;
 	Location location;
 	Boolean isUpdated;
+	int imageNumber;
 	
 
 	/*
@@ -35,27 +35,21 @@ public class Recipe {
 		this.description = description;
 		this.ingredients = ingredients;
 		this.directions = directions;
-		this.isImagesExist = false;
 		this.creatorEmail = creatorEmail;
 		this.location = location;
 		this.recipeId = UUID.randomUUID();
 		this.isUpdated = false;
+		this.imageNumber = 0;
 	}
 	
 	public Recipe() {
-		this.isImagesExist = false;
 		this.recipeId = UUID.randomUUID();
 		this.location = Location.LOCAL;
 		this.isUpdated = false;
+		this.imageNumber = 0;
 	}
 
-	public Boolean getIsImagesExist() {
-		return this.isImagesExist;
-	}
 
-	public void setIsImagesExist(Boolean exists) {
-		this.isImagesExist = exists;
-	}
 	
 	public UUID getRecipeId() {
 		return this.recipeId;
@@ -106,6 +100,14 @@ public class Recipe {
 	
 	public Boolean getIsUpdated() {
 		return this.isUpdated;
+	}
+	
+	public void setImageNumber(int number) {
+		this.imageNumber = number;
+	}
+	
+	public int getImageNumber() {
+		return this.imageNumber;
 	}
 	
 	@Override

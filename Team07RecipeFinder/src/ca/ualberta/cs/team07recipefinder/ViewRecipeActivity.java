@@ -123,22 +123,21 @@ public class ViewRecipeActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 	}
-	
-	public void populateImages(){
+
+	public void populateImages() {
 		// Check if the recipe has any images saved on the sd card and get
 		// the bitmap for the imagebutton
-		if (currentRecipe.getIsImagesExist()) {
-			ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
-					currentRecipe.getRecipeId(), currentRecipe.location);
+		ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
+				currentRecipe.getRecipeId(), currentRecipe.location);
 
-			ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
+		ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
 
-			// Set the image of the imagebutton to the first image in the folder
-			if (imagePaths.size() > 0) {
-				pictureButton.setImageBitmap(ImageController.getThumbnailImage(
-						imagePaths.get(0), currentRecipe.location));
-			}	
+		// Set the image of the imagebutton to the first image in the folder
+		if (imagePaths.size() > 0) {
+			pictureButton.setImageBitmap(ImageController.getThumbnailImage(
+					imagePaths.get(0), currentRecipe.location));
 		}
+
 	}
 
 	/**
