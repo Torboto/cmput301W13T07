@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.UUID;
 
+
 /**
  * Data class that contains the components of a Recipe.
  * @author gcoomber
@@ -18,6 +19,8 @@ public class Recipe {
 	Boolean isImagesExist;
 	UUID recipeId;
 	String creatorEmail;
+	location location;
+	
 
 	/*
 	 * Creates recipe with inputed data, and also generates unique UUID for
@@ -25,7 +28,7 @@ public class Recipe {
 	 */
 	public Recipe(String name, String description,
 			ArrayList<String> ingredients, String directions,
-			String creatorEmail) {
+			String creatorEmail, location location) {
 
 		this.name = name;
 		this.description = description;
@@ -33,6 +36,7 @@ public class Recipe {
 		this.directions = directions;
 		this.isImagesExist = false;
 		this.creatorEmail = creatorEmail;
+		this.location = location;
 		this.recipeId = UUID.randomUUID();
 	}
 	
@@ -98,5 +102,8 @@ public class Recipe {
 				this.description;
 	}
 	
-	
+	static public enum location {
+		LOCAL,
+		SERVER;
+	}
 }
