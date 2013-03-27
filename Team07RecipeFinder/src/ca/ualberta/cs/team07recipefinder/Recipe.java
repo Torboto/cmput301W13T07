@@ -19,7 +19,7 @@ public class Recipe {
 	Boolean isImagesExist;
 	UUID recipeId;
 	String creatorEmail;
-	location location;
+	Location location;
 	
 
 	/*
@@ -28,7 +28,7 @@ public class Recipe {
 	 */
 	public Recipe(String name, String description,
 			ArrayList<String> ingredients, String directions,
-			String creatorEmail, location location) {
+			String creatorEmail, Location location) {
 
 		this.name = name;
 		this.description = description;
@@ -102,7 +102,7 @@ public class Recipe {
 				this.description;
 	}
 	
-	static public enum location {
+	static public enum Location {
 		LOCAL,
 		SERVER;
 	}
