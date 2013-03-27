@@ -10,16 +10,11 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.KeyListener;
-import android.util.Log;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 /**
  * The ViewRecipeActivity displays the information about a particular Recipe.
@@ -157,7 +152,6 @@ public class ViewRecipeActivity extends Activity {
 			SearchRecipeTask search = new SearchRecipeTask(recipeID);
 
 			search.setDataDownloadListener(new DataDownloadListener() {
-				@SuppressWarnings("unchecked")
 				public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
 					currentRecipe = data.get(0);
 					parseRecipe(currentRecipe);
