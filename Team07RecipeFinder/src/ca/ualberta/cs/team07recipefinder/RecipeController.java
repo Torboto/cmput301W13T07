@@ -151,11 +151,14 @@ public class RecipeController {
 		return isConnected;
 	}
 	
-	static public void synchronize(ArrayList<String> recipes){
-		for(String recipeId : recipes){
-			//get from database
-			//delete from server
-			//write to server
+	static public void synchronize(ArrayList<UUID> recipes, Context context){
+		SqlClient sqlClient = new SqlClient(context);
+		HttpClient httpClient = new HttpClient();
+		for(UUID recipeId : recipes){
+			//this will most definitely not work the first time.
+			Recipe recipe = sqlClient.readRecipe(recipeId);
+			httpClient.deleteRecipe(recipeId);
+			httpClient.writeRecipe(recipe);
 		}
 	}
 }
