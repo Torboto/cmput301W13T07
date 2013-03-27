@@ -61,6 +61,7 @@ public class SqlClient extends SQLiteOpenHelper {
      * @param recipe
      */
     public void writeRecipe(Recipe recipe) {
+		recipe.location = Recipe.Location.LOCAL;
     	String json;
     	
     	// GC: Gets the data repository in write mode
