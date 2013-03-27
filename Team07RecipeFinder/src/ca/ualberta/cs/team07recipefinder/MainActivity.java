@@ -118,6 +118,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 						EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
+						// AS: if edittext not empty then do a search
 						if (!isEmpty(etSearchNameView))
 							populateSearch();
 					}

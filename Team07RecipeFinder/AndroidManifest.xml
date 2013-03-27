@@ -54,6 +54,11 @@
             android:name="ca.ualberta.cs.team07recipefinder.SearchByPantryActivity"
             android:label="@string/title_activity_search_by_pantry" >
         </activity>
+        <activity
+            android:name="ca.ualberta.cs.team07recipefinder.GalleryViewActivity"
+            android:label="@string/title_activity_gallery_view"
+            android:theme="@android:style/Theme.Black.NoTitleBar" >
+        </activity>
     </application>
 
 </manifest>
