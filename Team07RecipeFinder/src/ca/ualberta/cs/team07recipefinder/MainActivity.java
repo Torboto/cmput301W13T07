@@ -89,21 +89,19 @@ public class MainActivity extends Activity {
 						startActivity(newRecipeIntent);
 					}
 				});
-		
-		// GC: Clicklistener for the synch button. Currently being used to 
+
+		// GC: Clicklistener for the synch button. Currently being used to
 		// test the camera.
-		/*findViewById(R.id.buttonSynch).setOnClickListener(
-				new View.OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						// GC: The add button starts the NewRecipeActivity
-						Intent cameraIntent = new Intent(
-								getApplicationContext(),
-								CameraActivity.class);
-						startActivity(cameraIntent);
-					}
-				});*/
-		
+		/*
+		 * findViewById(R.id.buttonSynch).setOnClickListener( new
+		 * View.OnClickListener() {
+		 * 
+		 * @Override public void onClick(View v) { // GC: The add button starts
+		 * the NewRecipeActivity Intent cameraIntent = new Intent(
+		 * getApplicationContext(), CameraActivity.class);
+		 * startActivity(cameraIntent); } });
+		 */
+
 		// MA: Call addIngredient() when click on Add Ingredients button
 		findViewById(R.id.buttonAddIngredient).setOnClickListener(
 				new View.OnClickListener() {
@@ -120,20 +118,22 @@ public class MainActivity extends Activity {
 						EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
 						// AS: if edittext not empty then do a search
 						if (!isEmpty(etSearchNameView))
-							populateSearch();
+							populateSearch(etSearchNameView.getText()
+									.toString(), null);
 					}
 				});
-		
+
 		// AS: listener for Pantry Search button
-				findViewById(R.id.buttonPantrySearch).setOnClickListener(
-						new View.OnClickListener() {
-							@Override
-							public void onClick(View view) {
-								Intent pantrySearchIntent = new Intent(getApplicationContext(),
-										SearchByPantryActivity.class);
-									startActivity(pantrySearchIntent);
-							}
-						});
+		findViewById(R.id.buttonPantrySearch).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View view) {
+						Intent pantrySearchIntent = new Intent(
+								getApplicationContext(),
+								SearchByPantryActivity.class);
+						startActivity(pantrySearchIntent);
+					}
+				});
 
 	}
 
@@ -358,14 +358,16 @@ public class MainActivity extends Activity {
 	 *         is a type that will pass the data from the async task back to
 	 *         setSearch method.
 	 */
-	protected void populateSearch() {
-		EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
-		// TODO Convert everything to search ingredients with a string, instead
-		// of an array
-		SearchRecipeTask search = new SearchRecipeTask(etSearchNameView.getText().toString(), null);
+	protected void populateSearch(String titleKeyword,
+			ArrayList<String> ingredients) {
+		SearchRecipeTask search = null;
+		if (titleKeyword != null) {
+			search = new SearchRecipeTask(titleKeyword, null);
+		} else if (ingredients != null) {
+			search = new SearchRecipeTask(null, ingredients);
+		}
 
 		search.setDataDownloadListener(new DataDownloadListener() {
-			@SuppressWarnings("unchecked")
 			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
 				setSearch(data);
 			}
@@ -388,12 +390,14 @@ public class MainActivity extends Activity {
 
 		setListViewOnClickListener(searchListView, recipes);
 	}
-	
+
 	/**
-	 * @author AS This method takes an EditText and returns true if it is empty and false otherwise.
+	 * @author AS This method takes an EditText and returns true if it is empty
+	 *         and false otherwise.
 	 * 
-	 * @param etText the EditText to be tested
-	 * @return       True: if empty, false: otherwise.
+	 * @param etText
+	 *            the EditText to be tested
+	 * @return True: if empty, false: otherwise.
 	 */
 	private boolean isEmpty(EditText etText) {
 		if (etText.getText().toString().trim().length() > 0)
