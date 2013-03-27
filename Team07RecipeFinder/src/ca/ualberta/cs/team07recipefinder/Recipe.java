@@ -43,6 +43,7 @@ public class Recipe {
 	public Recipe() {
 		this.isImagesExist = false;
 		this.recipeId = UUID.randomUUID();
+		this.location = Location.LOCAL;
 	}
 
 	public Boolean getIsImagesExist() {

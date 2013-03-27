@@ -73,16 +73,16 @@ public class NewRecipeActivity extends Activity {
 		
 		// Check if the recipe has any images saved on the sd card and get
 		// the bitmap for the imagebutton
-		RecipeController controller = new RecipeController();
 		ArrayList<String> imagePaths = 
 				ImageController.getAllRecipeImages(newRecipe.getRecipeId(), newRecipe.location);
 
 		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 
 		// Set the image of the imagebutton to the first image in the folder
-		if (imagePaths.size() > 0)
+		if (imagePaths.size() > 0){
 			pictureButton
 					.setImageBitmap(ImageController.getThumbnailImage(imagePaths.get(0), newRecipe.location));
+		}
 	}
 	
 	/**
