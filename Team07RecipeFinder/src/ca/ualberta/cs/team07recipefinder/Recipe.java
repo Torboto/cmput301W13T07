@@ -20,6 +20,7 @@ public class Recipe {
 	UUID recipeId;
 	String creatorEmail;
 	Location location;
+	Boolean isUpdated;
 	
 
 	/*
@@ -38,12 +39,14 @@ public class Recipe {
 		this.creatorEmail = creatorEmail;
 		this.location = location;
 		this.recipeId = UUID.randomUUID();
+		this.isUpdated = false;
 	}
 	
 	public Recipe() {
 		this.isImagesExist = false;
 		this.recipeId = UUID.randomUUID();
 		this.location = Location.LOCAL;
+		this.isUpdated = false;
 	}
 
 	public Boolean getIsImagesExist() {
@@ -95,6 +98,14 @@ public class Recipe {
 	
 	public void setCreatorEmail(String creatorEmail){
 		this.creatorEmail = creatorEmail;
+	}
+	
+	public void setIsUpdated(Boolean isUpdate) {
+		this.isUpdated = isUpdate;
+	}
+	
+	public Boolean getIsUpdated() {
+		return this.isUpdated;
 	}
 	
 	@Override

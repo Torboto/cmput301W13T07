@@ -66,6 +66,11 @@ public class RecipeController {
 	static public void updateRecipe(UUID uuid, Recipe recipe, Context context) {
 		SqlClient client = new SqlClient(context);
 		client.updateRecipe(uuid, recipe);
+		
+		// change the isUpdated boolean within recipe to indicate that changes
+		// tot he recipe have been made
+		recipe.setIsUpdated(true);
+		
 		return;
 	}
 
@@ -154,6 +159,7 @@ public class RecipeController {
 	static public void synchronize(ArrayList<UUID> recipes, Context context){
 		SqlClient sqlClient = new SqlClient(context);
 		HttpClient httpClient = new HttpClient();
+		
 		for(UUID recipeId : recipes){
 			Recipe recipe = sqlClient.readRecipe(recipeId);
 			
@@ -162,5 +168,41 @@ public class RecipeController {
 			//httpClient.deleteRecipe(recipeId);
 			//httpClient.writeRecipe(recipe);
 		}
+		
+		pushRecipeChangesToWeb(context);
 	}
+	
+	/**
+	 * Finds all locally saved recipes that have been changed since the 
+	 * last synch and pushes their changes to the webservice.
+	 * @param context
+	 */
+	static private void pushRecipeChangesToWeb(Context context) {
+		
+		ArrayList<Recipe> localRecipes;
+		// List of all the locally saved recipes that have changes that 
+		// must be pushed to the webservice.
+		ArrayList<Recipe> changedLocalRecipes = new ArrayList<Recipe>();
+		
+		SqlClient sqlClient = new SqlClient(context);
+		
+		localRecipes = sqlClient.getAllRecipes();
+		
+		// If there are any local recipes, check which have changes
+		if(localRecipes != null) {
+			for(Recipe recipe:localRecipes) {
+				// If the recipe has been changed, add to list
+				if(recipe.getIsUpdated() == true) {
+					changedLocalRecipes.add(recipe);
+				}
+			}
+			
+			if(changedLocalRecipes.size() > 0) {
+				// TODO: update the changed recipes
+				
+				// TODO: change the isUpdated boolean back to false
+			}
+		}
+	}
+	
 }
