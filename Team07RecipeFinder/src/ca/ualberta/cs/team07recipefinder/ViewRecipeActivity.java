@@ -147,11 +147,10 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private void fillCurrentRecipe(String recipeString) {
 		// AS: first get the recipe from the database using a recipeController
-		RecipeController rc = new RecipeController();
 		UUID recipeID = UUID.fromString(recipeString);
 
 		if (sourceCode == 1) {
-			currentRecipe = rc.getLocalRecipe(recipeID, getApplicationContext());
+			currentRecipe = RecipeController.getLocalRecipe(recipeID, getApplicationContext());
 			parseRecipe(currentRecipe);
 		}
 		if (sourceCode == 2){
@@ -310,16 +309,14 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private void deleteRecipe(String recipeString){
 		UUID recipeID = UUID.fromString(recipeString);
-		RecipeController rc = new RecipeController();
-		rc.deleteRecipe(recipeID, getApplicationContext());
+		RecipeController.deleteRecipe(recipeID, getApplicationContext());
 		return;
 	}
 	
 	private void editRecipe(String recipeString) {
 		UUID recipeID = UUID.fromString(recipeString);
 		Recipe newRecipe = grabRecipeInfo();
-		RecipeController rc = new RecipeController();
-		rc.updateRecipe(recipeID, newRecipe, getApplicationContext());
+		RecipeController.updateRecipe(recipeID, newRecipe, getApplicationContext());
 		return;
 	}
 	
