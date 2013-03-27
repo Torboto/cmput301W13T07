@@ -53,6 +53,19 @@ public class ViewRecipeActivity extends Activity {
 		// or server.
 		fillCurrentRecipe(recipeString);
 
+		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
+		pictureButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Intent galleryIntent = new Intent(getApplicationContext(),
+						GalleryViewActivity.class);
+				galleryIntent.putExtra("code", sourceCode);
+				galleryIntent.putExtra("recipeId",
+						String.valueOf(currentRecipe.getRecipeId()));
+				startActivity(galleryIntent);
+			}
+		});
+		
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
 		emailButton.setOnClickListener(new View.OnClickListener() {
 			@Override
