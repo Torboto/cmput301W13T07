@@ -23,21 +23,21 @@
 
         <Button
             android:id="@+id/buttonPrev"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/previousImage" />
 
         <Button
             android:id="@+id/buttonDelete"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/deleteImage" />
 
         <Button
             android:id="@+id/buttonNext"
-            android:layout_width="wrap_content"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/nextImage" />

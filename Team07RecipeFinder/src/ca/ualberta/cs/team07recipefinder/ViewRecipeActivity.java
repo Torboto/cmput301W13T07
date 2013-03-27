@@ -144,7 +144,7 @@ public class ViewRecipeActivity extends Activity {
 		ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
-		ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
+		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 
 		// Set the image of the imagebutton to the first image in the folder
 		if (imagePaths.size() > 0) {
@@ -169,6 +169,7 @@ public class ViewRecipeActivity extends Activity {
 			currentRecipe = RecipeController.getLocalRecipe(recipeID,
 					getApplicationContext());
 			parseRecipe(currentRecipe);
+			populateImages();
 		}
 		if (sourceCode == 2) {
 			SearchRecipeTask search = new SearchRecipeTask(recipeID);
