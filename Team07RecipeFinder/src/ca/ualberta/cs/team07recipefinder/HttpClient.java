@@ -48,7 +48,6 @@ public class HttpClient {
 		try {
 			stringEntity = new StringEntity(gson.toJson(recipe));
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		httpPost.setHeader("Accept", "application/json");
@@ -57,14 +56,11 @@ public class HttpClient {
 		try {
 			response = httpClient.execute(httpPost);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (NetworkOnMainThreadException e) {
-			// TODO
-			// e.printStackTrace();
+			//e.printStackTrace();
 		}
 
 		String status = response.getStatusLine().toString();
@@ -83,7 +79,6 @@ public class HttpClient {
 				System.err.println(output);
 			}
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		try {
@@ -91,7 +86,6 @@ public class HttpClient {
 			// of library that isn't in default Android package.
 			entity.consumeContent();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -112,10 +106,8 @@ public class HttpClient {
 		try {
 			response = httpClient.execute(httpGet);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -126,7 +118,6 @@ public class HttpClient {
 		try {
 			json = getEntityContent(response);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -156,10 +147,8 @@ public class HttpClient {
 		try {
 			response = httpClient.execute(httpDelete);
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -177,10 +166,8 @@ public class HttpClient {
 				System.err.println(output);
 			}
 		} catch (IllegalStateException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -223,13 +210,11 @@ public class HttpClient {
 			httpPost.setEntity(stringEntity);
 			response = httpClient.execute(httpPost);
 		} catch (UnsupportedEncodingException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -240,7 +225,6 @@ public class HttpClient {
 		try {
 			json = getEntityContent(response);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -266,33 +250,21 @@ public class HttpClient {
 	 * @param recipeId
 	 * @return
 	 */
-	public ArrayList<Recipe> searchRecipes(String name, UUID recipeId) {
+	public ArrayList<Recipe> searchRecipes(String name) {
 		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpGet searchRequest = null;
-		BufferedReader buff = null;
-		String output = null;
 		HttpResponse response = null;
 
 		try {
-			if (name != null) {
-				searchRequest = new HttpGet(url + "_search?pretty=1&q="
-						+ java.net.URLEncoder.encode(name, "UTF-8"));
-			} else if (recipeId != null) {
-				searchRequest = new HttpGet(url
-						+ "_search?pretty=1&q="
-						+ java.net.URLEncoder.encode(recipeId.toString(),
-								"UTF-8"));
-			}
+			searchRequest = new HttpGet(url + "_search?pretty=1&q="
+					+ java.net.URLEncoder.encode(name, "UTF-8"));
 			searchRequest.setHeader("Accept", "application/json");
 			response = httpClient.execute(searchRequest);
 		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 
@@ -303,7 +275,6 @@ public class HttpClient {
 		try {
 			json = getEntityContent(response);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 

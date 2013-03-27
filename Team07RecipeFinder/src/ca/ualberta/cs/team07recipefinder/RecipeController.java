@@ -150,4 +150,12 @@ public class RecipeController {
 		}
 		return isConnected;
 	}
+	
+	static public void synchronize(ArrayList<String> recipes){
+		for(String recipeId : recipes){
+			//get from database
+			//delete from server
+			//write to server
+		}
+	}
 }
