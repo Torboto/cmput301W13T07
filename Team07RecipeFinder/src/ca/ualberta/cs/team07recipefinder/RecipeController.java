@@ -155,10 +155,12 @@ public class RecipeController {
 		SqlClient sqlClient = new SqlClient(context);
 		HttpClient httpClient = new HttpClient();
 		for(UUID recipeId : recipes){
-			//this will most definitely not work the first time.
 			Recipe recipe = sqlClient.readRecipe(recipeId);
-			httpClient.deleteRecipe(recipeId);
-			httpClient.writeRecipe(recipe);
+			
+			//this will most definitely not work the first time.
+			//I need to write all the async tasks and stuff to go with this crap
+			//httpClient.deleteRecipe(recipeId);
+			//httpClient.writeRecipe(recipe);
 		}
 	}
 }
