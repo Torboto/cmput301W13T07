@@ -124,7 +124,7 @@ public class ViewRecipeActivity extends Activity {
 										// AS: The save button calls editRecipe
 										// then finishes
 										editRecipe(recipeString);
-										finish();
+										savedDialog();
 									}
 								});
 					}
@@ -447,6 +447,25 @@ public class ViewRecipeActivity extends Activity {
 		alert.setView(tv);
 		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
+	}
+	
+	/**
+	 *  This method creates a dialog which informs the user that the changes
+	 *  to the current recipe have been saved and finnishes the activity on
+	 *  click of OK.
+	 */
+	private void savedDialog() {
+		TextView tv = new TextView(this);
+		tv.setText("Changes to the current recipe have been saved.");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Success");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				finish();
 			}
 		});
 		alert.show();
