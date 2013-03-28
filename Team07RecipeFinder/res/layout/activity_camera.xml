@@ -27,10 +27,23 @@
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/status" />
 
-    <Button
-        android:id="@+id/buttonAddIngredient"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add" />
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonCancelImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_image" />
+
+        <Button
+            android:id="@+id/buttonSaveImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save_image" />
+    </LinearLayout>
 
 </LinearLayout>
