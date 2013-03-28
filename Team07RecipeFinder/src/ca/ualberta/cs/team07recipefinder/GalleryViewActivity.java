@@ -99,7 +99,7 @@ public class GalleryViewActivity extends Activity {
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));
 				cameraIntent.putExtra("imageNumber",
-						currentRecipe.getImageNumber());
+						currentRecipe.getImageNumber() + 1);
 				startActivity(cameraIntent);
 			}
 		});
