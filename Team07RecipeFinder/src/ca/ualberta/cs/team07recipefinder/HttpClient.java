@@ -18,6 +18,7 @@ import org.apache.http.client.methods.HttpPost;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 
+import android.graphics.Bitmap;
 import android.os.NetworkOnMainThreadException;
 
 import com.google.gson.Gson;
@@ -32,7 +33,8 @@ public class HttpClient {
 
 	private DefaultHttpClient httpClient = new DefaultHttpClient();
 	private Gson gson = new Gson();
-	private String url = "http://cmput301.softwareprocess.es:8080/cmput301w13t07/recipes/";
+	private String recipeUrl = "http://cmput301.softwareprocess.es:8080/cmput301w13t07/recipes/";
+	private String imageUrl = "http://cmput301.softwareprocess.es:8080/cmput301w13t07/images/";
 
 	/**
 	 * Writes recipe object to elastic search on the internet.
@@ -41,7 +43,7 @@ public class HttpClient {
 	 */
 	public void writeRecipe(Recipe recipe) {
 		recipe.location = Recipe.Location.SERVER;
-		HttpPost httpPost = new HttpPost(url + recipe.getRecipeId());
+		HttpPost httpPost = new HttpPost(recipeUrl + recipe.getRecipeId());
 		StringEntity stringEntity = null;
 
 		try {
@@ -97,7 +99,7 @@ public class HttpClient {
 	 * @return recipe object
 	 */
 	public Recipe readRecipe(UUID uuid) {
-		HttpGet httpGet = new HttpGet(url + uuid + "?pretty=1");
+		HttpGet httpGet = new HttpGet(recipeUrl + uuid + "?pretty=1");
 		// HttpGet httpPost = new
 		// HttpGet("http://cmput301.softwareprocess.es:8080/testing/lab02/999?pretty=1");//S4bRPFsuSwKUDSJImbCE2g?pretty=1
 
@@ -138,7 +140,7 @@ public class HttpClient {
 	}
 
 	public void deleteRecipe(UUID uuid) {
-		HttpDelete httpDelete = new HttpDelete(url + uuid);
+		HttpDelete httpDelete = new HttpDelete(recipeUrl + uuid);
 		httpDelete.addHeader("Accept", "application/json");
 
 		HttpResponse response = null;
@@ -185,7 +187,7 @@ public class HttpClient {
 	 * @return list of matching recipes
 	 */
 	public ArrayList<Recipe> searchRecipes(List<String> ingredients) {
-		HttpPost httpPost = new HttpPost(url + "_search?pretty=1");
+		HttpPost httpPost = new HttpPost(recipeUrl + "_search?pretty=1");
 		StringEntity stringEntity;
 		ArrayList<Recipe> recipeResults = null;
 		HttpResponse response = null;
@@ -254,7 +256,7 @@ public class HttpClient {
 		HttpResponse response = null;
 
 		try {
-			searchRequest = new HttpGet(url + "_search?pretty=1&q="
+			searchRequest = new HttpGet(recipeUrl + "_search?pretty=1&q="
 					+ java.net.URLEncoder.encode(name, "UTF-8"));
 			searchRequest.setHeader("Accept", "application/json");
 			response = httpClient.execute(searchRequest);
@@ -288,6 +290,64 @@ public class HttpClient {
 		}
 
 		return recipeResults;
+	}
+	
+	public void writeImage(UUID uuid, Bitmap bitmap){
+		HttpPost httpPost = new HttpPost(imageUrl + uuid);
+		StringEntity stringEntity = null;
+
+		try {
+			stringEntity = new StringEntity(gson.toJson(recipe));
+		} catch (UnsupportedEncodingException e1) {
+			e1.printStackTrace();
+		}
+		httpPost.setHeader("Accept", "application/json");
+		httpPost.setEntity(stringEntity);
+		HttpResponse response = null;
+		try {
+			response = httpClient.execute(httpPost);
+		} catch (ClientProtocolException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (NetworkOnMainThreadException e) {
+			//e.printStackTrace();
+		}
+
+		String status = response.getStatusLine().toString();
+		System.out.println(status);
+
+		HttpEntity entity = response.getEntity();
+		BufferedReader buff;
+
+		try {
+			buff = new BufferedReader(
+					new InputStreamReader(entity.getContent()));
+			String output;
+			System.err.println("Output from Server -> ");
+
+			while ((output = buff.readLine()) != null) {
+				System.err.println(output);
+			}
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		try {
+			// ET: Think this is right, EntityUtils is from more recent version
+			// of library that isn't in default Android package.
+			entity.consumeContent();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public Bitmap readImage(UUID uuid){
+		return null;
+	}
+	
+	public Bitmap[] readAllImages(UUID uuid){
+		return null;
 	}
 
 	/**

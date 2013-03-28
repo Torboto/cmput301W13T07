@@ -58,6 +58,10 @@ public class Image {
 		return bmp;
 	}
 	
+	static public void saveImageToServer(Bitmap bitmap){
+		
+	}
+	
 	static public Bitmap getServerThumbnailImage(UUID uuid) {
 		return null;
 	}
