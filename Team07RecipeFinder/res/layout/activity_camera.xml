@@ -1,36 +1,48 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <LinearLayout
+    <ImageView
+        android:id="@+id/ivPreview"
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:layout_gravity="right"
-        android:layout_weight="2"
-        android:gravity="right"
-        android:orientation="horizontal" >
-
-        <ImageButton
-            android:id="@+id/TakeAPhoto"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:scaleType="center"
-            android:src="@drawable/camera" />
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/status"
         android:layout_width="fill_parent"
-        android:layout_height="80dp"
+        android:layout_height="50dp"
         android:gravity="center_vertical|center_horizontal"
         android:text="@string/status" />
 
-    <Button
-        android:id="@+id/buttonAddIngredient"
+    <LinearLayout
         android:layout_width="fill_parent"
-        android:layout_height="wrap_content"
-        android:text="@string/add" />
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/buttonCancelImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/cancel_image" />
+
+        <ImageButton
+            android:id="@+id/ibTakeAPhoto"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/button_camera" />
+
+        <Button
+            android:id="@+id/buttonSaveImage"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="@string/save_image" />
+    </LinearLayout>
 
 </LinearLayout>

@@ -6,15 +6,16 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 /**
  * Activity that allows the user to take a picture and save it to the sd
@@ -29,20 +30,53 @@ public class CameraActivity extends Activity {
 	Uri imageFileUri;
 	String folderName = "";
 	int imageNumber = -1;
+	Context context;
+	int duration = Toast.LENGTH_SHORT;
+	Toast toast;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
 
-		ImageButton button = (ImageButton) findViewById(R.id.TakeAPhoto);
+		ImageButton button = (ImageButton) findViewById(R.id.ibTakeAPhoto);
 		OnClickListener listener = new OnClickListener() {
 			public void onClick(View v) {
 				takeAPhoto();
 			}
 		};
 		button.setOnClickListener(listener);
+
+		// MA: Save button will finish this activity. Cancel button will delete
+		// the temporary saved image.
+		Button cancelButton = (Button) findViewById(R.id.buttonCancelImage);
+		Button saveButton = (Button) findViewById(R.id.buttonSaveImage);
+
+		context = getApplicationContext();
+		duration = Toast.LENGTH_SHORT;
+
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				finish();
+			}
+		});
+
+		cancelButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+			}
+		});
 		
+		if (toast != null) {
+			toast.cancel();
+		}
+		toast = Toast.makeText(context, "Click to take a photo.", duration);
+		toast.show();
+		
+		ImageView iv = (ImageView) findViewById(R.id.ivPreview);
+		iv.setImageResource(R.drawable.recipe_image_outline);
+
 		// Get the name of the folder the image will be saved in
 		Bundle extras = getIntent().getExtras();
 		folderName = extras.getString("recipeId");
@@ -58,7 +92,8 @@ public class CameraActivity extends Activity {
 	public void takeAPhoto() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-		String folder = Environment.getExternalStorageDirectory().getAbsolutePath() + "/tmp/" + folderName;
+		String folder = Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + "/tmp/" + folderName;
 		File folderF = new File(folder);
 		if (!folderF.exists()) {
 			folderF.mkdir();
@@ -78,8 +113,8 @@ public class CameraActivity extends Activity {
 			TextView tv = (TextView) findViewById(R.id.status);
 			if (resultCode == RESULT_OK) {
 				tv.setText("Photo OK!");
-				ImageButton button = (ImageButton) findViewById(R.id.TakeAPhoto);
-				button.setImageDrawable(Drawable.createFromPath(imageFileUri
+				ImageView iv = (ImageView) findViewById(R.id.ivPreview);
+				iv.setImageDrawable(Drawable.createFromPath(imageFileUri
 						.getPath()));
 			} else if (resultCode == RESULT_CANCELED) {
 				tv.setText("Photo canceled");
