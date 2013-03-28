@@ -76,7 +76,7 @@
            			android:paddingTop="2dp"
            			android:paddingLeft="15dp"
            			android:textSize="15sp"
-           			android:hint="@string/recipe_ingredients" />
+           			android:hint="@string/ingredients_hint" />
         		
         		<!-- Recipe directions. -AS -->
         		<TextView

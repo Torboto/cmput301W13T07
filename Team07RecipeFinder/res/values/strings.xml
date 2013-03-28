@@ -50,6 +50,7 @@
     <string name="recipe_description">Recipe Description</string>
     <string name="recipe_ingredients">Ingredients:</string>
     <string name="recipe_directions">Directions:</string>
+    <string name="ingredients_hint">One ingredient per line</string>
     <!-- Button Strings -->
     <string name="button_edit">Edit</string>
     <string name="button_delete">Delete</string>
