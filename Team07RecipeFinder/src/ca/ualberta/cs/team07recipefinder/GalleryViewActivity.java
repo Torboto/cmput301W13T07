@@ -9,6 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class GalleryViewActivity extends Activity {
 	int sourceCode;
@@ -52,6 +53,9 @@ public class GalleryViewActivity extends Activity {
 				else
 					currentIndex--;
 				showImage(currentIndex);
+				Toast.makeText(getApplicationContext(),
+						currentIndex + 1 + " / " + total,
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -63,6 +67,9 @@ public class GalleryViewActivity extends Activity {
 				else
 					currentIndex++;
 				showImage(currentIndex);
+				Toast.makeText(getApplicationContext(),
+						currentIndex + 1 + " / " + total,
+						Toast.LENGTH_SHORT).show();
 			}
 		});
 
@@ -79,6 +86,10 @@ public class GalleryViewActivity extends Activity {
 					else
 						currentIndex--;
 					showImage(currentIndex);
+				} else {
+					Toast.makeText(getApplicationContext(),
+							"Sorry, you cannot delete the last photo!",
+							Toast.LENGTH_SHORT).show();
 				}
 			}
 		});
