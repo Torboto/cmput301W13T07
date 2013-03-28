@@ -8,12 +8,10 @@ import android.provider.MediaStore;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
-import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.widget.Button;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 /**
@@ -35,7 +33,7 @@ public class CameraActivity extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
 
-		ImageButton button = (ImageButton) findViewById(R.id.TakeAPhoto);
+		ImageButton button = (ImageButton) findViewById(R.id.ibTakeAPhoto);
 		OnClickListener listener = new OnClickListener() {
 			public void onClick(View v) {
 				takeAPhoto();
@@ -78,8 +76,8 @@ public class CameraActivity extends Activity {
 			TextView tv = (TextView) findViewById(R.id.status);
 			if (resultCode == RESULT_OK) {
 				tv.setText("Photo OK!");
-				ImageButton button = (ImageButton) findViewById(R.id.TakeAPhoto);
-				button.setImageDrawable(Drawable.createFromPath(imageFileUri
+				ImageView iv = (ImageView) findViewById(R.id.ivPreview);
+				iv.setImageDrawable(Drawable.createFromPath(imageFileUri
 						.getPath()));
 			} else if (resultCode == RESULT_CANCELED) {
 				tv.setText("Photo canceled");

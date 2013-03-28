@@ -4,12 +4,12 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <ImageButton
-        android:id="@+id/TakeAPhoto"
+    <ImageView
+        android:id="@+id/ivPreview"
         android:layout_width="fill_parent"
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:src="@drawable/button_camera" />
+        android:scaleType="fitCenter" />
 
     <TextView
         android:id="@+id/status"
@@ -28,6 +28,14 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:text="@string/cancel_image" />
+
+        <ImageButton
+            android:id="@+id/ibTakeAPhoto"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="fitCenter"
+            android:src="@drawable/button_camera" />
 
         <Button
             android:id="@+id/buttonSaveImage"
