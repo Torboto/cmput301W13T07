@@ -5,6 +5,7 @@ import java.util.UUID;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -90,9 +91,19 @@ public class GalleryViewActivity extends Activity {
 		addButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// Call the CameraActivity
+				// Get the number of images the recipe has
+				RecipeController.updateImageNumber(currentRecipe);
+
+				Intent cameraIntent = new Intent(getApplicationContext(),
+						CameraActivity.class);
+				cameraIntent.putExtra("recipeId",
+						String.valueOf(currentRecipe.getRecipeId()));
+				cameraIntent.putExtra("imageNumber",
+						currentRecipe.getImageNumber());
+				startActivity(cameraIntent);
 			}
 		});
+
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -106,6 +117,12 @@ public class GalleryViewActivity extends Activity {
 					else
 						currentIndex--;
 					showImage(currentIndex);
+					if (toast != null) {
+						toast.cancel();
+					}
+					toast = Toast.makeText(context, currentIndex + 1 + " of "
+							+ total, duration);
+					toast.show();
 				} else {
 					if (toast != null) {
 						toast.cancel();
