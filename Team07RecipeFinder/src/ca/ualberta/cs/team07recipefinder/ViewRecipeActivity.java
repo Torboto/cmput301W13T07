@@ -93,7 +93,6 @@ public class ViewRecipeActivity extends Activity {
 		if (sourceCode == 1) {
 			// AS: if came from My Recipes
 			hideSave();
-			// hideEmail(); commented out for testing
 			Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
 			Button editButton = (Button) findViewById(R.id.b_recipeEdit);
 
@@ -282,15 +281,6 @@ public class ViewRecipeActivity extends Activity {
 		return;
 	}
 
-	/**
-	 * This method hides the email button. It is called the user is viewing one
-	 * of their own recipes, so the email button is not needed.
-	 */
-	private void hideEmail() {
-		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
-		emailButton.setVisibility(4);
-		return;
-	}
 
 	/**
 	 * This method makes the save button visible again, for when the user enters
