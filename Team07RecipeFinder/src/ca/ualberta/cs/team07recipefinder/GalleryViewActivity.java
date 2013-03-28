@@ -57,7 +57,7 @@ public class GalleryViewActivity extends Activity {
 		prevButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (currentIndex == 0)
+				if (currentIndex <= 0)
 					currentIndex = total - 1;
 				else
 					currentIndex--;
@@ -74,7 +74,7 @@ public class GalleryViewActivity extends Activity {
 		nextButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				if (currentIndex == total - 1)
+				if (currentIndex >= total - 1)
 					currentIndex = 0;
 				else
 					currentIndex++;
