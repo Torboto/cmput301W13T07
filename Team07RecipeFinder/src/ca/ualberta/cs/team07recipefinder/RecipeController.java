@@ -27,11 +27,9 @@ public class RecipeController {
 	 * @author gcoomber
 	 */
 	static public void writeRecipe(Recipe recipe, Context context) {
-		boolean isConnected;
+		boolean isConnected = checkInternetConnection(context);
 
 		SqlClient sqlClient = new SqlClient(context);
-
-		isConnected = checkInternetConnection(context);
 
 		// GC: Add the recipe to the recipe database.
 		sqlClient.writeRecipe(recipe);
@@ -65,6 +63,7 @@ public class RecipeController {
 	 */
 	// TODO: ET- Does this need to take in a uuid? recipe should have same UUID.
 	static public void updateRecipe(UUID uuid, Recipe recipe, Context context) {
+		boolean isConnected = checkInternetConnection(context);
 		SqlClient client = new SqlClient(context);
 		client.updateRecipe(uuid, recipe);
 
@@ -72,6 +71,9 @@ public class RecipeController {
 		// tot he recipe have been made
 		recipe.setIsUpdated(true);
 
+		if (isConnected) {
+			updateServerRecipe(uuid, recipe);
+		}
 		return;
 	}
 
@@ -130,8 +132,9 @@ public class RecipeController {
 		search.execute("");
 	}
 
-	static public void updateServerRecipe(UUID uuid) {
-
+	static public void updateServerRecipe(UUID uuid, Recipe recipe) {
+		new DeleteRecipeTask().execute(uuid);
+		new WriteRecipeTask().execute(recipe);
 	}
 
 	/**
@@ -211,13 +214,13 @@ public class RecipeController {
 	}
 
 	/*
-	 * Update the integer value that represents the number of saved images
-	 * for a locally saved recipe.
+	 * Update the integer value that represents the number of saved images for a
+	 * locally saved recipe.
 	 */
 	static public void updateImageNumber(Recipe recipe) {
-		int imageNumber = ImageController.getNumberImages(recipe.getRecipeId(), 
+		int imageNumber = ImageController.getNumberImages(recipe.getRecipeId(),
 				Recipe.Location.LOCAL);
 		recipe.setImageNumber(imageNumber);
 	}
-	
+
 }

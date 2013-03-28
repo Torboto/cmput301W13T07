@@ -6,7 +6,6 @@ import java.io.InputStreamReader;
 import java.io.UnsupportedEncodingException;
 import java.lang.reflect.Type;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 import java.util.UUID;
 
@@ -139,8 +138,7 @@ public class HttpClient {
 	}
 
 	public void deleteRecipe(UUID uuid) {
-		HttpDelete httpDelete = new HttpDelete(
-				"http://cmput301.softwareprocess.es:8080/testing/lab02/1");
+		HttpDelete httpDelete = new HttpDelete(url + uuid);
 		httpDelete.addHeader("Accept", "application/json");
 
 		HttpResponse response = null;
