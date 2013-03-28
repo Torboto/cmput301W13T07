@@ -4,11 +4,13 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 public class GalleryViewActivity extends Activity {
 	int sourceCode;
@@ -17,6 +19,9 @@ public class GalleryViewActivity extends Activity {
 	ArrayList<String> imagePaths;
 	ImageView imageview;
 	int currentIndex, total;
+	Context context;
+	int duration = Toast.LENGTH_SHORT;
+	Toast toast;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -42,7 +47,11 @@ public class GalleryViewActivity extends Activity {
 
 		ImageButton prevButton = (ImageButton) findViewById(R.id.buttonPrev);
 		ImageButton nextButton = (ImageButton) findViewById(R.id.buttonNext);
+		ImageButton addButton = (ImageButton) findViewById(R.id.buttonAdd);
 		ImageButton deleteButton = (ImageButton) findViewById(R.id.buttonDelete);
+
+		context = getApplicationContext();
+		duration = Toast.LENGTH_SHORT;
 
 		prevButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -52,6 +61,12 @@ public class GalleryViewActivity extends Activity {
 				else
 					currentIndex--;
 				showImage(currentIndex);
+				if (toast != null) {
+					toast.cancel();
+				}
+				toast = Toast.makeText(context, currentIndex + 1 + " of "
+						+ total, duration);
+				toast.show();
 			}
 		});
 
@@ -63,9 +78,21 @@ public class GalleryViewActivity extends Activity {
 				else
 					currentIndex++;
 				showImage(currentIndex);
+				if (toast != null) {
+					toast.cancel();
+				}
+				toast = Toast.makeText(context, currentIndex + 1 + " of "
+						+ total, duration);
+				toast.show();
 			}
 		});
 
+		addButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Call the CameraActivity
+			}
+		});
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -79,6 +106,14 @@ public class GalleryViewActivity extends Activity {
 					else
 						currentIndex--;
 					showImage(currentIndex);
+				} else {
+					if (toast != null) {
+						toast.cancel();
+					}
+					toast = Toast.makeText(context,
+							"Sorry, you cannot delete the last photo!",
+							duration);
+					toast.show();
 				}
 			}
 		});
