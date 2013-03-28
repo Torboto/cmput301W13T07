@@ -53,6 +53,16 @@ public class ViewRecipeActivity extends Activity {
 		// databse
 		// or server.
 		fillCurrentRecipe(recipeString);
+		
+		//ET: Save current recipe to cache
+		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
+		saveButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				SqlClient sqlClient = new SqlClient(getApplicationContext());
+				sqlClient.writeRecipe(currentRecipe);
+			}
+		});
 
 		// MA: start GalleryViewActivity when click on the thumbnail.
 		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
