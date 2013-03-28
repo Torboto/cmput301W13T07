@@ -12,12 +12,12 @@ import android.util.Log;
 public class Image {
 	Bitmap image;
 	String filename;
-	
-	Image(String filename, Bitmap image){
+
+	Image(String filename, Bitmap image) {
 		this.filename = filename;
 		this.image = image;
 	}
-	
+
 	/**
 	 * Retrieve the path names of the images saved on the sd card associated
 	 * with the recipe id associated with uuid.
@@ -45,10 +45,10 @@ public class Image {
 		return images;
 	}
 
-	static public ArrayList<String> getAllServerRecipeImages(UUID uuid){
+	static public ArrayList<String> getAllServerRecipeImages(UUID uuid) {
 		return null;
 	}
-	
+
 	/**
 	 * Retrieves the bitmap saved at the path specified by path
 	 * 
@@ -65,11 +65,11 @@ public class Image {
 		}
 		return bmp;
 	}
-	
-	static public void saveImageToServer(Bitmap bitmap){
-		
+
+	static public void saveImageToServer(Bitmap bitmap) {
+
 	}
-	
+
 	static public Bitmap getServerThumbnailImage(UUID uuid) {
 		return null;
 	}

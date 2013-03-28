@@ -103,6 +103,13 @@ public class MainActivity extends Activity {
 		 * getApplicationContext(), CameraActivity.class);
 		 * startActivity(cameraIntent); } });
 		 */
+		
+		  findViewById(R.id.buttonSynch).setOnClickListener( new
+		  View.OnClickListener() {
+		  @Override 
+		  public void onClick(View v) { 
+			  //
+		   } });
 
 		// MA: Call addIngredient() when click on Add Ingredients button
 		findViewById(R.id.buttonAddIngredient).setOnClickListener(
@@ -406,12 +413,13 @@ public class MainActivity extends Activity {
 		else
 			return true;
 	}
-	
+
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == 1 && resultCode == RESULT_OK) {
-				ArrayList<String> search_list = data.getStringArrayListExtra("ingredients_list");
-				populateSearch(null, search_list);
-			}
+			ArrayList<String> search_list = data
+					.getStringArrayListExtra("ingredients_list");
+			populateSearch(null, search_list);
+		}
 	}
-	
+
 }

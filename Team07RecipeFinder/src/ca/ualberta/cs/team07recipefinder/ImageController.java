@@ -32,8 +32,7 @@ public class ImageController {
 		ArrayList<String> images = new ArrayList<String>();
 
 		if (location == Recipe.Location.LOCAL) {
-			//TODO: Fix this up yo
-			//images = Image.getAllLocalRecipeImages(uuid);
+			images = Image.getAllLocalRecipeImages(uuid);
 		}
 		if (location == Recipe.Location.SERVER) {
 
@@ -49,12 +48,12 @@ public class ImageController {
 	 */
 	static public Bitmap getThumbnailImage(String path, Recipe.Location location) {
 		Bitmap bmp = null;
-				
+
 		if (location == Recipe.Location.LOCAL) {
 			bmp = Image.getLocalThumbnailImage(path);
 		}
 		if (location == Recipe.Location.SERVER) {
-		
+
 		}
 		return bmp;
 	}
@@ -74,24 +73,23 @@ public class ImageController {
 			Image.deleteLocalImage(path);
 		}
 		if (location == Recipe.Location.SERVER) {
-		
+
 		}
 	}
-	
+
 	// Gets the number of images that a recipe has saved on the sdcard
 	static public int getNumberImages(UUID uuid, Recipe.Location location) {
 		int maxImageNumber = -1;
-		
+
 		if(location == Recipe.Location.LOCAL) {
 			// get the paths of all images saved locally
-			//TODO Fix this up yo to deal with a list of Images
-			//ArrayList<String> imagePaths = getAllRecipeImages(uuid, location);
-			//maxImageNumber = imagePaths.size();
+			ArrayList<String> imagePaths = getAllRecipeImages(uuid, location);
+			maxImageNumber = imagePaths.size();
 		} else if(location == Recipe.Location.SERVER) {
 			// TODO: SERVERSTUFF
 		}
-		
+
 		return maxImageNumber;
 	}
-	
+
 }
