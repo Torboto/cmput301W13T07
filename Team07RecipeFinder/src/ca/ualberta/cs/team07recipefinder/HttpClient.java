@@ -61,7 +61,7 @@ public class HttpClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NetworkOnMainThreadException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 
 		String status = response.getStatusLine().toString();
@@ -176,7 +176,7 @@ public class HttpClient {
 	}
 
 	public void updateRecipe(Recipe recipe) {
-		
+
 	}
 
 	/**
@@ -196,8 +196,12 @@ public class HttpClient {
 		String output = null;
 
 		String queryString = "";
-		for (String s : ingredients) {
-			queryString += s + " OR ";
+		if (ingredients.size() > 1) {
+			for (String s : ingredients) {
+				queryString += s + " OR ";
+			}
+		} else {
+			queryString = ingredients.get(0);
 		}
 
 		String query = "{\"query\" : " + "{\"query_string\" : " + "{"
@@ -291,16 +295,11 @@ public class HttpClient {
 
 		return recipeResults;
 	}
-	
-	public void writeImage(UUID uuid, Bitmap bitmap){
+
+	public void writeImage(UUID uuid, Bitmap bitmap) {
 		HttpPost httpPost = new HttpPost(imageUrl + uuid);
 		StringEntity stringEntity = null;
 
-		try {
-			stringEntity = new StringEntity(gson.toJson(recipe));
-		} catch (UnsupportedEncodingException e1) {
-			e1.printStackTrace();
-		}
 		httpPost.setHeader("Accept", "application/json");
 		httpPost.setEntity(stringEntity);
 		HttpResponse response = null;
@@ -311,7 +310,7 @@ public class HttpClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		} catch (NetworkOnMainThreadException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
 
 		String status = response.getStatusLine().toString();
@@ -339,14 +338,14 @@ public class HttpClient {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	public Bitmap readImage(UUID uuid){
+
+	public Bitmap readImage(UUID uuid) {
 		return null;
 	}
-	
-	public Bitmap[] readAllImages(UUID uuid){
+
+	public Bitmap[] readAllImages(UUID uuid) {
 		return null;
 	}
 
