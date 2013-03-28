@@ -44,7 +44,6 @@ public class Recipe {
 	
 	public Recipe() {
 		this.recipeId = UUID.randomUUID();
-		this.location = Location.LOCAL;
 		this.isUpdated = false;
 		this.imageNumber = 0;
 	}

@@ -1,6 +1,7 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.UUID;
 
 import android.content.Context;
@@ -66,11 +67,11 @@ public class RecipeController {
 	static public void updateRecipe(UUID uuid, Recipe recipe, Context context) {
 		SqlClient client = new SqlClient(context);
 		client.updateRecipe(uuid, recipe);
-		
+
 		// change the isUpdated boolean within recipe to indicate that changes
 		// tot he recipe have been made
 		recipe.setIsUpdated(true);
-		
+
 		return;
 	}
 
@@ -95,15 +96,15 @@ public class RecipeController {
 	 */
 	static public void getRecipeHTTP(UUID uuid, final Context context) {
 
-//		SearchRecipeTask search = new SearchRecipeTask(uuid);
-//
-//		search.setDataDownloadListener(new DataDownloadListener() {
-//			@SuppressWarnings("unchecked")
-//			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
-//				context.returnSearchResultstoActivity(data);
-//			}
-//		});
-//		search.execute("");
+		// SearchRecipeTask search = new SearchRecipeTask(uuid);
+		//
+		// search.setDataDownloadListener(new DataDownloadListener() {
+		// @SuppressWarnings("unchecked")
+		// public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
+		// context.returnSearchResultstoActivity(data);
+		// }
+		// });
+		// search.execute("");
 	}
 
 	/*
@@ -114,23 +115,23 @@ public class RecipeController {
 
 	}
 
-	/*
-	 * Only searches HTTP server
-	 */
-	static public void searchRecipeTitle(String title, Context context) {
-		// List<Recipe> recipeResults = new ArrayList<Recipe>();
-		// new SearchRecipeTask(title, null, null).execute("title");
-		// SearchRecipeTask search = new SearchRecipeTask(null, null, uuid);
-		//
-		// search.setDataDownloadListener(new DataDownloadListener() {
-		// @SuppressWarnings("unchecked")
-		// public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
-		// //context.
-		// }
-		// });
-		// search.execute("");
+	static public void getServerRecipe(UUID uuid, Context context) {
+		List<Recipe> recipeResults = new ArrayList<Recipe>();
+
+		SearchRecipeTask search = new SearchRecipeTask(uuid);
+
+		search.setDataDownloadListener(new DataDownloadListener() {
+			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
+				updateServerRecipe(data.get(0).recipeId);
+			}
+		});
+		search.execute("");
 	}
 	
+	static public void updateServerRecipe(UUID uuid){
+		
+	}
+
 	/**
 	 * GC: Check for an active internet connection. Follows format from stack
 	 * overflow post: http://stackoverflow.com/questions/4238921/
@@ -155,56 +156,58 @@ public class RecipeController {
 		}
 		return isConnected;
 	}
-	
-	static public void synchronize(ArrayList<UUID> recipes, Context context){
+
+	static public void synchronize(ArrayList<UUID> recipes, Context context) {
 		SqlClient sqlClient = new SqlClient(context);
 		HttpClient httpClient = new HttpClient();
-		
-		for(UUID recipeId : recipes){
+
+		for (UUID recipeId : recipes) {
 			Recipe recipe = sqlClient.readRecipe(recipeId);
-			
-			//this will most definitely not work the first time.
-			//I need to write all the async tasks and stuff to go with this crap
-			//httpClient.deleteRecipe(recipeId);
-			//httpClient.writeRecipe(recipe);
+
+			// this will most definitely not work the first time.
+			// I need to write all the async tasks and stuff to go with this
+			// crap
+			// httpClient.deleteRecipe(recipeId);
+			// httpClient.writeRecipe(recipe);
 		}
-		
+
 		pushRecipeChangesToWeb(context);
 	}
-	
+
 	/**
-	 * Finds all locally saved recipes that have been changed since the 
-	 * last synch and pushes their changes to the webservice.
+	 * Finds all locally saved recipes that have been changed since the last
+	 * synch and pushes their changes to the webservice.
+	 * 
 	 * @param context
 	 */
 	static private void pushRecipeChangesToWeb(Context context) {
-		
+
 		ArrayList<Recipe> localRecipes;
-		// List of all the locally saved recipes that have changes that 
+		// List of all the locally saved recipes that have changes that
 		// must be pushed to the webservice.
 		ArrayList<Recipe> changedLocalRecipes = new ArrayList<Recipe>();
-		
+
 		SqlClient sqlClient = new SqlClient(context);
-		
+
 		localRecipes = sqlClient.getAllRecipes();
-		
+
 		// If there are any local recipes, check which have changes
-		if(localRecipes != null) {
-			for(Recipe recipe:localRecipes) {
+		if (localRecipes != null) {
+			for (Recipe recipe : localRecipes) {
 				// If the recipe has been changed, add to list
-				if(recipe.getIsUpdated() == true) {
+				if (recipe.getIsUpdated() == true) {
 					changedLocalRecipes.add(recipe);
 				}
 			}
-			
-			if(changedLocalRecipes.size() > 0) {
+
+			if (changedLocalRecipes.size() > 0) {
 				// TODO: update the changed recipes
-				
+
 				// TODO: change the isUpdated boolean back to false
 			}
 		}
 	}
-	
+
 	/*
 	 * Update the integer value that represents the number of saved images
 	 * for a locally saved recipe.

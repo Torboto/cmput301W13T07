@@ -64,5 +64,8 @@
     <string name="title_activity_search_by_pantry">SearchByPantryActivity</string>
     
     <string name="title_activity_gallery_view">GalleryViewActivity</string>
+    <string name="previousImage">Previous</string>
+    <string name="nextImage">Next</string>
+    <string name="deleteImage">Delete</string>
 
 </resources>
