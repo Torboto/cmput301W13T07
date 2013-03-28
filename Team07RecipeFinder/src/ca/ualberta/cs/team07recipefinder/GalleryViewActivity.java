@@ -47,6 +47,7 @@ public class GalleryViewActivity extends Activity {
 
 		ImageButton prevButton = (ImageButton) findViewById(R.id.buttonPrev);
 		ImageButton nextButton = (ImageButton) findViewById(R.id.buttonNext);
+		ImageButton addButton = (ImageButton) findViewById(R.id.buttonAdd);
 		ImageButton deleteButton = (ImageButton) findViewById(R.id.buttonDelete);
 
 		context = getApplicationContext();
@@ -63,7 +64,7 @@ public class GalleryViewActivity extends Activity {
 				if (toast != null) {
 					toast.cancel();
 				}
-				toast = Toast.makeText(context, currentIndex + 1 + " / "
+				toast = Toast.makeText(context, currentIndex + 1 + " of "
 						+ total, duration);
 				toast.show();
 			}
@@ -80,12 +81,18 @@ public class GalleryViewActivity extends Activity {
 				if (toast != null) {
 					toast.cancel();
 				}
-				toast = Toast.makeText(context, currentIndex + 1 + " / "
+				toast = Toast.makeText(context, currentIndex + 1 + " of "
 						+ total, duration);
 				toast.show();
 			}
 		});
 
+		addButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				// Call the CameraActivity
+			}
+		});
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
