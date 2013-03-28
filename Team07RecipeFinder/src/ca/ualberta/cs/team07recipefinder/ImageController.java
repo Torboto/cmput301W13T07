@@ -28,11 +28,12 @@ public class ImageController {
 	 * @param uuid
 	 * @return
 	 */
-	static public ArrayList<String> getAllRecipeImages(UUID uuid, Recipe.Location location) {
-		ArrayList<String> images = new ArrayList<String>();
+	static public ArrayList<Image> getAllRecipeImages(UUID uuid, Recipe.Location location) {
+		ArrayList<Image> images = new ArrayList<Image>();
 
 		if (location == Recipe.Location.LOCAL) {
-			images = Image.getAllLocalRecipeImages(uuid);
+			//TODO: Fix this up yo
+			//images = Image.getAllLocalRecipeImages(uuid);
 		}
 		if (location == Recipe.Location.SERVER) {
 
@@ -83,8 +84,9 @@ public class ImageController {
 		
 		if(location == Recipe.Location.LOCAL) {
 			// get the paths of all images saved locally
-			ArrayList<String> imagePaths = getAllRecipeImages(uuid, location);
-			maxImageNumber = imagePaths.size();
+			//TODO Fix this up yo to deal with a list of Images
+			//ArrayList<String> imagePaths = getAllRecipeImages(uuid, location);
+			//maxImageNumber = imagePaths.size();
 		} else if(location == Recipe.Location.SERVER) {
 			// TODO: SERVERSTUFF
 		}
