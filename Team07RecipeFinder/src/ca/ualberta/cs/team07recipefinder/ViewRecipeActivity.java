@@ -114,6 +114,7 @@ public class ViewRecipeActivity extends Activity {
 					if (isEditableRecipe()) {
 						editTextMode();
 						hideEditDelete();
+						hideEmail();
 						showSave();
 						showThatEditable();
 						Button saveButton = (Button) findViewById(R.id.b_recipeSave);
@@ -302,6 +303,16 @@ public class ViewRecipeActivity extends Activity {
 		Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
 		editButton.setVisibility(4);
 		deleteButton.setVisibility(4);
+		return;
+	}
+	
+	/**
+	 * This method hides the email button. It is called if the user
+	 * enters edit mode.
+	 */
+	private void hideEmail() {
+		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
+		emailButton.setVisibility(4);
 		return;
 	}
 
