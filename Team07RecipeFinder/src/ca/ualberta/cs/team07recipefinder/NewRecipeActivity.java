@@ -57,11 +57,15 @@ public class NewRecipeActivity extends Activity {
 		pictureButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// Get the number of images the recipe has
+				RecipeController.updateImageNumber(newRecipe);
+				
 				Intent cameraIntent = new Intent(
 						getApplicationContext(),
 						CameraActivity.class);
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(newRecipe.getRecipeId()));
+				cameraIntent.putExtra("imageNumber", newRecipe.getImageNumber());
 				startActivity(cameraIntent);
 			}
 		});
@@ -91,6 +95,8 @@ public class NewRecipeActivity extends Activity {
 	 * to the user's database.
 	 */
 	private void createRecipe() {
+		// Get the number of images the recipe has
+		RecipeController.updateImageNumber(newRecipe);
 		
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
 				&& (!isEmpty(ingredientsEditText))
@@ -101,6 +107,7 @@ public class NewRecipeActivity extends Activity {
 			 */
 			Recipe newRecipe = grabRecipeInfo();
 			writeRecipe(newRecipe);
+			
 			finish();
 		}
 		else

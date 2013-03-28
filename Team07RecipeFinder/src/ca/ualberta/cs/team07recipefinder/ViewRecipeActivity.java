@@ -14,6 +14,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.ImageButton;
 import android.widget.TextView;
 
 /**
@@ -351,6 +352,9 @@ public class ViewRecipeActivity extends Activity {
 	 * @return the newly created Recipe.
 	 */
 	private Recipe grabRecipeInfo() {
+		// Get the number of images the recipe has
+		RecipeController.updateImageNumber(currentRecipe);
+		
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);
