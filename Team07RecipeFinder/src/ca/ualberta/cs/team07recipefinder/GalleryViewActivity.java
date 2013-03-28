@@ -7,6 +7,7 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 public class GalleryViewActivity extends Activity {
@@ -39,9 +40,9 @@ public class GalleryViewActivity extends Activity {
 					imagePaths.get(currentIndex), currentRecipe.location));
 		}
 
-		Button prevButton = (Button) findViewById(R.id.buttonPrev);
-		Button nextButton = (Button) findViewById(R.id.buttonNext);
-		Button deleteButton = (Button) findViewById(R.id.buttonDelete);
+		ImageButton prevButton = (ImageButton) findViewById(R.id.buttonPrev);
+		ImageButton nextButton = (ImageButton) findViewById(R.id.buttonNext);
+		ImageButton deleteButton = (ImageButton) findViewById(R.id.buttonDelete);
 
 		prevButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -68,7 +69,17 @@ public class GalleryViewActivity extends Activity {
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-
+				if (total > 1) {
+					Image.deleteLocalImage(imagePaths.get(currentIndex));
+					imagePaths = ImageController.getAllRecipeImages(
+							currentRecipe.getRecipeId(), currentRecipe.location);
+					total = imagePaths.size();
+					if (currentIndex == 0)
+						currentIndex = total - 1;
+					else
+						currentIndex--;
+					showImage(currentIndex);
+				}
 			}
 		});
 	}
@@ -77,7 +88,7 @@ public class GalleryViewActivity extends Activity {
 		if (imagePaths.size() > 0) {
 			imageview.setImageBitmap(ImageController.getThumbnailImage(
 					imagePaths.get(index), currentRecipe.location));
-		}		
+		}
 	}
 
 	private void fillCurrentRecipe(String recipeString) {
