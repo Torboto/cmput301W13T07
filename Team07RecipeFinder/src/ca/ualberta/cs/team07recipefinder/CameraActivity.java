@@ -65,15 +65,14 @@ public class CameraActivity extends Activity {
 		cancelButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				// delete photo
+				// deleteTempPhoto();
+				finish();
 			}
 		});
 		
-		if (toast != null) {
-			toast.cancel();
-		}
-		toast = Toast.makeText(context, "Click to take a photo.", duration);
-		toast.show();
-		
+		TextView tv = (TextView) findViewById(R.id.status);
+		tv.setText("Click to take a photo\n¡ý");
 		ImageView iv = (ImageView) findViewById(R.id.ivPreview);
 		iv.setImageResource(R.drawable.recipe_image_outline);
 

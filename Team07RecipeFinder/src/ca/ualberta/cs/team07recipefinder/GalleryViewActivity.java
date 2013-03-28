@@ -6,11 +6,13 @@ import java.util.UUID;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 public class GalleryViewActivity extends Activity {
@@ -99,8 +101,8 @@ public class GalleryViewActivity extends Activity {
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));
 				cameraIntent.putExtra("imageNumber",
-						currentRecipe.getImageNumber() + 1);
-				startActivity(cameraIntent);
+						currentRecipe.getImageNumber() + total + 1);
+				startActivityForResult(cameraIntent, RESULT_OK);
 			}
 		});
 
@@ -112,9 +114,7 @@ public class GalleryViewActivity extends Activity {
 					imagePaths = ImageController.getAllRecipeImages(
 							currentRecipe.getRecipeId(), currentRecipe.location);
 					total = imagePaths.size();
-					if (currentIndex == 0)
-						currentIndex = total - 1;
-					else
+					if (currentIndex == total)
 						currentIndex--;
 					showImage(currentIndex);
 					if (toast != null) {
@@ -128,12 +128,23 @@ public class GalleryViewActivity extends Activity {
 						toast.cancel();
 					}
 					toast = Toast.makeText(context,
-							"Sorry, you cannot delete the last photo!",
+							"Sorry, you need to keep at least one photo!",
 							duration);
 					toast.show();
 				}
 			}
 		});
+	}
+
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		imagePaths = ImageController.getAllRecipeImages(
+				currentRecipe.getRecipeId(), currentRecipe.location);
+		total = imagePaths.size();
+		currentIndex = total - 1;
+		if (imagePaths.size() > 0) {
+			imageview.setImageBitmap(ImageController.getThumbnailImage(
+					imagePaths.get(currentIndex), currentRecipe.location));
+		}
 	}
 
 	protected void showImage(int index) {
