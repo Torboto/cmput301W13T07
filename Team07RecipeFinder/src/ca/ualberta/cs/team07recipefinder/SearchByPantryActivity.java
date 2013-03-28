@@ -39,6 +39,9 @@ public class SearchByPantryActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// AS: The cancel button finnishes the activity
+				// without returning anything
+				Intent returnIntent = new Intent();
+				setResult(RESULT_CANCELED, returnIntent);
 				finish();
 			}
 		});
@@ -47,16 +50,29 @@ public class SearchByPantryActivity extends Activity {
 		searchButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				// AS: The search button grabs the needed ingredients using indicesToSearch
-				// then calls searchIngredients
+				// AS: The search button grabs the needed ingredients using
+				// indicesToSearch then returns them in ingredientsToSearch
 				
-				// clear the ingredients list every time so we don't "double count" certain indices
+				// clear the ingredients list every time so we don't
+				// "double count" certain indices
 				ingredientsToSearch.clear();
-				for(Integer i : indicesToSearch){
-					ingredientsToSearch.add(ingredients.get(i));
+				
+				// AS: only do a search if at least one ingredient selected
+				if (indicesToSearch.isEmpty()){
+					emptySearchDialog();
 				}
-				searchIngredients();
-				testDialog();
+				else {
+					for(Integer i : indicesToSearch){
+						ingredientsToSearch.add(ingredients.get(i));
+					}
+				
+					// AS: return the ingredients to main activity
+					Intent returnIntent = new Intent();
+					returnIntent.putStringArrayListExtra("ingredients_list",
+							ingredientsToSearch);
+					setResult(RESULT_OK, returnIntent);
+					finish();
+				}
 			}
 		});
 	
@@ -102,20 +118,13 @@ public class SearchByPantryActivity extends Activity {
 	}
 	
 	
-	private void searchIngredients() {
-		
-	}
 
-	protected void testDialog() {
+	protected void emptySearchDialog() {
 		TextView tv = new TextView(this);
-		String thingy = new String();
-		thingy = "";
-		for (String ingredient : ingredientsToSearch)
-			thingy += (ingredient + " ,");
 			
-		tv.setText(thingy);
+		tv.setText("Please select at least one ingredient to search!");
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Sorry!");
+		alert.setTitle("Nothing Selected");
 		alert.setView(tv);
 		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {

@@ -146,7 +146,7 @@ public class MainActivity extends Activity {
 						Intent pantrySearchIntent = new Intent(
 								getApplicationContext(),
 								SearchByPantryActivity.class);
-						startActivity(pantrySearchIntent);
+						startActivityForResult(pantrySearchIntent, 1);
 					}
 				});
 	}
@@ -419,4 +419,12 @@ public class MainActivity extends Activity {
 		else
 			return true;
 	}
+	
+	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+		if (requestCode == 1 && resultCode == RESULT_OK) {
+				ArrayList<String> search_list = data.getStringArrayListExtra("ingredients_list");
+				populateSearch(null, search_list);
+			}
+	}
+	
 }
