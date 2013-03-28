@@ -122,14 +122,16 @@ public class RecipeController {
 
 		search.setDataDownloadListener(new DataDownloadListener() {
 			public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
-				updateServerRecipe(data.get(0).recipeId);
+				HttpClient httpClient = new HttpClient();
+				httpClient.deleteRecipe(data.get(0).recipeId);
+				httpClient.writeRecipe(data.get(0));
 			}
 		});
 		search.execute("");
 	}
-	
-	static public void updateServerRecipe(UUID uuid){
-		
+
+	static public void updateServerRecipe(UUID uuid) {
+
 	}
 
 	/**

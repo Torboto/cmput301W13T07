@@ -3,6 +3,8 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.ArrayList;
 import java.util.UUID;
 
+import ca.ualberta.cs.team07recipefinder.Recipe.Location;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -107,6 +109,19 @@ public class MainActivity extends Activity {
 				new View.OnClickListener() {
 					public void onClick(View v) {
 						addIngredient(v);
+						//DEBUG
+							ArrayList<String> ingredients = new ArrayList<String>();
+							ingredients.add("strawberries");
+							ingredients.add("sugar");
+							ingredients.add("crust");
+							ingredients.add("lack of self-worth");
+							Recipe recipe = new Recipe("Strawberry Pie", "This pie sucks! Don't cook it.",
+									ingredients, "Combine. Wisk. Bake. Put in face.",
+									"adam@me.com", Recipe.Location.SERVER);
+							
+							HttpClient httpClient = new HttpClient();
+							httpClient.writeRecipe(recipe);
+						//ENDDEBUG
 					}
 				});
 
