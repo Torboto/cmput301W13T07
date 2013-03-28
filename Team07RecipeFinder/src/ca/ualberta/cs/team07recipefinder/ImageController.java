@@ -28,8 +28,8 @@ public class ImageController {
 	 * @param uuid
 	 * @return
 	 */
-	static public ArrayList<Image> getAllRecipeImages(UUID uuid, Recipe.Location location) {
-		ArrayList<Image> images = new ArrayList<Image>();
+	static public ArrayList<String> getAllRecipeImages(UUID uuid, Recipe.Location location) {
+		ArrayList<String> images = new ArrayList<String>();
 
 		if (location == Recipe.Location.LOCAL) {
 			//TODO: Fix this up yo
