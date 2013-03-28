@@ -13,6 +13,7 @@ import android.text.method.KeyListener;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -130,7 +131,7 @@ public class ViewRecipeActivity extends Activity {
 		ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
-		ImageView pictureButton = (ImageView) findViewById(R.id.ivRecipe);
+		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 
 		// Set the image of the imagebutton to the first image in the folder
 		if (imagePaths.size() > 0) {
@@ -336,6 +337,9 @@ public class ViewRecipeActivity extends Activity {
 	 * @return the newly created Recipe.
 	 */
 	private Recipe grabRecipeInfo() {
+		// Get the number of images the recipe has
+		RecipeController.updateImageNumber(currentRecipe);
+		
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);

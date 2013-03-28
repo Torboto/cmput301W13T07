@@ -28,6 +28,7 @@ public class CameraActivity extends Activity {
 
 	Uri imageFileUri;
 	String folderName = "";
+	int imageNumber = -1;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
@@ -45,6 +46,7 @@ public class CameraActivity extends Activity {
 		// Get the name of the folder the image will be saved in
 		Bundle extras = getIntent().getExtras();
 		folderName = extras.getString("recipeId");
+		imageNumber = extras.getInt("imageNumber") + 1;
 	}
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
@@ -62,8 +64,8 @@ public class CameraActivity extends Activity {
 			folderF.mkdir();
 		}
 
-		String imageFilePath = folder + "/"
-				+ String.valueOf(System.currentTimeMillis()) + ".jpg";
+		String imageFilePath = folder + "/" + folderName + "_"
+				+ String.valueOf(imageNumber) + ".jpg";
 		File imageFile = new File(imageFilePath);
 		imageFileUri = Uri.fromFile(imageFile);
 

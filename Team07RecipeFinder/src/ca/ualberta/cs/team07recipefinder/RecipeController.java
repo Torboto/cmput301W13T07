@@ -205,4 +205,14 @@ public class RecipeController {
 		}
 	}
 	
+	/*
+	 * Update the integer value that represents the number of saved images
+	 * for a locally saved recipe.
+	 */
+	static public void updateImageNumber(Recipe recipe) {
+		int imageNumber = ImageController.getNumberImages(recipe.getRecipeId(), 
+				Recipe.Location.LOCAL);
+		recipe.setImageNumber(imageNumber);
+	}
+	
 }
