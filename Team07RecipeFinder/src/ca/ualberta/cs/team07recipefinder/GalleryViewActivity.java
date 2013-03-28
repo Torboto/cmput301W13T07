@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -18,6 +19,9 @@ public class GalleryViewActivity extends Activity {
 	ArrayList<String> imagePaths;
 	ImageView imageview;
 	int currentIndex, total;
+	Context context;
+	int duration = Toast.LENGTH_SHORT;
+	Toast toast;
 
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -45,6 +49,9 @@ public class GalleryViewActivity extends Activity {
 		ImageButton nextButton = (ImageButton) findViewById(R.id.buttonNext);
 		ImageButton deleteButton = (ImageButton) findViewById(R.id.buttonDelete);
 
+		context = getApplicationContext();
+		duration = Toast.LENGTH_SHORT;
+
 		prevButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
@@ -53,9 +60,12 @@ public class GalleryViewActivity extends Activity {
 				else
 					currentIndex--;
 				showImage(currentIndex);
-				Toast.makeText(getApplicationContext(),
-						currentIndex + 1 + " / " + total,
-						Toast.LENGTH_SHORT).show();
+				if (toast != null) {
+					toast.cancel();
+				}
+				toast = Toast.makeText(context, currentIndex + 1 + " / "
+						+ total, duration);
+				toast.show();
 			}
 		});
 
@@ -67,9 +77,12 @@ public class GalleryViewActivity extends Activity {
 				else
 					currentIndex++;
 				showImage(currentIndex);
-				Toast.makeText(getApplicationContext(),
-						currentIndex + 1 + " / " + total,
-						Toast.LENGTH_SHORT).show();
+				if (toast != null) {
+					toast.cancel();
+				}
+				toast = Toast.makeText(context, currentIndex + 1 + " / "
+						+ total, duration);
+				toast.show();
 			}
 		});
 
@@ -87,9 +100,13 @@ public class GalleryViewActivity extends Activity {
 						currentIndex--;
 					showImage(currentIndex);
 				} else {
-					Toast.makeText(getApplicationContext(),
+					if (toast != null) {
+						toast.cancel();
+					}
+					toast = Toast.makeText(context,
 							"Sorry, you cannot delete the last photo!",
-							Toast.LENGTH_SHORT).show();
+							duration);
+					toast.show();
 				}
 			}
 		});
