@@ -57,6 +57,7 @@
     <string name="button_email">Email</string>
     <string name="hello_world">Hello world!</string>
     <string name="button_cancel">Cancel</string>
+    <string name="keyword_search">Keyword Search</string>
 
     <!-- EditPantryMenu -->
     <string name="menu_delete_ingredient">Delete</string>
