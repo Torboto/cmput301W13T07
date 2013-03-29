@@ -176,7 +176,10 @@ public class HttpClient {
 	}
 
 	public void updateRecipe(Recipe recipe) {
-
+		DeleteRecipeTask deleteTask = new DeleteRecipeTask();
+		deleteTask.execute(recipe.recipeId);
+		WriteRecipeTask writeTask = new WriteRecipeTask();
+		writeTask.execute(recipe);
 	}
 
 	/**
@@ -189,7 +192,7 @@ public class HttpClient {
 	public ArrayList<Recipe> searchRecipes(List<String> ingredients) {
 		HttpPost httpPost = new HttpPost(recipeUrl + "_search?pretty=1");
 		StringEntity stringEntity;
-		ArrayList<Recipe> recipeResults = null;
+		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpResponse response = null;
 		HttpEntity entity = null;
 		BufferedReader buff = null;
@@ -198,7 +201,10 @@ public class HttpClient {
 		String queryString = "";
 		if (ingredients.size() > 1) {
 			for (String s : ingredients) {
-				queryString += s + " OR ";
+				queryString += s;
+				if (s != ingredients.get(ingredients.size() - 1).toString()) {
+					queryString += " OR ";
+				}
 			}
 		} else {
 			queryString = ingredients.get(0);
@@ -237,6 +243,7 @@ public class HttpClient {
 		ElasticSearchSearchResponse<Recipe> esResponse = gson.fromJson(json,
 				elasticSearchSearchResponseType);
 		System.err.println(esResponse);
+
 		for (ElasticSearchResponse<Recipe> esrt : esResponse.getHits()) {
 			Recipe recipe = esrt.getSource();
 			recipeResults.add(recipe);

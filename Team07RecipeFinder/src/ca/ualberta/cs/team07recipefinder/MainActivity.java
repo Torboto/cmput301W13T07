@@ -103,13 +103,14 @@ public class MainActivity extends Activity {
 		 * getApplicationContext(), CameraActivity.class);
 		 * startActivity(cameraIntent); } });
 		 */
-		
-		  findViewById(R.id.buttonSynch).setOnClickListener( new
-		  View.OnClickListener() {
-		  @Override 
-		  public void onClick(View v) { 
-			  //
-		   } });
+
+		findViewById(R.id.buttonSynch).setOnClickListener(
+				new View.OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						RecipeController.synchronize(getApplicationContext());
+					}
+				});
 
 		// MA: Call addIngredient() when click on Add Ingredients button
 		findViewById(R.id.buttonAddIngredient).setOnClickListener(
@@ -124,6 +125,10 @@ public class MainActivity extends Activity {
 				new View.OnClickListener() {
 					@Override
 					public void onClick(View view) {
+						if (RecipeController
+								.checkInternetConnection(getApplicationContext())) {
+							return;
+						}
 						EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
 						// AS: if edittext not empty then do a search
 						if (!isEmpty(etSearchNameView))

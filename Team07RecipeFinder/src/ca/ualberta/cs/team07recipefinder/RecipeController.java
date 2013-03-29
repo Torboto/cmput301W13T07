@@ -72,7 +72,7 @@ public class RecipeController {
 		recipe.setIsUpdated(true);
 
 		if (isConnected) {
-			updateServerRecipe(uuid, recipe);
+			updateServerRecipe(recipe);
 		}
 		return;
 	}
@@ -132,9 +132,11 @@ public class RecipeController {
 		search.execute("");
 	}
 
-	static public void updateServerRecipe(UUID uuid, Recipe recipe) {
-		new DeleteRecipeTask().execute(uuid);
-		new WriteRecipeTask().execute(recipe);
+	static public void updateServerRecipe(Recipe recipe) {
+		HttpClient httpClient = new HttpClient();
+		httpClient.updateRecipe(recipe);
+		//new DeleteRecipeTask().execute(recipe.recipeId);
+		//new WriteRecipeTask().execute(recipe);
 	}
 
 	/**
@@ -145,7 +147,7 @@ public class RecipeController {
 	 * @param context
 	 * @return
 	 */
-	static private boolean checkInternetConnection(Context context) {
+	static public boolean checkInternetConnection(Context context) {
 		boolean isConnected = false;
 		try {
 			ConnectivityManager cm = (ConnectivityManager) context
@@ -162,53 +164,22 @@ public class RecipeController {
 		return isConnected;
 	}
 
-	static public void synchronize(ArrayList<UUID> recipes, Context context) {
-		SqlClient sqlClient = new SqlClient(context);
-		HttpClient httpClient = new HttpClient();
-
-		for (UUID recipeId : recipes) {
-			Recipe recipe = sqlClient.readRecipe(recipeId);
-
-			// this will most definitely not work the first time.
-			// I need to write all the async tasks and stuff to go with this
-			// crap
-			// httpClient.deleteRecipe(recipeId);
-			// httpClient.writeRecipe(recipe);
-		}
-
-		pushRecipeChangesToWeb(context);
-	}
-
 	/**
-	 * Finds all locally saved recipes that have been changed since the last
-	 * synch and pushes their changes to the webservice.
 	 * 
 	 * @param context
 	 */
-	static private void pushRecipeChangesToWeb(Context context) {
-
-		ArrayList<Recipe> localRecipes;
-		// List of all the locally saved recipes that have changes that
-		// must be pushed to the webservice.
-		ArrayList<Recipe> changedLocalRecipes = new ArrayList<Recipe>();
-
+	static public void synchronize(Context context) {
 		SqlClient sqlClient = new SqlClient(context);
+		HttpClient httpClient = new HttpClient();
+		ArrayList<Recipe> localRecipes = sqlClient.getAllRecipes();
 
-		localRecipes = sqlClient.getAllRecipes();
-
-		// If there are any local recipes, check which have changes
-		if (localRecipes != null) {
-			for (Recipe recipe : localRecipes) {
-				// If the recipe has been changed, add to list
-				if (recipe.getIsUpdated() == true) {
-					changedLocalRecipes.add(recipe);
-				}
+		for (Recipe localRecipe : localRecipes) {
+			Recipe serverRecipe = httpClient.readRecipe(localRecipe.recipeId);
+			if (serverRecipe.getIsUpdated() == true) {
+				sqlClient.updateRecipe(localRecipe.recipeId, serverRecipe);
 			}
-
-			if (changedLocalRecipes.size() > 0) {
-				// TODO: update the changed recipes
-
-				// TODO: change the isUpdated boolean back to false
+			if (localRecipe.getIsUpdated() == true){
+				httpClient.updateRecipe(localRecipe);
 			}
 		}
 	}
