@@ -62,7 +62,9 @@
     <string name="menu_delete_ingredient">Delete</string>
     <string name="menu_edit_ingredient">Edit</string>
     <string name="menu_pantry_title">Menu</string>
-    <string name="title_activity_search_by_pantry">SearchByPantryActivity</string>
+    
+    <!-- SearchByPantryActivity -->
+    <string name="title_activity_search_by_pantry">Select Pantry Items to Search By</string>
     
     <!-- GalleryViewActivity -->
     <string name="title_activity_gallery_view">GalleryViewActivity</string>
