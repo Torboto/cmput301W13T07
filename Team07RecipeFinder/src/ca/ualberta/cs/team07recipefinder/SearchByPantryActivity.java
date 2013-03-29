@@ -19,6 +19,13 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
+/**
+ * @author adam
+ * 
+ * This activity is launched when the user selects "Search Using My Pantry" from 
+ * the Search tab. The user selects ingredients from their pantry, which are returned
+ * to the main activity as an ArrayList and used in an ingredients search.
+ */
 public class SearchByPantryActivity extends Activity {
 	ListView ingredientsLV;
 	User user;
@@ -118,10 +125,12 @@ public class SearchByPantryActivity extends Activity {
 	}
 	
 	
-
+	/**
+	 * This method creates a dialog which informs the user that at least one
+	 * ingredient must be selected to search by.
+	 */
 	protected void emptySearchDialog() {
 		TextView tv = new TextView(this);
-			
 		tv.setText("Please select at least one ingredient to search!");
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Nothing Selected");

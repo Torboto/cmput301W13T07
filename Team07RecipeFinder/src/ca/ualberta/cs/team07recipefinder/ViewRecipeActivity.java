@@ -10,6 +10,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.method.KeyListener;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -155,6 +156,9 @@ public class ViewRecipeActivity extends Activity {
 		ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
+		Log.w("*****", "outside");
+		Log.w("*****", String.valueOf(currentRecipe.getRecipeId()));
+		Log.w("*****", String.valueOf(currentRecipe.location));
 		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 
 		// Set the image of the imagebutton to the first image in the folder

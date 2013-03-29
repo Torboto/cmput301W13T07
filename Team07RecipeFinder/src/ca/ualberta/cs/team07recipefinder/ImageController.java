@@ -33,9 +33,11 @@ public class ImageController {
 
 		if (location == Recipe.Location.LOCAL) {
 			images = Image.getAllLocalRecipeImages(uuid);
-		}
-		if (location == Recipe.Location.SERVER) {
+		} else if (location == Recipe.Location.SERVER) {
 
+		} else {
+			Log.e("ImageController",
+					"ERROR: No recipe location set in getAllRecipeImages");
 		}
 		return images;
 	}
@@ -51,9 +53,11 @@ public class ImageController {
 
 		if (location == Recipe.Location.LOCAL) {
 			bmp = Image.getLocalThumbnailImage(path);
-		}
-		if (location == Recipe.Location.SERVER) {
+		} else if (location == Recipe.Location.SERVER) {
 
+		} else {
+			Log.e("ImageController",
+					"ERROR: No recipe location set in setThumbnailImage");
 		}
 		return bmp;
 	}
@@ -71,9 +75,11 @@ public class ImageController {
 	static public void deleteImage(String path, Recipe.Location location) {
 		if (location == Recipe.Location.LOCAL) {
 			Image.deleteLocalImage(path);
-		}
-		if (location == Recipe.Location.SERVER) {
+		} else if (location == Recipe.Location.SERVER) {
 
+		} else {
+			Log.e("ImageController",
+					"ERROR: No recipe location set in deleteImage");
 		}
 	}
 
