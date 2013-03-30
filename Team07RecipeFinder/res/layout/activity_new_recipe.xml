@@ -58,10 +58,16 @@
                 		android:hint="@string/recipe_description" />
         		</LinearLayout>
 				
+        		<LinearLayout
+            		android:layout_width="wrap_content"
+            		android:layout_height="90dp"
+            		android:orientation="horizontal"
+            		android:paddingTop="10dp" >
+            		
         		<!-- Recipe ingredients. -AS -->
         		<TextView
             		android:id="@+id/tvIngredientsTitle"
-            		android:layout_width="wrap_content"
+            		android:layout_width="130dp"
             		android:layout_height="wrap_content"
            			android:paddingTop="20dp"
            			android:paddingLeft="10dp"
@@ -69,14 +75,28 @@
            			android:textStyle="bold"
            			android:text="@string/recipe_ingredients" />
         		
-        		<EditText
+        		<Button
+            	    android:id="@+id/bNewIngredient"
+            	    
+            	    android:textSize="20sp"
+            	    android:textStyle="bold"
+               		android:layout_width="25dp"
+          	        android:layout_height="25dp"	        
+          	        android:background="#3af904"
+            	    android:textColor="@android:color/white"
+                    android:text="@string/newIngredient" />
+        	
+        		
+        		</LinearLayout>
+        		
+        		<!--   <EditText
             		android:id="@+id/etIngredientsList"
             		android:layout_width="wrap_content"
             		android:layout_height="wrap_content"
            			android:paddingTop="2dp"
            			android:paddingLeft="15dp"
            			android:textSize="15sp"
-           			android:hint="@string/ingredients_hint" />
+           			android:hint="@string/ingredients_hint" /> -->
         		
         		<!-- Recipe directions. -AS -->
         		<TextView

@@ -8,11 +8,13 @@ import android.content.Intent;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -28,7 +30,7 @@ public class NewRecipeActivity extends Activity {
 
 	EditText titleEditText;
 	EditText descriptionEditText;
-	EditText ingredientsEditText;
+	//EditText ingredientsEditText;
 	EditText directionsEditText;
 	
 	// New recipe that will be populated with the info entered by the user
@@ -43,7 +45,7 @@ public class NewRecipeActivity extends Activity {
 
 		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
 		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
-		ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
+		//ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
 		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
 
 		Button doneButton = (Button) findViewById(R.id.bDone);
@@ -52,6 +54,14 @@ public class NewRecipeActivity extends Activity {
 			public void onClick(View v) {
 				// AS: The done button calls createRecipe
 				createRecipe();
+			}
+		});
+		
+		Button newIngredientButton = (Button) findViewById(R.id.bNewIngredient);
+		newIngredientButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				addIngredient(v);
 			}
 		});
 		
@@ -104,7 +114,7 @@ public class NewRecipeActivity extends Activity {
 		RecipeController.updateImageNumber(newRecipe);
 		
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
-				&& (!isEmpty(ingredientsEditText))
+		//		&& (!isEmpty(ingredientsEditText))
 				&& (!isEmpty(directionsEditText))) {
 			/*
 			 * AS: Now we know the required fields are filled in before we
@@ -128,12 +138,12 @@ public class NewRecipeActivity extends Activity {
 	private Recipe grabRecipeInfo() {
 		String title = titleEditText.getText().toString();
 		String description = descriptionEditText.getText().toString();
-		ArrayList<String> ingredients = 
-				parseIngredients(ingredientsEditText);
+		//ArrayList<String> ingredients = 
+		//		parseIngredients(ingredientsEditText);
 		String directions = directionsEditText.getText().toString();
 		String email = grabEmail();
 		newRecipe.setDescription(description);
-		newRecipe.setIngredients(ingredients);
+		//newRecipe.setIngredients(ingredients);
 		newRecipe.setName(title);
 		newRecipe.setDirections(directions);
 		newRecipe.setCreatorEmail(email);
@@ -200,7 +210,7 @@ public class NewRecipeActivity extends Activity {
 	 */
 	private void missingFields() {
 		TextView tv = new TextView(this);
-		tv.setText("You must fill in all fields to create a recipe!");
+		tv.setText("You must fill in all text fields to create a recipe!");
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Sorry");
 		alert.setView(tv);
@@ -211,4 +221,44 @@ public class NewRecipeActivity extends Activity {
 		alert.show();
 	}
 
+	protected void addIngredient(final View v) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Add New Ingredient");
+		
+		final EditText ingredientET = new EditText(this);
+		ingredientET.setHint("Ingredient");
+		
+		final EditText unitET = new EditText(this);
+		unitET.setHint("Unit of measurement");
+		
+		final EditText quantityET = new EditText(this);
+		quantityET.setHint("Quantity");
+		
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(1); // 1 is for vertical orientation
+		layout.addView(ingredientET);
+		layout.addView(unitET);
+		layout.addView(quantityET);
+		
+		alert.setView(layout);
+		
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				/*String ingredientName = input.getText().toString();
+				if (TextUtils.isEmpty(ingredientName))
+				else {
+					myPantry.addIngredient(ingredientName);
+					user.setPantry(myPantry);
+					user.Write(getApplicationContext());
+					onStart();
+				}*/
+			}
+		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		alert.show();
+	}
 }
