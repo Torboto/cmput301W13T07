@@ -148,12 +148,14 @@ public class ViewRecipeActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		populateImages();
 	}
 
 	public void populateImages() {
 		// Check if the recipe has any images saved on the sd card and get
 		// the bitmap for the imagebutton
-		ArrayList<String> imagePaths = ImageController.getAllRecipeImages(
+		
+		ArrayList<Image> images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
 		Log.w("*****", "outside");
@@ -162,9 +164,8 @@ public class ViewRecipeActivity extends Activity {
 		ImageButton pictureButton = (ImageButton) findViewById(R.id.ibRecipe);
 
 		// Set the image of the imagebutton to the first image in the folder
-		if (imagePaths.size() > 0) {
-			pictureButton.setImageBitmap(ImageController.getThumbnailImage(
-					imagePaths.get(0), currentRecipe.location));
+		if (images.size() > 0) {
+			pictureButton.setImageBitmap(images.get(0).getBitmap());
 		}
 
 	}

@@ -17,32 +17,13 @@ public class Image {
 		this.filename = filename;
 		this.image = image;
 	}
-
-	/**
-	 * Retrieve the path names of the images saved on the sd card associated
-	 * with the recipe id associated with uuid.
-	 * 
-	 * @param uuid
-	 * @return
-	 */
-	static public ArrayList<String> getAllLocalRecipeImages(UUID uuid) {
-
-		ArrayList<String> images = new ArrayList<String>();
-
-		try {
-			// Specify the expected file path for the recipe images.
-			File path = new File(Environment.getExternalStorageDirectory()
-					.getAbsolutePath() + "/tmp/" + String.valueOf(uuid));
-			File[] files = path.listFiles();
-
-			for (File file : files) {
-				images.add(String.valueOf(file));
-			}
-		} catch (Exception e) {
-			// The folder may not exist or there are no images
-			Log.w("Recipe Image Error: ", "No such folder or file.");
-		}
-		return images;
+	
+	public Bitmap getBitmap() {
+		return this.image;
+	}
+	
+	public String getFilename() {
+		return this.filename;
 	}
 
 	static public ArrayList<String> getAllServerRecipeImages(UUID uuid) {
@@ -79,13 +60,34 @@ public class Image {
 	 * 
 	 * @param path
 	 */
-	static public void deleteLocalImage(String path) {
-		File file = new File(path);
+	public void deleteLocalImage() {
 		try {
+			String[] nameComponents = this.filename.split("_");
+			Log.w("DELETING", "DELETING");
+			if(nameComponents.length <= 1)
+			{
+				Log.e("ERROR", "ERROR: image name incorrect for deleteLocalImage");
+				return;
+			}
+			Log.w("DELETING", "Test");
+			String filePath = getStoragePath() + nameComponents[0] + "/"
+					+ filename;
+			Log.w("DELETING", filePath);
+			File file = new File(filePath);
 			file.delete();
 		} catch (Exception e) {
 			// No file exists with that path
-			Log.w("Delete image", "Recipe image cannot be deleted");
+			Log.e("Delete image", "ERROR: Recipe image cannot be deleted");
 		}
+	}
+	
+	/**
+	 * returns the path of the folder where image folders are saved
+	 * @return
+	 */
+	public String getStoragePath() {
+		String storagePath = Environment.getExternalStorageDirectory()
+				.getAbsolutePath() + "/tmp/";
+		return storagePath;
 	}
 }

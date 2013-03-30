@@ -8,6 +8,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -19,7 +20,8 @@ public class GalleryViewActivity extends Activity {
 	int sourceCode;
 	Recipe currentRecipe;
 	RecipeController controller = new RecipeController();
-	ArrayList<String> imagePaths;
+	//ArrayList<String> imagePaths;
+	ArrayList<Image> images;
 	ImageView imageview;
 	int currentIndex, total;
 	Context context;
@@ -38,14 +40,13 @@ public class GalleryViewActivity extends Activity {
 
 		fillCurrentRecipe(recipeString);
 
-		imagePaths = ImageController.getAllRecipeImages(
+		images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
 		currentIndex = 0;
-		total = imagePaths.size();
-		if (imagePaths.size() > 0) {
-			imageview.setImageBitmap(ImageController.getThumbnailImage(
-					imagePaths.get(currentIndex), currentRecipe.location));
+		total = images.size();
+		if (images.size() > 0) {
+			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 
 		ImageButton prevButton = (ImageButton) findViewById(R.id.buttonPrev);
@@ -100,20 +101,24 @@ public class GalleryViewActivity extends Activity {
 						CameraActivity.class);
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));
-				cameraIntent.putExtra("imageNumber",
-						currentRecipe.getImageNumber() + total + 1);
-				startActivityForResult(cameraIntent, RESULT_OK);
+				Log.w("&&&", String.valueOf(currentRecipe.getImageNumber()));
+				cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber());
+				//cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber() + total + 1);
+				//startActivityForResult(cameraIntent, RESULT_OK);
+				startActivity(cameraIntent);
 			}
 		});
 
 		deleteButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
+				Image tempImage;
 				if (total > 1) {
-					Image.deleteLocalImage(imagePaths.get(currentIndex));
-					imagePaths = ImageController.getAllRecipeImages(
+					tempImage = images.get(currentIndex);
+					tempImage.deleteLocalImage();
+					images = ImageController.getAllRecipeImages(
 							currentRecipe.getRecipeId(), currentRecipe.location);
-					total = imagePaths.size();
+					total = images.size();
 					if (currentIndex == total)
 						currentIndex--;
 					showImage(currentIndex);
@@ -137,20 +142,18 @@ public class GalleryViewActivity extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-		imagePaths = ImageController.getAllRecipeImages(
+		images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
-		total = imagePaths.size();
+		total = images.size();
 		currentIndex = total - 1;
-		if (imagePaths.size() > 0) {
-			imageview.setImageBitmap(ImageController.getThumbnailImage(
-					imagePaths.get(currentIndex), currentRecipe.location));
+		if (images.size() > 0) {
+			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 	}
 
 	protected void showImage(int index) {
-		if (imagePaths.size() > 0) {
-			imageview.setImageBitmap(ImageController.getThumbnailImage(
-					imagePaths.get(index), currentRecipe.location));
+		if (images.size() > 0) {
+			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 	}
 
