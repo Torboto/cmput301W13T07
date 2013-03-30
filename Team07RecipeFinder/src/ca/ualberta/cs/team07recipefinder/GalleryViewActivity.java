@@ -40,6 +40,7 @@ public class GalleryViewActivity extends Activity {
 
 		fillCurrentRecipe(recipeString);
 
+		/*
 		images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
@@ -48,6 +49,10 @@ public class GalleryViewActivity extends Activity {
 		if (images.size() > 0) {
 			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
+		*/
+
+		currentIndex = 0;
+		loadImages();
 
 		ImageButton prevButton = (ImageButton) findViewById(R.id.buttonPrev);
 		ImageButton nextButton = (ImageButton) findViewById(R.id.buttonNext);
@@ -102,9 +107,7 @@ public class GalleryViewActivity extends Activity {
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));
 				Log.w("&&&", String.valueOf(currentRecipe.getImageNumber()));
-				cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber());
-				//cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber() + total + 1);
-				//startActivityForResult(cameraIntent, RESULT_OK);
+				cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber()+ 1);
 				startActivity(cameraIntent);
 			}
 		});
@@ -141,15 +144,20 @@ public class GalleryViewActivity extends Activity {
 		});
 	}
 
-	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+	protected void loadImages() {
 		images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 		total = images.size();
-		currentIndex = total - 1;
 		if (images.size() > 0) {
 			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 	}
+	@Override
+	public void onResume() {
+		super.onResume();
+		loadImages();
+	}
+
 
 	protected void showImage(int index) {
 		if (images.size() > 0) {
