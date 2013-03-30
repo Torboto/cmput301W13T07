@@ -42,7 +42,6 @@ public class Recipe {
 	}
 
 	public Recipe() {
-		this.recipeId = UUID.randomUUID();
 		this.isUpdated = false;
 		this.imageNumber = 0;
 	}
@@ -53,6 +52,10 @@ public class Recipe {
 
 	public String getName() {
 		return this.name;
+	}
+	
+	public void createUUID(){
+		this.recipeId = UUID.randomUUID();
 	}
 
 	public String getDirections() {

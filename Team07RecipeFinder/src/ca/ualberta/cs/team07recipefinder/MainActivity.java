@@ -126,7 +126,7 @@ public class MainActivity extends Activity {
 					@Override
 					public void onClick(View view) {
 						if (RecipeController
-								.checkInternetConnection(getApplicationContext())) {
+								.checkInternetConnection(getApplicationContext()) == false) {
 							return;
 						}
 						EditText etSearchNameView = (EditText) findViewById(R.id.etSearchName);
