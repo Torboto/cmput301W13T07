@@ -37,6 +37,8 @@ public class NewRecipeActivity extends Activity {
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
+		
+		newRecipe.createUUID();
 		setContentView(R.layout.activity_new_recipe);
 
 		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
