@@ -40,6 +40,7 @@ public class MainActivity extends Activity {
 
 	private User user;
 	private ListView ingredientsLV;
+	private Pantry myPantry;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -66,6 +67,7 @@ public class MainActivity extends Activity {
 		tabHost.addTab(spec3);
 
 		user = User.getInstance();
+		myPantry = user.getPantry();
 		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
 		registerForContextMenu(ingredientsLV);
 	}
@@ -225,9 +227,9 @@ public class MainActivity extends Activity {
 				if (TextUtils.isEmpty(ingredientName))
 					showInvalidInputWaring();
 				else {
-					Pantry p = user.getPantry();
-					p.addIngredient(ingredientName);
-					user.setPantry(p);
+					myPantry.addIngredient(ingredientName);
+					user.setPantry(myPantry);
+					user.Write(getApplicationContext());
 					onStart();
 				}
 			}
@@ -269,15 +271,13 @@ public class MainActivity extends Activity {
 	 */
 	private void editIngredient(final int index) {
 		final EditText et = new EditText(this);
-		et.setText(user.getPantry().getIngredient(index));
+		et.setText(myPantry.getIngredient(index));
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Edit Ingredient");
 		alert.setView(et);
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				user.getPantry().updateIngredient(index,
-						et.getText().toString());
-				onStart();
+				myPantry.updateIngredient(index, et.getText().toString());
 			}
 		});
 		alert.setNegativeButton("Cancel",
@@ -315,11 +315,15 @@ public class MainActivity extends Activity {
 		int index = info.position;
 		switch (item.getItemId()) {
 		case R.id.menu_delete_ingredient:
-			user.getPantry().removeIngredient(index);
+			myPantry.removeIngredient(index);
+			user.setPantry(myPantry);
+			user.Write(getApplicationContext());
 			onStart();
 			return true;
 		case R.id.menu_edit_ingredient:
 			editIngredient(index);
+			user.setPantry(myPantry);
+			user.Write(getApplicationContext());
 			onStart();
 			return true;
 		default:
@@ -336,7 +340,7 @@ public class MainActivity extends Activity {
 	protected void onStart() {
 		super.onStart();
 		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
-		ArrayList<String> ingredients = user.getPantry().getAllIngredients();
+		ArrayList<String> ingredients = myPantry.getAllIngredients();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, ingredients);
 		ingredientsLV.setAdapter(adapter);
