@@ -12,11 +12,11 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.google.gson.Gson;
 
 /**
+ * @author gcoomber
+ * 
  * A helper class for the Sqlite database that stores the user's locally
  * cached recipes. Recipes can be added to the database, deleted, and
  * updated.
- * @author gcoomber
- *
  */
 public class SqlClient extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
