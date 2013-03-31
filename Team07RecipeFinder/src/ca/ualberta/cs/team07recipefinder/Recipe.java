@@ -15,8 +15,8 @@ public class Recipe {
 	String name;
 	String description;
 	ArrayList<String> ingredients;
-	ArrayList<Integer> amount;
-	ArrayList<String> unit;
+	ArrayList<String> quantities;
+	ArrayList<String> units;
 	String directions;
 	UUID recipeId;
 	String creatorEmail;
