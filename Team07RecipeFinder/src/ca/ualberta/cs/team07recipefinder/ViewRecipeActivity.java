@@ -12,10 +12,12 @@ import android.os.Bundle;
 import android.text.method.KeyListener;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageButton;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -35,7 +37,6 @@ public class ViewRecipeActivity extends Activity {
 	int sourceCode;
 	KeyListener titleListener;
 	KeyListener descriptionListener;
-	KeyListener ingredientsListener;
 	KeyListener directionsListener;
 	// TODO: ET- if currentRecipe is a member variable, it should need to be
 	// passed into any functions like ParseRecipe
@@ -54,6 +55,10 @@ public class ViewRecipeActivity extends Activity {
 		// databse
 		// or server.
 		fillCurrentRecipe(recipeString);
+		
+		// AS: hide the add ingredient button
+		Button addButton = (Button) findViewById(R.id.bNewIngredient);
+		addButton.setVisibility(4);
 		
 		//ET: Save current recipe to cache
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
@@ -116,7 +121,7 @@ public class ViewRecipeActivity extends Activity {
 						editTextMode();
 						hideEditDelete();
 						hideEmail();
-						showSave();
+						showSaveAndAdd();
 						showThatEditable();
 						Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 						saveButton
@@ -212,9 +217,9 @@ public class ViewRecipeActivity extends Activity {
 		String title = recipe.getName();
 		String directions = recipe.getDirections();
 		String description = recipe.getDescription();
-		String ingredients = convertList(recipe.getIngredients());
 
-		fillTextViews(title, description, directions, ingredients);
+		fillTextViews(title, description, directions);
+		//populateIngredientView(recipe);
 	}
 
 	/**
@@ -232,30 +237,26 @@ public class ViewRecipeActivity extends Activity {
 	 *            the ingredients of the recipe
 	 */
 	private void fillTextViews(String title, String description,
-			String directions, String ingredients) {
+			String directions) {
 		// AS: first create the edit text objects
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);
-		EditText etIngredients = (EditText) findViewById(R.id.etIngredientsList);
 
 		// AS: then set the text views
 		etTitle.setText(title);
 		etDescription.setText(description);
 		etDirections.setText(directions);
-		etIngredients.setText(ingredients);
 
 		// AS: save the original key listeners
 		titleListener = etTitle.getKeyListener();
 		descriptionListener = etDescription.getKeyListener();
 		directionsListener = etDirections.getKeyListener();
-		ingredientsListener = etIngredients.getKeyListener();
 
 		// AS: then set them to be uneditable
 		etTitle.setKeyListener(null);
 		etDescription.setKeyListener(null);
 		etDirections.setKeyListener(null);
-		etIngredients.setKeyListener(null);
 
 		return;
 
@@ -292,9 +293,11 @@ public class ViewRecipeActivity extends Activity {
 	 * This method makes the save button visible again, for when the user enters
 	 * edit mode.
 	 */
-	private void showSave() {
+	private void showSaveAndAdd() {
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
+		Button addButton = (Button) findViewById(R.id.bNewIngredient);
 		saveButton.setVisibility(1);
+		addButton.setVisibility(1);
 		return;
 	}
 
@@ -328,13 +331,10 @@ public class ViewRecipeActivity extends Activity {
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);
-		EditText etIngredients = (EditText) findViewById(R.id.etIngredientsList);
 
 		etTitle.setKeyListener(titleListener);
 		etDescription.setKeyListener(descriptionListener);
 		etDirections.setKeyListener(directionsListener);
-		etIngredients.setKeyListener(ingredientsListener);
-
 		return;
 	}
 
@@ -374,18 +374,15 @@ public class ViewRecipeActivity extends Activity {
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);
-		EditText etIngredients = (EditText) findViewById(R.id.etIngredientsList);
 
 		String title = etTitle.getText().toString();
 		String description = etDescription.getText().toString();
-		ArrayList<String> ingredients = parseIngredients(etIngredients);
 		String directions = etDirections.getText().toString();
 		String email = grabEmail();
 		Recipe newRecipe = new Recipe();
 		newRecipe.setName(title);
 		newRecipe.setDescription(description);
 		newRecipe.setDirections(directions);
-		newRecipe.setIngredients(ingredients);
 		newRecipe.setCreatorEmail(email);
 		return newRecipe;
 
@@ -521,6 +518,30 @@ public class ViewRecipeActivity extends Activity {
 		return "Recipe Title:\n" + title + "\n\nRecipe Description:\n"
 				+ description + "\n\nIngredients:\n" + ingredients
 				+ "\n\nDirections:\n" + directions;
+	}
+
+	private ArrayList <String> formCombinedArray(Recipe recipe) {
+		ArrayList <String> ingredients = recipe.getIngredients();
+		ArrayList <String> quantities = recipe.getQuantities();
+		ArrayList <String> units = recipe.getUnits();
+		ArrayList <String> combined = new ArrayList <String>();
+		
+		//for (int index = 0; index < ingredients.size(); index++){
+		//	combined.add(ingredients.get(index) + ", " + quantities.get(index) +
+		//			" " + units.get(index));
+		//}
+		return ingredients;
+	}
+	
+	
+	private void populateIngredientView(Recipe recipe) {
+		ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
+		registerForContextMenu(ingredientsLV);
+		
+		ArrayList <String> combined = formCombinedArray(recipe);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.list_item, combined);
+		ingredientsLV.setAdapter(adapter);
 	}
 
 }
