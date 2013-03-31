@@ -4,11 +4,7 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Environment;
 import android.util.Log;
 
@@ -28,11 +24,46 @@ public class ImageController {
 	 * @param uuid
 	 * @return
 	 */
-	static public ArrayList<String> getAllRecipeImages(UUID uuid, Recipe.Location location) {
-		ArrayList<String> images = new ArrayList<String>();
+	
+	/**
+	 * Retrieve the path names of the images saved on the sd card associated
+	 * with the recipe id associated with uuid.
+	 * 
+	 * @param uuid
+	 * @return
+	 */
+	static public ArrayList<Image> getAllLocalRecipeImages(UUID uuid) {
+
+		ArrayList<Image> images = new ArrayList<Image>();
+
+		try {
+			// Specify the expected file path for the recipe images.
+			File path = new File(Environment.getExternalStorageDirectory()
+					.getAbsolutePath() + "/tmp/" + String.valueOf(uuid));
+			
+			File[] files = path.listFiles();
+
+			int i = 1;
+			// Create the image object
+			for (File file : files) {
+				String name = String.valueOf(uuid) + "_" + i + ".jpg";
+				Bitmap bitmap = Image.getLocalThumbnailImage(String.valueOf(file));
+				Image tempImage = new Image(name, bitmap);
+				images.add(tempImage);
+				i++;
+			}
+		} catch (Exception e) {
+			// The folder may not exist or there are no images
+			Log.e("getAllLocalRecipeImages: ", "ERROR: No such folder or file.");
+		}
+		return images;
+	}
+	
+	static public ArrayList<Image> getAllRecipeImages(UUID uuid, Recipe.Location location) {
+		ArrayList<Image> images = new ArrayList<Image>();
 
 		if (location == Recipe.Location.LOCAL) {
-			images = Image.getAllLocalRecipeImages(uuid);
+			images = getAllLocalRecipeImages(uuid);
 		} else if (location == Recipe.Location.SERVER) {
 
 		} else {
@@ -72,9 +103,9 @@ public class ImageController {
 	 * 
 	 * @param path
 	 */
-	static public void deleteImage(String path, Recipe.Location location) {
+	static public void deleteImage(Image image, Recipe.Location location) {
 		if (location == Recipe.Location.LOCAL) {
-			Image.deleteLocalImage(path);
+			image.deleteLocalImage();
 		} else if (location == Recipe.Location.SERVER) {
 
 		} else {
@@ -89,8 +120,8 @@ public class ImageController {
 
 		if(location == Recipe.Location.LOCAL) {
 			// get the paths of all images saved locally
-			ArrayList<String> imagePaths = getAllRecipeImages(uuid, location);
-			maxImageNumber = imagePaths.size();
+			ArrayList<Image> images = getAllRecipeImages(uuid, location);
+			maxImageNumber = images.size();
 		} else if(location == Recipe.Location.SERVER) {
 			// TODO: SERVERSTUFF
 		}

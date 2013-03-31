@@ -71,6 +71,14 @@ public class Recipe {
 	public ArrayList<String> getIngredients() {
 		return this.ingredients;
 	}
+	
+	public ArrayList<String> getQuantities() {
+		return this.quantities;
+	}
+	
+	public ArrayList<String> getUnits() {
+		return this.units;
+	}
 
 	public void setName(String name) {
 		this.name = name;
@@ -88,6 +96,14 @@ public class Recipe {
 		this.directions = directions;
 	}
 
+	public void setQuantities(ArrayList<String> quantities) {
+		this.quantities = quantities;
+	}
+	
+	public void setUnits(ArrayList<String> units) {
+		this.units = units;
+	}
+	
 	public String getCreatorEmail() {
 		return this.creatorEmail;
 	}

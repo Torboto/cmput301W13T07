@@ -26,10 +26,9 @@ import android.widget.Toast;
  * 
  */
 public class CameraActivity extends Activity {
-
+	
+	Camera camera;
 	Uri imageFileUri;
-	String folderName = "";
-	int imageNumber = -1;
 	Context context;
 	int duration = Toast.LENGTH_SHORT;
 	Toast toast;
@@ -78,29 +77,21 @@ public class CameraActivity extends Activity {
 
 		// Get the name of the folder the image will be saved in
 		Bundle extras = getIntent().getExtras();
-		folderName = extras.getString("recipeId");
-		imageNumber = extras.getInt("imageNumber") + 1;
+		String folderName = extras.getString("recipeId");
+		int imageNumber = extras.getInt("imageNumber") + 1;
+		
+		this.camera = new Camera(folderName, imageNumber);
 	}
 
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
 	/**
 	 * Take a photo by saving a photo in the temp folder in the external storage
-	 * with the current time as the jpg name.
 	 */
 	public void takeAPhoto() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
 
-		String folder = Environment.getExternalStorageDirectory()
-				.getAbsolutePath() + "/tmp/" + folderName;
-		File folderF = new File(folder);
-		if (!folderF.exists()) {
-			folderF.mkdir();
-		}
-
-		String imageFilePath = folder + "/" + folderName + "_"
-				+ String.valueOf(imageNumber) + ".jpg";
-		File imageFile = new File(imageFilePath);
+		File imageFile = camera.getFile();
 		imageFileUri = Uri.fromFile(imageFile);
 
 		intent.putExtra(MediaStore.EXTRA_OUTPUT, imageFileUri);

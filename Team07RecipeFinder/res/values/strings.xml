@@ -26,7 +26,7 @@
     <!-- TextView Strings -->
     <string name="description">Description</string>
     <string name="ingredients">Ingredients</string>
-    <string name="newIngredient">1. New Ingredient</string>
+    <string name="newIngredient">+</string>
     <string name="procedure">Procedure</string>
     <string name="newStep">1. New Step</string>
     <string name="done">Done</string>
@@ -34,6 +34,7 @@
     <string name="search">Search</string>
     <string name="save">Save</string>
     <string name="share">Share</string>
+    
     <!-- EditTextHint Strings -->
     <string name="search_ingredient">Ingredients</string>
     <string name="search_recipe">Recipe</string>
