@@ -17,6 +17,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -134,6 +135,14 @@ public class ViewRecipeActivity extends Activity {
 										savedDialog();
 									}
 								});
+						
+						Button newIngredientButton = (Button) findViewById(R.id.bNewIngredient);
+						newIngredientButton.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								//addIngredient(v);
+							}
+						});
 					}
 
 					// AS: if not editable then nothing happens (inform user
@@ -543,5 +552,70 @@ public class ViewRecipeActivity extends Activity {
 				R.layout.list_item, combined);
 		ingredientsLV.setAdapter(adapter);
 	}
+	
+/*	protected void addIngredient(final View v) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Add New Ingredient");
+		
+		final EditText ingredientET = new EditText(this);
+		ingredientET.setHint("Ingredient");
+		
+		final EditText unitET = new EditText(this);
+		unitET.setHint("Unit of measurement");
+		
+		final EditText quantityET = new EditText(this);
+		quantityET.setHint("Quantity");
+		
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(1); // 1 is for vertical orientation
+		layout.addView(ingredientET);
+		layout.addView(unitET);
+		layout.addView(quantityET);
+		
+		alert.setView(layout);
+		
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET)) && (!isEmpty(quantityET))) {
+					parseIngredientInfo(ingredientET, unitET, quantityET);
+					populateIngredientView();
+				}
+			}
+		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		alert.show();
+	} */
+	
+	
+	/**
+	 * This method takes an EditText and returns true if it is empty and false otherwise.
+	 * 
+	 * @param etText the EditText to be tested
+	 * @return       True: if empty, false: otherwise.
+	 */
+	private boolean isEmpty(EditText etText) {
+		// AS: returns if an Edit Text is empty or not
+		if (etText.getText().toString().trim().length() > 0)
+			return false;
+		else
+			return true;
+	}
 
+	/*
+	private void parseIngredientInfo(EditText ingredientET, EditText unitET,
+			EditText quantityET) {
+			String ingredient = ingredientET.getText().toString();
+			String unit = unitET.getText().toString();
+			String quantity = quantityET.getText().toString();
+			ingredients.add(ingredient);
+			units.add(unit);
+			quantities.add(quantity);
+			combined.add(ingredient + ", " + quantity + " " + unit);
+		
+	}
+	*/
 }
