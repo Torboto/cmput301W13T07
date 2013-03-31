@@ -24,7 +24,7 @@ public class Hits<T> {
     
     /**
      * Returns a collection of hits for the search
-     * @return
+     * @return All hits for the query from elasticsearch
      */
     public Collection<ElasticSearchResponse<T>> getHits() {
         return hits;

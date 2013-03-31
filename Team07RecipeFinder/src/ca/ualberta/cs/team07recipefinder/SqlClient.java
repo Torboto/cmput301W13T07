@@ -82,7 +82,7 @@ public class SqlClient extends SQLiteOpenHelper {
      * Retrieve a recipe from the local database using recipeId as
      * the key.
      * @param id
-     * @return
+     * @return Single recipe stored on local device.
      */
     public Recipe readRecipe(UUID id) {
     	Recipe recipe;
@@ -118,8 +118,13 @@ public class SqlClient extends SQLiteOpenHelper {
     /**
      * Update an existing Recipe in the local database by overwriting 
      * the Recipe.
+     * 
      * @param recipeId
-     * @param temp_recipe
+     * Identifying parameter for recipe object.
+     * 
+     * @param updatedRecipe
+     * Recipe object that contains changes to put made to existing recipe.
+     * 
      */
     public void updateRecipe( UUID recipeId, Recipe updatedRecipe ) {
     	boolean isExists;
@@ -179,7 +184,7 @@ public class SqlClient extends SQLiteOpenHelper {
      * Query the database to check if a Recipe exits with the recipeId.
      * Return true if row exists, false if row does not exist.
      * @param recipeId
-     * @return
+     * @return Boolean on whether row exists.
      */
     public boolean checkRow(UUID recipeId) {
 		boolean isExist = false;
@@ -226,7 +231,7 @@ public class SqlClient extends SQLiteOpenHelper {
     
     /**
      * Find and return all recipes that are saved in the local database.
-     * @return
+     * @return List of all recipes stored on local device.
      */
     public ArrayList<Recipe> getAllRecipes() {
     	String json;

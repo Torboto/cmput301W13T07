@@ -153,12 +153,10 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author Torboto
-	 * @author gcoomber
 	 * 
-	 *         Takes in a listview, and an array of recipes to bind to an
-	 *         onItemClickListener These variables must be passed in as final so
-	 *         that the listener declared inside may access them.
+	 * Takes in a listview, and an array of recipes to bind to an
+	 * onItemClickListener These variables must be passed in as final so that
+	 * the listener declared inside may access them.
 	 * 
 	 * @param listView
 	 *            listview to bind to recipes param
@@ -206,11 +204,9 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author xiaohuim
-	 * 
-	 *         This will show a dialog for user to input a ingredient and save
-	 *         it to the pantry. If the input is null, it will call the
-	 *         showInvalidInputWaring() to show warn the user.
+	 * This will show a dialog for user to input a ingredient and save it to the
+	 * pantry. If the input is null, it will call the showInvalidInputWaring()
+	 * to show warn the user.
 	 * 
 	 * @param v
 	 * 
@@ -243,9 +239,7 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author xiaohuim
-	 * 
-	 *         Will show a dialog says the input is invalid
+	 * Will show a dialog says the input is invalid
 	 */
 	protected void showInvalidInputWaring() {
 		TextView tv = new TextView(this);
@@ -370,10 +364,9 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author Torboto This method is called when a search is done, it creates
-	 *         an async task, as well as defining a DataDownloadListener which
-	 *         is a type that will pass the data from the async task back to
-	 *         setSearch method.
+	 * This method is called when a search is done, it creates an async task, as
+	 * well as defining a DataDownloadListener which is a type that will pass
+	 * the data from the async task back to setSearch method.
 	 */
 	protected void populateSearch(String titleKeyword,
 			ArrayList<String> ingredients) {

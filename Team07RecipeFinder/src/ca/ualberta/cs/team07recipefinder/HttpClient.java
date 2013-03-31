@@ -256,10 +256,9 @@ public class HttpClient {
 	/**
 	 * Searches for recipes based on titles.
 	 * 
-	 * @param name
-	 *            title of recipe to search
-	 * @param recipeId
-	 * @return
+	 * @param name 
+	 * title of recipe to search
+	 * @return Returns all recipes that match the keyword given
 	 */
 	public ArrayList<Recipe> searchRecipes(String name) {
 		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
