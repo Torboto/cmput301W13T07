@@ -11,10 +11,12 @@ import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 /**
@@ -30,11 +32,15 @@ public class NewRecipeActivity extends Activity {
 
 	EditText titleEditText;
 	EditText descriptionEditText;
-	//EditText ingredientsEditText;
 	EditText directionsEditText;
 	
 	// New recipe that will be populated with the info entered by the user
 	Recipe newRecipe = new Recipe();
+	
+	ArrayList <String> ingredients = new ArrayList <String>();
+	ArrayList <String> units = new ArrayList <String>();
+	ArrayList <String> quantities = new ArrayList <String>();
+	ArrayList <String> combined = new ArrayList <String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -45,9 +51,10 @@ public class NewRecipeActivity extends Activity {
 
 		titleEditText = (EditText) findViewById(R.id.etRecipeTitle);
 		descriptionEditText = (EditText) findViewById(R.id.etRecipeDescription);
-		//ingredientsEditText = (EditText) findViewById(R.id.etIngredientsList);
 		directionsEditText = (EditText) findViewById(R.id.etDirectionsList);
 
+		populateIngredientView();
+		
 		Button doneButton = (Button) findViewById(R.id.bDone);
 		doneButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -114,7 +121,6 @@ public class NewRecipeActivity extends Activity {
 		RecipeController.updateImageNumber(newRecipe);
 		
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
-		//		&& (!isEmpty(ingredientsEditText))
 				&& (!isEmpty(directionsEditText))) {
 			/*
 			 * AS: Now we know the required fields are filled in before we
@@ -210,7 +216,7 @@ public class NewRecipeActivity extends Activity {
 	 */
 	private void missingFields() {
 		TextView tv = new TextView(this);
-		tv.setText("You must fill in all text fields to create a recipe!");
+		tv.setText("You must fill in all text fields!");
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Sorry");
 		alert.setView(tv);
@@ -244,14 +250,10 @@ public class NewRecipeActivity extends Activity {
 		
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				/*String ingredientName = input.getText().toString();
-				if (TextUtils.isEmpty(ingredientName))
-				else {
-					myPantry.addIngredient(ingredientName);
-					user.setPantry(myPantry);
-					user.Write(getApplicationContext());
-					onStart();
-				}*/
+				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET)) && (!isEmpty(quantityET))) {
+					parseIngredientInfo(ingredientET, unitET, quantityET);
+					populateIngredientView();
+				}
 			}
 		});
 		alert.setNegativeButton("Cancel",
@@ -261,4 +263,26 @@ public class NewRecipeActivity extends Activity {
 				});
 		alert.show();
 	}
+	
+	private void parseIngredientInfo(EditText ingredientET, EditText unitET,
+			EditText quantityET) {
+			String ingredient = ingredientET.getText().toString();
+			String unit = unitET.getText().toString();
+			String quantity = quantityET.getText().toString();
+			ingredients.add(ingredient);
+			units.add(unit);
+			quantities.add(quantity);
+			combined.add(ingredient + ", " + quantity + " " + unit);
+		
+	}
+	
+	private void populateIngredientView() {
+			ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
+			registerForContextMenu(ingredientsLV);	
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+					R.layout.list_item, combined);
+			ingredientsLV.setAdapter(adapter);
+		
+	}
+
 }
