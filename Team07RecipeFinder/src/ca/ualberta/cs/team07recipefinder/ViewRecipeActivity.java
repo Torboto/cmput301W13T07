@@ -219,7 +219,7 @@ public class ViewRecipeActivity extends Activity {
 		String description = recipe.getDescription();
 
 		fillTextViews(title, description, directions);
-		//populateIngredientView(recipe);
+		populateIngredientView(recipe);
 	}
 
 	/**
@@ -526,16 +526,16 @@ public class ViewRecipeActivity extends Activity {
 		ArrayList <String> units = recipe.getUnits();
 		ArrayList <String> combined = new ArrayList <String>();
 		
-		//for (int index = 0; index < ingredients.size(); index++){
-		//	combined.add(ingredients.get(index) + ", " + quantities.get(index) +
-		//			" " + units.get(index));
-		//}
-		return ingredients;
+		for (int index = 0; index < ingredients.size(); index++){
+			combined.add(ingredients.get(index) + ", " + quantities.get(index) +
+					" " + units.get(index));
+		}
+		return combined;
 	}
 	
 	
 	private void populateIngredientView(Recipe recipe) {
-		ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
+		ListView ingredientsLV = (ListView) findViewById(R.id.lv_Ingredients);
 		registerForContextMenu(ingredientsLV);
 		
 		ArrayList <String> combined = formCombinedArray(recipe);

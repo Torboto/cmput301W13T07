@@ -144,12 +144,12 @@ public class NewRecipeActivity extends Activity {
 	private Recipe grabRecipeInfo() {
 		String title = titleEditText.getText().toString();
 		String description = descriptionEditText.getText().toString();
-		//ArrayList<String> ingredients = 
-		//		parseIngredients(ingredientsEditText);
 		String directions = directionsEditText.getText().toString();
 		String email = grabEmail();
 		newRecipe.setDescription(description);
-		//newRecipe.setIngredients(ingredients);
+		newRecipe.setIngredients(ingredients);
+		newRecipe.setQuantities(quantities);
+		newRecipe.setUnits(units);
 		newRecipe.setName(title);
 		newRecipe.setDirections(directions);
 		newRecipe.setCreatorEmail(email);

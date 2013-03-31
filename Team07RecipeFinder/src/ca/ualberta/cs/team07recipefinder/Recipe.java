@@ -100,7 +100,7 @@ public class Recipe {
 		this.quantities = quantities;
 	}
 	
-	public void setunits(ArrayList<String> units) {
+	public void setUnits(ArrayList<String> units) {
 		this.units = units;
 	}
 	
