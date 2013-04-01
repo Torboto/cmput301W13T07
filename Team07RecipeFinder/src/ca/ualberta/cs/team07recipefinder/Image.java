@@ -113,9 +113,6 @@ public class Image {
 
 	/**
 	 * Deletes the recipe image file located at the file path.
-	 * 
-	 * @param path
-	 *            Path to SD card on local device.
 	 */
 	public void deleteLocalImage() {
 		try {
@@ -149,10 +146,12 @@ public class Image {
 		return storagePath;
 	}
 
+	@SuppressWarnings("javadoc")
 	public Bitmap getBitmap() {
 		return this.image;
 	}
 
+	@SuppressWarnings("javadoc")
 	public String getFilename() {
 		return this.filename;
 	}

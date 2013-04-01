@@ -324,8 +324,8 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	/*
-	 * GC: For MyRecipes Tab. Retrieves all recipes from the cache and lists
+	/**
+	 * For MyRecipes Tab. Retrieves all recipes from the cache and lists
 	 * their names and returns the list of retrieved recipes
 	 */
 	public void populateMyRecipes() {

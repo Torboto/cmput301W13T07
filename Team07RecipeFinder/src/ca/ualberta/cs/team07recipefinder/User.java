@@ -26,6 +26,11 @@ public class User implements Serializable {
 	private Pantry pantry;
 	private String filename = "userdata";
 
+	/**
+	 * Singleton constructor so that only one user exists on each device, and pantry data is persistent.
+	 * 
+	 * @return The current instance of user.
+	 */
 	public static User getInstance() {
 		if (instance == null) {
 			instance = new User();
