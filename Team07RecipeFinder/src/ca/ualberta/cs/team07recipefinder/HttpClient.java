@@ -30,6 +30,7 @@ import com.google.gson.reflect.TypeToken;
  *         Methods for saving recipes, deleting recipes, and searching for
  *         recipes from webservice:
  *         http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
+ *         Majority of code from: https://github.com/rayzhangcl/ESDemo
  */
 public class HttpClient {
 
