@@ -9,7 +9,7 @@ import android.os.Environment;
  * 
  *         A helper class that contains data and methods for the camera
  *         activity.
- * 
+ * 	
  */
 public class Camera {
 	private String folderName;

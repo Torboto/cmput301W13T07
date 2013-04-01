@@ -20,15 +20,15 @@ import com.google.gson.Gson;
  */
 public class SqlClient extends SQLiteOpenHelper {
 	/**
-	 * 
+	 * The version of the database
 	 */
 	public static final int DATABASE_VERSION = 1;
 	/**
-	 * 
+	 * Set the name of the database that will be saved locally
 	 */
 	public static final String DATABASE_NAME = "RecipeCache.db";
 	/**
-	 * 
+	 * Set the name of table name and the column names
 	 */
 	public static final String TABLE_NAME = "LocalRecipes";
 	private static final String COLUMN_NAME_ID = "recipe_id";
@@ -154,36 +154,6 @@ public class SqlClient extends SQLiteOpenHelper {
 			writeRecipe(updatedRecipe);
 		}
 
-		/*
-		 * if (isExists == true) { // New value for one column ContentValues
-		 * values = new ContentValues();
-		 * 
-		 * // values.put(COLUMN_NAME_ID, String.valueOf( recipeId ));
-		 * values.put(COLUMN_NAME_CONTENT, json); db.execSQL("UPDATE " +
-		 * TABLE_NAME + " SET " + COLUMN_NAME_CONTENT + " = " + "\"" + json +
-		 * "\"" + " WHERE " + COLUMN_NAME_ID + " = " + "\"" +
-		 * String.valueOf(recipeId) + "\""); db.update(TABLE_NAME, values,
-		 * COLUMN_NAME_ID + " =? " + "\'" + String.valueOf(recipeId) + "\'",
-		 * null);
-		 * 
-		 * }/
-		 * 
-		 * 
-		 * /* if (isExists == true) { // New value for one column ContentValues
-		 * values = new ContentValues();
-		 * 
-		 * //values.put(COLUMN_NAME_ID, String.valueOf( recipeId ));
-		 * values.put(COLUMN_NAME_CONTENT, json);
-		 * 
-		 * // Which row to update, based on the ID String selection =
-		 * COLUMN_NAME_ID + " LIKE ?"; String[] selectionArgs = {
-		 * String.valueOf( recipeId ) };
-		 * 
-		 * int count = db.update(TABLE_NAME, values, selection, selectionArgs);
-		 * }
-		 */
-
-		// db.close();
 	}
 
 	/**
