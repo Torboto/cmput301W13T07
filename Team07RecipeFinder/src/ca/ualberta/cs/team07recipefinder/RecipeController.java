@@ -120,7 +120,7 @@ public class RecipeController {
 		boolean isConnected = false;
 		try {
 			ConnectivityManager cm = (ConnectivityManager) context
-					.getSystemService(context.CONNECTIVITY_SERVICE);
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
 
 			NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 			isConnected = networkInfo != null && networkInfo.isAvailable()
@@ -158,19 +158,6 @@ public class RecipeController {
 				sqlClient.updateRecipe(localRecipe.recipeId, serverRecipe);
 			}
 		}
-	}
-
-	/**
-	 * Update the integer value that represents the number of saved images for a
-	 * locally saved recipe.
-	 * 
-	 * @param recipe
-	 *            Recipe to be updated.
-	 */
-	static public void updateImageNumber(Recipe recipe) {
-		int imageNumber = ImageController.getNumberImages(recipe.getRecipeId(),
-				Recipe.Location.LOCAL);
-		recipe.setImageNumber(imageNumber);
 	}
 
 }

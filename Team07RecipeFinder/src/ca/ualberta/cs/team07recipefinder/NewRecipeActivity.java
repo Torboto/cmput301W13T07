@@ -76,7 +76,7 @@ public class NewRecipeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Get the number of images the recipe has
-				RecipeController.updateImageNumber(newRecipe);
+				ImageController.updateImageNumber(newRecipe);
 
 				Intent cameraIntent = new Intent(getApplicationContext(),
 						CameraActivity.class);
@@ -115,7 +115,7 @@ public class NewRecipeActivity extends Activity {
 	 */
 	private void createRecipe() {
 		// Get the number of images the recipe has
-		RecipeController.updateImageNumber(newRecipe);
+		ImageController.updateImageNumber(newRecipe);
 
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
 				&& (!isEmpty(directionsEditText))) {
