@@ -12,6 +12,11 @@ import org.junit.Test;
 import ca.ualberta.cs.team07recipefinder.HttpClient;
 import ca.ualberta.cs.team07recipefinder.Recipe;
 
+/**
+ * @author Torboto
+ *
+ *	Tests HttpClient functionality
+ */
 public class HttpTestCase extends TestCase {
 	HttpClient httpClient;
 	Recipe recipe;
@@ -28,7 +33,7 @@ public class HttpTestCase extends TestCase {
 		ingredients.add("fish");
 		ingredients.add("cats");
 		recipe = new Recipe("test", "test_desc", ingredients, "DIRECTINOS",
-				"ern@bleh.com");
+				"ern@bleh.com", Recipe.Location.SERVER);
 	}
 
 	/**
@@ -43,14 +48,15 @@ public class HttpTestCase extends TestCase {
 	
 	@Test
 	public void testSearch() {
-		ArrayList<Recipe> output = httpClient.searchRecipes(recipe.getName(), null);
+		ArrayList<Recipe> output = httpClient.searchRecipes(recipe.getTitle());
 		assertTrue(output.get(0) == recipe);
 	}
 	
+	@Test
 	public void testUpdate() {
 		recipe.setDescription("Test");
 		httpClient.updateRecipe(recipe);
-		ArrayList<Recipe> output = httpClient.searchRecipes(recipe.getName(), null);
+		ArrayList<Recipe> output = httpClient.searchRecipes(recipe.getTitle());
 		assertTrue(output.get(0).getDescription() == recipe.getDescription());
 	}
 }

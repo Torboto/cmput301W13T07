@@ -146,8 +146,6 @@ public class GalleryViewActivity extends Activity {
 	}
 
 	/**
-	 * @author xiaohui
-	 * 
 	 *         This method will reload the images variable in case the images
 	 *         are changed.
 	 */
@@ -167,8 +165,6 @@ public class GalleryViewActivity extends Activity {
 	}
 
 	/**
-	 * @author xiaohui
-	 * 
 	 *         This method will reset the currently showing image in the
 	 *         ImageView given the current index.
 	 * 
