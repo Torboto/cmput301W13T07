@@ -49,6 +49,10 @@ public class Recipe {
 	public UUID getRecipeId() {
 		return this.recipeId;
 	}
+	
+	public void setRecipeId(UUID uuid) {
+		this.recipeId = uuid;
+	}
 
 	public String getName() {
 		return this.name;

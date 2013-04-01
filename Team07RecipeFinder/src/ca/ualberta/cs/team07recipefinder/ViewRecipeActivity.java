@@ -49,12 +49,12 @@ public class ViewRecipeActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		sourceCode = extras.getInt("code");
 		final String recipeString = extras.getString("recipeId");
-
+		
 		// AS: call fillCurrentRecipe() to get the recipe from either the local
 		// databse
 		// or server.
 		fillCurrentRecipe(recipeString);
-		
+		Recipe test = currentRecipe;
 		//ET: Save current recipe to cache
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 		saveButton.setOnClickListener(new View.OnClickListener() {
@@ -387,6 +387,7 @@ public class ViewRecipeActivity extends Activity {
 		newRecipe.setDirections(directions);
 		newRecipe.setIngredients(ingredients);
 		newRecipe.setCreatorEmail(email);
+		newRecipe.setRecipeId(currentRecipe.getRecipeId());
 		return newRecipe;
 
 	}
