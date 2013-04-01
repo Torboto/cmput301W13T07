@@ -15,6 +15,10 @@ public class Camera {
 	private String folderName;
 	int imageNumber;
 
+	/**
+	 * @param folderName
+	 * @param imageNumber
+	 */
 	public Camera(String folderName, int imageNumber) {
 		this.folderName = folderName;
 		this.imageNumber = imageNumber;

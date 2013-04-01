@@ -162,6 +162,13 @@ public class Recipe {
 	 *         on the elasticsearch server.
 	 */
 	static public enum Location {
-		LOCAL, SERVER;
+		/**
+		 * Located on local device, in SQL database.
+		 */
+		LOCAL, 
+		/**
+		 * Located on elasticsearch webservice.
+		 */
+		SERVER;
 	}
 }

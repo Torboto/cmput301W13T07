@@ -19,8 +19,17 @@ import com.google.gson.Gson;
  *         updated.
  */
 public class SqlClient extends SQLiteOpenHelper {
+	/**
+	 * 
+	 */
 	public static final int DATABASE_VERSION = 1;
+	/**
+	 * 
+	 */
 	public static final String DATABASE_NAME = "RecipeCache.db";
+	/**
+	 * 
+	 */
 	public static final String TABLE_NAME = "LocalRecipes";
 	private static final String COLUMN_NAME_ID = "recipe_id";
 	private static final String COLUMN_NAME_CONTENT = "recipe_text";
@@ -35,6 +44,9 @@ public class SqlClient extends SQLiteOpenHelper {
 	private static final String SQL_DELETE_ENTRIES = "DROP TABLE IF EXISTS "
 			+ TABLE_NAME;
 
+	/**
+	 * @param context
+	 */
 	public SqlClient(Context context) {
 		super(context, DATABASE_NAME, null, DATABASE_VERSION);
 	}

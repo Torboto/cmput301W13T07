@@ -8,5 +8,10 @@ package ca.ualberta.cs.team07recipefinder;
  * @param <M>
  */
 public interface View<M> {
+	/**
+	 * 
+	 * 
+	 * @param model
+	 */
 	public void update(M model);
 }

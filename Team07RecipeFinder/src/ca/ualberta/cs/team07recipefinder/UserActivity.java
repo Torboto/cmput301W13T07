@@ -83,6 +83,7 @@ public class UserActivity extends Activity {
 	 * are form errors (invalid email, missing fields, etc.), the errors are
 	 * presented and no actual registration attempt is made.
 	 */
+	@SuppressWarnings("unused")
 	public void verifyUser() {
 		// Reset errors.
 		mEmailView.setError(null);
@@ -91,7 +92,7 @@ public class UserActivity extends Activity {
 		// Store values at the time of the login attempt.
 		mEmail = mEmailView.getText().toString();
 		mPersonName = mPersonNameView.getText().toString();
-		View focusView = null;
+		View focusView;
 
 		// Check for a valid email address and name.
 		if (TextUtils.isEmpty(mEmail)) {
