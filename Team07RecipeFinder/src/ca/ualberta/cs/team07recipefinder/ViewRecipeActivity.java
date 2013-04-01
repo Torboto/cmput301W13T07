@@ -442,22 +442,6 @@ public class ViewRecipeActivity extends Activity {
 		}
 	}
 
-	/**
-	 * This method takes the ingredients as an EditText and returns them as an
-	 * ArrayList of strings. It assumes that they are separated by newline
-	 * characters.
-	 * 
-	 * @param ingredientsEditText
-	 *            the ingredients as an EditText
-	 * @return the ingredients as an ArrayList of strings
-	 */
-	// TODO: Can we get rid of this method? It's never used.
-	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
-		String ingredientsString = ingredientsEditText.getText().toString();
-		ArrayList<String> ingredients = new ArrayList<String>(
-				Arrays.asList(ingredientsString.split("\n")));
-		return ingredients;
-	}
 
 	/**
 	 * This method creates a dialog which informs that user that they can now
