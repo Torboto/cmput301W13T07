@@ -6,21 +6,24 @@ import java.util.UUID;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
+/**
+ * @author xiaohui
+ * 
+ *         This is the gallery view activity for viewing images of a recipe.
+ *         User can delete or add a image in this.
+ */
 public class GalleryViewActivity extends Activity {
 	int sourceCode;
 	Recipe currentRecipe;
 	RecipeController controller = new RecipeController();
-	//ArrayList<String> imagePaths;
+	// ArrayList<String> imagePaths;
 	ArrayList<Image> images;
 	ImageView imageview;
 	int currentIndex, total;
@@ -41,15 +44,12 @@ public class GalleryViewActivity extends Activity {
 		fillCurrentRecipe(recipeString);
 
 		/*
-		images = ImageController.getAllRecipeImages(
-				currentRecipe.getRecipeId(), currentRecipe.location);
-
-		currentIndex = 0;
-		total = images.size();
-		if (images.size() > 0) {
-			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
-		}
-		*/
+		 * images = ImageController.getAllRecipeImages(
+		 * currentRecipe.getRecipeId(), currentRecipe.location);
+		 * 
+		 * currentIndex = 0; total = images.size(); if (images.size() > 0) {
+		 * imageview.setImageBitmap(images.get(currentIndex).getBitmap()); }
+		 */
 
 		currentIndex = 0;
 		loadImages();
@@ -100,14 +100,15 @@ public class GalleryViewActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Get the number of images the recipe has
-				RecipeController.updateImageNumber(currentRecipe);
+				ImageController.updateImageNumber(currentRecipe);
 
 				Intent cameraIntent = new Intent(getApplicationContext(),
 						CameraActivity.class);
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));
 				Log.w("&&&", String.valueOf(currentRecipe.getImageNumber()));
-				cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber()+ 1);
+				cameraIntent.putExtra("imageNumber",
+						currentRecipe.getImageNumber() + 1);
 				startActivity(cameraIntent);
 			}
 		});
@@ -144,6 +145,12 @@ public class GalleryViewActivity extends Activity {
 		});
 	}
 
+	/**
+	 * @author xiaohui
+	 * 
+	 *         This method will reload the images variable in case the images
+	 *         are changed.
+	 */
 	protected void loadImages() {
 		images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
@@ -152,19 +159,30 @@ public class GalleryViewActivity extends Activity {
 			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		loadImages();
 	}
 
-
+	/**
+	 * @author xiaohui
+	 * 
+	 *         This method will reset the currently showing image in the
+	 *         ImageView given the current index.
+	 * 
+	 * @param index
+	 */
 	protected void showImage(int index) {
 		if (images.size() > 0) {
 			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 	}
 
+	/**
+	 * @param recipeString
+	 */
 	private void fillCurrentRecipe(String recipeString) {
 		// AS: first get the recipe from the database using a recipeController
 		UUID recipeID = UUID.fromString(recipeString);

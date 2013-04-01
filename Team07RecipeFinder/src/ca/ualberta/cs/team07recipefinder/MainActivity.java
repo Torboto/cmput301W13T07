@@ -3,8 +3,6 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.ArrayList;
 import java.util.UUID;
 
-import ca.ualberta.cs.team07recipefinder.Recipe.Location;
-
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
@@ -21,7 +19,6 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.AdapterContextMenuInfo;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.TabHost;
@@ -93,18 +90,6 @@ public class MainActivity extends Activity {
 						startActivity(newRecipeIntent);
 					}
 				});
-
-		// GC: Clicklistener for the synch button. Currently being used to
-		// test the camera.
-		/*
-		 * findViewById(R.id.buttonSynch).setOnClickListener( new
-		 * View.OnClickListener() {
-		 * 
-		 * @Override public void onClick(View v) { // GC: The add button starts
-		 * the NewRecipeActivity Intent cameraIntent = new Intent(
-		 * getApplicationContext(), CameraActivity.class);
-		 * startActivity(cameraIntent); } });
-		 */
 
 		findViewById(R.id.buttonSynch).setOnClickListener(
 				new View.OnClickListener() {
@@ -255,10 +240,8 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author xiaohuim
-	 * 
-	 *         This will show a dialog with a EditText and update the ingredient
-	 *         of the given index
+	 * This will show a dialog with a EditText and update the ingredient of the
+	 * given index
 	 * 
 	 * @param index
 	 * 
@@ -284,8 +267,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * @author xiaohuim
-	 * 
 	 * If user long-press on item in the pantry listview and this menu will show.
 	 */
 	public void onCreateContextMenu(ContextMenu menu, View v,
@@ -298,8 +279,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * @author xiaohuim
-	 * 
 	 * If click on an item in the ConetextMenu and the corresponding method will
 	 * be called.
 	 */
@@ -327,8 +306,6 @@ public class MainActivity extends Activity {
 
 	@Override
 	/**
-	 * @author xiaohuim
-	 * 
 	 * This will load and show all ingredients in the ListView under Pantry tab.
 	 */
 	protected void onStart() {
@@ -347,8 +324,8 @@ public class MainActivity extends Activity {
 		return true;
 	}
 
-	/*
-	 * GC: For MyRecipes Tab. Retrieves all recipes from the cache and lists
+	/**
+	 * For MyRecipes Tab. Retrieves all recipes from the cache and lists
 	 * their names and returns the list of retrieved recipes
 	 */
 	public void populateMyRecipes() {
@@ -386,8 +363,8 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * * @author Torboto This method is called by the async task once it has
-	 * completed it's call from the server.
+	 * This method is called by the async task once it has completed it's call
+	 * from the server.
 	 * 
 	 * @param recipes
 	 *            receives list of recipes that matched the search
@@ -402,8 +379,8 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * @author AS This method takes an EditText and returns true if it is empty
-	 *         and false otherwise.
+	 * This method takes an EditText and returns true if it is empty and false
+	 * otherwise.
 	 * 
 	 * @param etText
 	 *            the EditText to be tested

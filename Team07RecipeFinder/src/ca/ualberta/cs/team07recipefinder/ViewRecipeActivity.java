@@ -16,30 +16,28 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
-import android.widget.ImageButton;
-import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * The ViewRecipeActivity displays the information about a particular Recipe.
- * The title, description, ingredients, and directions are shown to the user.
- * Different buttons are visible depending on whether the activity was launched
- * from the user's recipes or from a search of the online database. An integer
- * named "code" is passed through the intent which signifies which buttons are
- * seen. If the user is looking at their own recipe then they have the options
- * to delete or edit. If the user is viewing a searched recipe, they can save it
- * to their own database.
+ * @author ajstarna
  * 
- * @author Adam St. Arnaud
- * 
+ *         The ViewRecipeActivity displays the information about a particular
+ *         Recipe. The title, description, ingredients, and directions are shown
+ *         to the user. Different buttons are visible depending on whether the
+ *         activity was launched from the user's recipes or from a search of the
+ *         online database. An integer named "code" is passed through the intent
+ *         which signifies which buttons are seen. If the user is looking at
+ *         their own recipe then they have the options to delete or edit. If the
+ *         user is viewing a searched recipe, they can save it to their own
+ *         database.
  */
 public class ViewRecipeActivity extends Activity {
 	int sourceCode;
 	KeyListener titleListener;
 	KeyListener descriptionListener;
 	KeyListener directionsListener;
-	// TODO: ET- if currentRecipe is a member variable, it should need to be
+	// TODO: ET- if currentRecipe is a member variable, it shouldn't need to be
 	// passed into any functions like ParseRecipe
 	Recipe currentRecipe;
 
@@ -56,12 +54,12 @@ public class ViewRecipeActivity extends Activity {
 		// databse
 		// or server.
 		fillCurrentRecipe(recipeString);
-		
+
 		// AS: hide the add ingredient button
 		Button addButton = (Button) findViewById(R.id.bNewIngredient);
 		addButton.setVisibility(4);
-		
-		//ET: Save current recipe to cache
+
+		// ET: Save current recipe to cache
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 		saveButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -84,7 +82,7 @@ public class ViewRecipeActivity extends Activity {
 				startActivity(galleryIntent);
 			}
 		});
-		
+
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
 		emailButton.setOnClickListener(new View.OnClickListener() {
 			@Override
@@ -95,6 +93,7 @@ public class ViewRecipeActivity extends Activity {
 			}
 
 		});
+
 		// AS: depending on whether the user came from My Recipes or from a
 		// search we set up different buttons
 		if (sourceCode == 1) {
@@ -116,6 +115,7 @@ public class ViewRecipeActivity extends Activity {
 			editButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					// TODO: This should be factored out into a method.
 					// AS: if the recipe is editable to this user then
 					// the edit button will change the editTexts and buttons
 					if (isEditableRecipe()) {
@@ -135,14 +135,24 @@ public class ViewRecipeActivity extends Activity {
 										savedDialog();
 									}
 								});
-						
+
 						Button newIngredientButton = (Button) findViewById(R.id.bNewIngredient);
+<<<<<<< HEAD
 						newIngredientButton.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								ingredientDialog(v);
 							}
 						});
+=======
+						newIngredientButton
+								.setOnClickListener(new View.OnClickListener() {
+									@Override
+									public void onClick(View v) {
+										// addIngredient(v);
+									}
+								});
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 					}
 
 					// AS: if not editable then nothing happens (inform user
@@ -162,13 +172,21 @@ public class ViewRecipeActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		populateImages();
+		// PopulateImages cannot be called before the async task has returned
+		// with recipe object, otherwise currentRecipe will be null.
+		if (currentRecipe != null
+				&& currentRecipe.location == Recipe.Location.LOCAL) {
+			populateImages();
+		}
 	}
 
+	/**
+	 * Populates thumbnail of recipe.
+	 */
 	public void populateImages() {
 		// Check if the recipe has any images saved on the sd card and get
 		// the bitmap for the imagebutton
-		
+
 		ArrayList<Image> images = ImageController.getAllRecipeImages(
 				currentRecipe.getRecipeId(), currentRecipe.location);
 
@@ -223,7 +241,7 @@ public class ViewRecipeActivity extends Activity {
 	 *            the recipe with information to gather
 	 */
 	private void parseRecipe(Recipe recipe) {
-		String title = recipe.getName();
+		String title = recipe.getTitle();
 		String directions = recipe.getDirections();
 		String description = recipe.getDescription();
 
@@ -297,7 +315,6 @@ public class ViewRecipeActivity extends Activity {
 		return;
 	}
 
-
 	/**
 	 * This method makes the save button visible again, for when the user enters
 	 * edit mode.
@@ -322,10 +339,10 @@ public class ViewRecipeActivity extends Activity {
 		deleteButton.setVisibility(4);
 		return;
 	}
-	
+
 	/**
-	 * This method hides the email button. It is called if the user
-	 * enters edit mode.
+	 * This method hides the email button. It is called if the user enters edit
+	 * mode.
 	 */
 	private void hideEmail() {
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
@@ -358,16 +375,19 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private void deleteRecipe(String recipeString) {
 		UUID recipeID = UUID.fromString(recipeString);
-		RecipeController.deleteRecipe(recipeID, getApplicationContext());
-		return;
+		RecipeController.deleteLocalRecipe(recipeID, getApplicationContext());
 	}
 
+	/**
+	 * TODO: Comments
+	 * 
+	 * @param recipeString
+	 */
 	private void editRecipe(String recipeString) {
 		UUID recipeID = UUID.fromString(recipeString);
 		Recipe newRecipe = grabRecipeInfo();
 		RecipeController.updateRecipe(recipeID, newRecipe,
 				getApplicationContext());
-		return;
 	}
 
 	/**
@@ -378,8 +398,8 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private Recipe grabRecipeInfo() {
 		// Get the number of images the recipe has
-		RecipeController.updateImageNumber(currentRecipe);
-		
+		ImageController.updateImageNumber(currentRecipe);
+
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);
@@ -396,6 +416,7 @@ public class ViewRecipeActivity extends Activity {
 		newRecipe.setQuantities(currentRecipe.getQuantities());
 		newRecipe.setUnits(currentRecipe.getUnits());
 		newRecipe.setCreatorEmail(email);
+		newRecipe.setRecipeId(currentRecipe.getRecipeId());
 		return newRecipe;
 
 	}
@@ -421,10 +442,11 @@ public class ViewRecipeActivity extends Activity {
 	private boolean isEditableRecipe() {
 		String userEmail = grabEmail();
 		String creatorEmail = currentRecipe.getCreatorEmail();
-		if (userEmail.equalsIgnoreCase(creatorEmail))
+		if (userEmail.equalsIgnoreCase(creatorEmail)) {
 			return true;
-		else
+		} else {
 			return false;
+		}
 	}
 
 	/**
@@ -436,6 +458,7 @@ public class ViewRecipeActivity extends Activity {
 	 *            the ingredients as an EditText
 	 * @return the ingredients as an ArrayList of strings
 	 */
+	// TODO: Can we get rid of this method? It's never used.
 	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
 		String ingredientsString = ingredientsEditText.getText().toString();
 		ArrayList<String> ingredients = new ArrayList<String>(
@@ -476,11 +499,11 @@ public class ViewRecipeActivity extends Activity {
 		});
 		alert.show();
 	}
-	
+
 	/**
-	 *  This method creates a dialog which informs the user that the changes
-	 *  to the current recipe have been saved and finnishes the activity on
-	 *  click of OK.
+	 * This method creates a dialog which informs the user that the changes to
+	 * the current recipe have been saved and finnishes the activity on click of
+	 * OK.
 	 */
 	private void savedDialog() {
 		TextView tv = new TextView(this);
@@ -509,6 +532,7 @@ public class ViewRecipeActivity extends Activity {
 		alert.show();
 	}
 
+	// TODO: Factor this out into email class
 	private void emailToSelf() {
 		String userEmail = grabEmail();
 		String emailBody = convertToEmail();
@@ -523,7 +547,7 @@ public class ViewRecipeActivity extends Activity {
 
 	// TODO: ET - factor this out into another class
 	private String convertToEmail() {
-		String title = currentRecipe.getName();
+		String title = currentRecipe.getTitle();
 		String directions = currentRecipe.getDirections();
 		String description = currentRecipe.getDescription();
 		String ingredients = convertList(currentRecipe.getIngredients());
@@ -532,29 +556,34 @@ public class ViewRecipeActivity extends Activity {
 				+ "\n\nDirections:\n" + directions;
 	}
 
-	private ArrayList <String> formCombinedArray(Recipe recipe) {
-		ArrayList <String> ingredients = recipe.getIngredients();
-		ArrayList <String> quantities = recipe.getQuantities();
-		ArrayList <String> units = recipe.getUnits();
-		ArrayList <String> combined = new ArrayList <String>();
-		
-		for (int index = 0; index < ingredients.size(); index++){
-			combined.add(ingredients.get(index) + ", " + quantities.get(index) +
-					" " + units.get(index));
+	private ArrayList<String> formCombinedArray(Recipe recipe) {
+		ArrayList<String> ingredients = recipe.getIngredients();
+		ArrayList<String> quantities = recipe.getQuantities();
+		ArrayList<String> units = recipe.getUnits();
+		ArrayList<String> combined = new ArrayList<String>();
+
+		for (int index = 0; index < ingredients.size(); index++) {
+			combined.add(quantities.get(index) + " " + units.get(index) + "  "
+					+ ingredients.get(index));
 		}
 		return combined;
 	}
-	
-	
+
+	/**
+	 * TODO: Comment
+	 * 
+	 * @param recipe
+	 */
 	private void populateIngredientView(Recipe recipe) {
 		ListView ingredientsLV = (ListView) findViewById(R.id.lv_Ingredients);
 		registerForContextMenu(ingredientsLV);
-		
-		ArrayList <String> combined = formCombinedArray(recipe);
+
+		ArrayList<String> combined = formCombinedArray(recipe);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, combined);
 		ingredientsLV.setAdapter(adapter);
 	}
+<<<<<<< HEAD
 	
 	protected void ingredientDialog(final View v) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -637,4 +666,6 @@ public class ViewRecipeActivity extends Activity {
 		
 	}
 	
+=======
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 }

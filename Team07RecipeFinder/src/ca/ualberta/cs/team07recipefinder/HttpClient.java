@@ -25,9 +25,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * @author Torboto Methods for saving recipes, deleting recipes, and searching
- *         for recipes from webservice:
+ * @author Torboto
+ * 
+ *         Methods for saving recipes, deleting recipes, and searching for
+ *         recipes from webservice:
  *         http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
+ *         Majority of code from: https://github.com/rayzhangcl/ESDemo
  */
 public class HttpClient {
 
@@ -40,6 +43,7 @@ public class HttpClient {
 	 * Writes recipe object to elastic search on the internet.
 	 * 
 	 * @param recipe
+	 *            Recipe object to be written.
 	 */
 	public void writeRecipe(Recipe recipe) {
 		recipe.location = Recipe.Location.SERVER;
@@ -95,8 +99,8 @@ public class HttpClient {
 	 * Reads in the identified recipe by it's given id.
 	 * 
 	 * @param uuid
-	 *            identifying id for recipe to be found
-	 * @return recipe object
+	 *            Identifying id for recipe to be found.
+	 * @return Specific recipe object.
 	 */
 	public Recipe readRecipe(UUID uuid) {
 		HttpGet httpGet = new HttpGet(recipeUrl + uuid + "?pretty=1");
@@ -128,17 +132,23 @@ public class HttpClient {
 		// Now we expect to get a Recipe response
 		ElasticSearchResponse<Recipe> esResponse = gson.fromJson(json,
 				elasticSearchResponseType);
-		// We get the recipe from it!
-		if (esResponse != null) {
+		if (esResponse.exists != false) {
 			Recipe recipe = esResponse.getSource();
 			System.out.println(recipe.toString());
 			// TODO consume?
 
 			return recipe;
 		}
+		//Null means the recipe does not exist.
 		return null;
 	}
 
+	/**
+	 * Deletes specified recipe permanently from server.
+	 * 
+	 * @param uuid
+	 *            Recipe id.
+	 */
 	public void deleteRecipe(UUID uuid) {
 		HttpDelete httpDelete = new HttpDelete(recipeUrl + uuid);
 		httpDelete.addHeader("Accept", "application/json");
@@ -175,6 +185,12 @@ public class HttpClient {
 
 	}
 
+	/**
+	 * Deletes and rewrites recipe with the same UUID with updated information.
+	 * 
+	 * @param recipe
+	 *            Recipe containing UUID and updated nformation.
+	 */
 	public void updateRecipe(Recipe recipe) {
 		DeleteRecipeTask deleteTask = new DeleteRecipeTask();
 		deleteTask.execute(recipe.recipeId);
@@ -194,9 +210,6 @@ public class HttpClient {
 		StringEntity stringEntity;
 		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpResponse response = null;
-		HttpEntity entity = null;
-		BufferedReader buff = null;
-		String output = null;
 
 		String queryString = "";
 		if (ingredients.size() > 1) {
@@ -222,7 +235,6 @@ public class HttpClient {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -256,8 +268,8 @@ public class HttpClient {
 	/**
 	 * Searches for recipes based on titles.
 	 * 
-	 * @param name 
-	 * title of recipe to search
+	 * @param name
+	 *            title of recipe to search
 	 * @return Returns all recipes that match the keyword given
 	 */
 	public ArrayList<Recipe> searchRecipes(String name) {
@@ -302,6 +314,14 @@ public class HttpClient {
 		return recipeResults;
 	}
 
+	/**
+	 * Writes image to server.
+	 * 
+	 * @param uuid
+	 *            Recipe id to be used as filename.
+	 * @param bitmap
+	 *            Image to be saved.
+	 */
 	public void writeImage(UUID uuid, Bitmap bitmap) {
 		HttpPost httpPost = new HttpPost(imageUrl + uuid);
 		StringEntity stringEntity = null;
@@ -347,11 +367,28 @@ public class HttpClient {
 
 	}
 
-	public Bitmap readImage(UUID uuid) {
+	/**
+	 * Queries for images with provided filename.
+	 * 
+	 * @param filename
+	 *            Filename of image.
+	 * @return Returns a single image.
+	 */
+	public Bitmap readImage(String filename) {
 		return null;
 	}
 
-	public Bitmap[] readAllImages(UUID uuid) {
+	/**
+	 * Generates filenames based on UUID and number of images a recipe has, and
+	 * returns all images corresponding with recipe.
+	 * 
+	 * @param uuid
+	 *            UUID used for filename prefix.
+	 * @param numImages
+	 *            Number of images to look for, also suffix in filename.
+	 * @return All images associated with requested recipe.
+	 */
+	public Bitmap[] readAllImages(UUID uuid, int numImages) {
 		return null;
 	}
 
