@@ -132,19 +132,19 @@ public class HttpClient {
 		// Now we expect to get a Recipe response
 		ElasticSearchResponse<Recipe> esResponse = gson.fromJson(json,
 				elasticSearchResponseType);
-		// We get the recipe from it!
-		if (esResponse != null) {
+		if (esResponse.exists != false) {
 			Recipe recipe = esResponse.getSource();
 			System.out.println(recipe.toString());
 			// TODO consume?
 
 			return recipe;
 		}
+		//Null means the recipe does not exist.
 		return null;
 	}
 
 	/**
-	 * Deletes specified recipe permenantly from server.
+	 * Deletes specified recipe permanently from server.
 	 * 
 	 * @param uuid
 	 *            Recipe id.
