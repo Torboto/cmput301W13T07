@@ -46,12 +46,18 @@ public class HttpTestCase extends TestCase {
 		assertTrue(output == recipe);
 	}
 	
+	/**
+	 * Testing search by keyword.
+	 */
 	@Test
 	public void testSearch() {
 		ArrayList<Recipe> output = httpClient.searchRecipes(recipe.getTitle());
 		assertTrue(output.get(0) == recipe);
 	}
 	
+	/**
+	 * Test deleting and rewriting a recipe
+	 */
 	@Test
 	public void testUpdate() {
 		recipe.setDescription("Test");
