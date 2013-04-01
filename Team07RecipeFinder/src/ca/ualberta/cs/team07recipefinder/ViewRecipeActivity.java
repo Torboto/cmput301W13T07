@@ -140,7 +140,7 @@ public class ViewRecipeActivity extends Activity {
 						newIngredientButton.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View v) {
-								//addIngredient(v);
+								ingredientDialog(v);
 							}
 						});
 					}
@@ -392,6 +392,9 @@ public class ViewRecipeActivity extends Activity {
 		newRecipe.setName(title);
 		newRecipe.setDescription(description);
 		newRecipe.setDirections(directions);
+		newRecipe.setIngredients(currentRecipe.getIngredients());
+		newRecipe.setQuantities(currentRecipe.getQuantities());
+		newRecipe.setUnits(currentRecipe.getUnits());
 		newRecipe.setCreatorEmail(email);
 		return newRecipe;
 
@@ -553,7 +556,7 @@ public class ViewRecipeActivity extends Activity {
 		ingredientsLV.setAdapter(adapter);
 	}
 	
-/*	protected void addIngredient(final View v) {
+	protected void ingredientDialog(final View v) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Add New Ingredient");
 		
@@ -577,8 +580,8 @@ public class ViewRecipeActivity extends Activity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET)) && (!isEmpty(quantityET))) {
-					parseIngredientInfo(ingredientET, unitET, quantityET);
-					populateIngredientView();
+					addIngredient(ingredientET, unitET, quantityET);
+					populateIngredientView(currentRecipe);
 				}
 			}
 		});
@@ -588,7 +591,7 @@ public class ViewRecipeActivity extends Activity {
 					}
 				});
 		alert.show();
-	} */
+	} 
 	
 	
 	/**
@@ -604,18 +607,22 @@ public class ViewRecipeActivity extends Activity {
 		else
 			return true;
 	}
+	
 
-	/*
-	private void parseIngredientInfo(EditText ingredientET, EditText unitET,
+	
+	private void addIngredient(EditText ingredientET, EditText unitET,
 			EditText quantityET) {
 			String ingredient = ingredientET.getText().toString();
 			String unit = unitET.getText().toString();
 			String quantity = quantityET.getText().toString();
+			ArrayList <String> ingredients = currentRecipe.getIngredients();
+			ArrayList <String> quantities = currentRecipe.getQuantities();
+			ArrayList <String> units = currentRecipe.getUnits();
+			
 			ingredients.add(ingredient);
 			units.add(unit);
 			quantities.add(quantity);
-			combined.add(ingredient + ", " + quantity + " " + unit);
 		
 	}
-	*/
+	
 }

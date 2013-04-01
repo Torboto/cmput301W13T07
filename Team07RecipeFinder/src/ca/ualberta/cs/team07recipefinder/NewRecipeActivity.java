@@ -121,7 +121,7 @@ public class NewRecipeActivity extends Activity {
 		RecipeController.updateImageNumber(newRecipe);
 		
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
-				&& (!isEmpty(directionsEditText))) {
+				&& (!isEmpty(directionsEditText)) && (!ingredients.isEmpty())) {
 			/*
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
@@ -193,20 +193,6 @@ public class NewRecipeActivity extends Activity {
 		User theUser = User.getInstance();
 		String email = theUser.getEmail();
 		return email;
-	}
-
-	/**
-	 * This method takes the ingredients as an EditText and returns them as an
-	 * ArrayList of strings. It assumes that they are separated by newline characters.
-	 * 
-	 * @param ingredientsEditText the ingredients as an EditText
-	 * @return                    the ingredients as an ArrayList of strings
-	 */
-	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
-		String ingredientsString = ingredientsEditText.getText().toString();
-		ArrayList<String> ingredients = new ArrayList<String>(
-				Arrays.asList(ingredientsString.split("\n")));
-		return ingredients;
 	}
 	
 	
