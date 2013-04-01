@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
 
@@ -137,22 +138,14 @@ public class ViewRecipeActivity extends Activity {
 								});
 
 						Button newIngredientButton = (Button) findViewById(R.id.bNewIngredient);
-<<<<<<< HEAD
+
 						newIngredientButton.setOnClickListener(new View.OnClickListener() {
 							@Override
 							public void onClick(View v) {
 								ingredientDialog(v);
 							}
 						});
-=======
-						newIngredientButton
-								.setOnClickListener(new View.OnClickListener() {
-									@Override
-									public void onClick(View v) {
-										// addIngredient(v);
-									}
-								});
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
+
 					}
 
 					// AS: if not editable then nothing happens (inform user
@@ -583,7 +576,7 @@ public class ViewRecipeActivity extends Activity {
 				R.layout.list_item, combined);
 		ingredientsLV.setAdapter(adapter);
 	}
-<<<<<<< HEAD
+
 	
 	protected void ingredientDialog(final View v) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -666,6 +659,4 @@ public class ViewRecipeActivity extends Activity {
 		
 	}
 	
-=======
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 }
