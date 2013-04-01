@@ -18,7 +18,7 @@ public class ImageController {
 	 * located.
 	 * 
 	 * @param uuid
-	 *            UUID to indentify recipe by.
+	 *            UUID to identify recipe by.
 	 * @param location
 	 *            Recipe location enum.
 	 * @return All images associated with this recipe.
