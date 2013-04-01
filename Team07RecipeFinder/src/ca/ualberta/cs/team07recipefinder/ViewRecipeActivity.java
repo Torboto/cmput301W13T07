@@ -49,12 +49,12 @@ public class ViewRecipeActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		sourceCode = extras.getInt("code");
 		final String recipeString = extras.getString("recipeId");
-
+		
 		// AS: call fillCurrentRecipe() to get the recipe from either the local
 		// databse
 		// or server.
 		fillCurrentRecipe(recipeString);
-
+		
 		// AS: hide the add ingredient button
 		Button addButton = (Button) findViewById(R.id.bNewIngredient);
 		addButton.setVisibility(4);
@@ -396,6 +396,7 @@ public class ViewRecipeActivity extends Activity {
 		newRecipe.setDescription(description);
 		newRecipe.setDirections(directions);
 		newRecipe.setCreatorEmail(email);
+		newRecipe.setRecipeId(currentRecipe.getRecipeId());
 		return newRecipe;
 
 	}
