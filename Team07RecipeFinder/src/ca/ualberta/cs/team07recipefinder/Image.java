@@ -40,7 +40,7 @@ public class Image {
 		}
 		return bmp;
 	}
-	
+
 	/**
 	 * Gets images saved on the sd card associated with the recipe id associated
 	 * with uuid.
