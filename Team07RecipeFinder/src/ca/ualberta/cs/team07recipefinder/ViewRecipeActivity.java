@@ -49,12 +49,12 @@ public class ViewRecipeActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		sourceCode = extras.getInt("code");
 		final String recipeString = extras.getString("recipeId");
-		
+
 		// AS: call fillCurrentRecipe() to get the recipe from either the local
 		// databse
 		// or server.
 		fillCurrentRecipe(recipeString);
-		
+
 		// AS: hide the add ingredient button
 		Button addButton = (Button) findViewById(R.id.bNewIngredient);
 		addButton.setVisibility(4);
@@ -163,7 +163,12 @@ public class ViewRecipeActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		populateImages();
+		// PopulateImages cannot be called before the async task has returned
+		// with recipe object, otherwise currentRecipe will be null.
+		if (currentRecipe != null
+				&& currentRecipe.location == Recipe.Location.LOCAL) {
+			populateImages();
+		}
 	}
 
 	public void populateImages() {
@@ -224,7 +229,7 @@ public class ViewRecipeActivity extends Activity {
 	 *            the recipe with information to gather
 	 */
 	private void parseRecipe(Recipe recipe) {
-		String title = recipe.getName();
+		String title = recipe.getTitle();
 		String directions = recipe.getDirections();
 		String description = recipe.getDescription();
 
@@ -527,7 +532,7 @@ public class ViewRecipeActivity extends Activity {
 
 	// TODO: ET - factor this out into another class
 	private String convertToEmail() {
-		String title = currentRecipe.getName();
+		String title = currentRecipe.getTitle();
 		String directions = currentRecipe.getDirections();
 		String description = currentRecipe.getDescription();
 		String ingredients = convertList(currentRecipe.getIngredients());
@@ -543,8 +548,8 @@ public class ViewRecipeActivity extends Activity {
 		ArrayList<String> combined = new ArrayList<String>();
 
 		for (int index = 0; index < ingredients.size(); index++) {
-			combined.add(ingredients.get(index) + ", " + quantities.get(index)
-					+ " " + units.get(index));
+			combined.add(quantities.get(index) + " " + units.get(index) + "  "
+					+ ingredients.get(index));
 		}
 		return combined;
 	}

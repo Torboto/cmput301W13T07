@@ -73,7 +73,7 @@ public class Recipe {
 		this.recipeId = uuid;
 	}
 
-	public String getName() {
+	public String getTitle() {
 		return this.title;
 	}
 
