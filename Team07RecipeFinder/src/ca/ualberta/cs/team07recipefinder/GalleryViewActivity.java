@@ -6,21 +6,18 @@ import java.util.UUID;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class GalleryViewActivity extends Activity {
 	int sourceCode;
 	Recipe currentRecipe;
 	RecipeController controller = new RecipeController();
-	//ArrayList<String> imagePaths;
+	// ArrayList<String> imagePaths;
 	ArrayList<Image> images;
 	ImageView imageview;
 	int currentIndex, total;
@@ -41,15 +38,12 @@ public class GalleryViewActivity extends Activity {
 		fillCurrentRecipe(recipeString);
 
 		/*
-		images = ImageController.getAllRecipeImages(
-				currentRecipe.getRecipeId(), currentRecipe.location);
-
-		currentIndex = 0;
-		total = images.size();
-		if (images.size() > 0) {
-			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
-		}
-		*/
+		 * images = ImageController.getAllRecipeImages(
+		 * currentRecipe.getRecipeId(), currentRecipe.location);
+		 * 
+		 * currentIndex = 0; total = images.size(); if (images.size() > 0) {
+		 * imageview.setImageBitmap(images.get(currentIndex).getBitmap()); }
+		 */
 
 		currentIndex = 0;
 		loadImages();
@@ -107,7 +101,8 @@ public class GalleryViewActivity extends Activity {
 				cameraIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));
 				Log.w("&&&", String.valueOf(currentRecipe.getImageNumber()));
-				cameraIntent.putExtra("imageNumber",currentRecipe.getImageNumber()+ 1);
+				cameraIntent.putExtra("imageNumber",
+						currentRecipe.getImageNumber() + 1);
 				startActivity(cameraIntent);
 			}
 		});
@@ -152,12 +147,12 @@ public class GalleryViewActivity extends Activity {
 			imageview.setImageBitmap(images.get(currentIndex).getBitmap());
 		}
 	}
+
 	@Override
 	public void onResume() {
 		super.onResume();
 		loadImages();
 	}
-
 
 	protected void showImage(int index) {
 		if (images.size() > 0) {

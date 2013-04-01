@@ -1,14 +1,14 @@
 package ca.ualberta.cs.team07recipefinder;
 
 import java.io.File;
-import android.net.Uri;
-import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
+
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
+import android.os.Bundle;
+import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
@@ -18,15 +18,14 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * Activity that allows the user to take a picture and save it to the sd
- * storage. The code is an altered version of the lab example code for the
- * camera test.
- * 
  * @author edited by gcoomber
  * 
+ *         Activity that allows the user to take a picture and save it to the sd
+ *         storage. The code is an altered version of the lab example code for
+ *         the camera test.
  */
 public class CameraActivity extends Activity {
-	
+
 	Camera camera;
 	Uri imageFileUri;
 	Context context;
@@ -69,9 +68,9 @@ public class CameraActivity extends Activity {
 				finish();
 			}
 		});
-		
+
 		TextView tv = (TextView) findViewById(R.id.status);
-		tv.setText("Click to take a photo\n¡ý");
+		tv.setText("Click to take a photo\n");
 		ImageView iv = (ImageView) findViewById(R.id.ivPreview);
 		iv.setImageResource(R.drawable.recipe_image_outline);
 
@@ -79,7 +78,7 @@ public class CameraActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		String folderName = extras.getString("recipeId");
 		int imageNumber = extras.getInt("imageNumber") + 1;
-		
+
 		this.camera = new Camera(folderName, imageNumber);
 	}
 

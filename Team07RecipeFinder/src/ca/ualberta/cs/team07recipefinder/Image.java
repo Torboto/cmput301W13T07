@@ -9,6 +9,11 @@ import android.graphics.BitmapFactory;
 import android.os.Environment;
 import android.util.Log;
 
+/**
+ * @author Torboto, gcoomber
+ * 
+ *         Data class to hold filename and bitmap together for saving purposes.
+ */
 public class Image {
 	Bitmap image;
 	String filename;
@@ -17,24 +22,13 @@ public class Image {
 		this.filename = filename;
 		this.image = image;
 	}
-	
-	public Bitmap getBitmap() {
-		return this.image;
-	}
-	
-	public String getFilename() {
-		return this.filename;
-	}
-
-	static public ArrayList<String> getAllServerRecipeImages(UUID uuid) {
-		return null;
-	}
 
 	/**
 	 * Retrieves the bitmap saved at the path specified by path
 	 * 
 	 * @param path
-	 * @return
+	 *            Path to SD card on local device.
+	 * @return Bitmap object to be used as the thumbnail.
 	 */
 	static public Bitmap getLocalThumbnailImage(String path) {
 		Bitmap bmp = null;
@@ -47,10 +41,36 @@ public class Image {
 		return bmp;
 	}
 
-	static public void saveImageToServer(Bitmap bitmap) {
+	/**
+	 * Retrieves all images associated with recipe from online.
+	 * 
+	 * @param uuid
+	 *            Recipe id.
+	 * @return All images for recipe.
+	 */
+	static public ArrayList<String> getAllServerRecipeImages(UUID uuid) {
+		return null;
+	}
+
+	/**
+	 * Save image online using uuid as filename.
+	 * 
+	 * @param bitmap
+	 *            Image to be saved.
+	 * @param uuid
+	 *            UUID of associated recipe to be used in filename.
+	 */
+	static public void saveImageToServer(Bitmap bitmap, UUID uuid) {
 
 	}
 
+	/**
+	 * Returns first image to be used as thumbnail.
+	 * 
+	 * @param uuid
+	 *            Recipe Id.
+	 * @return Single image to be used as thumbnail image.
+	 */
 	static public Bitmap getServerThumbnailImage(UUID uuid) {
 		return null;
 	}
@@ -59,14 +79,15 @@ public class Image {
 	 * Deletes the recipe image file located at the file path.
 	 * 
 	 * @param path
+	 *            Path to SD card on local device.
 	 */
 	public void deleteLocalImage() {
 		try {
 			String[] nameComponents = this.filename.split("_");
 			Log.w("DELETING", "DELETING");
-			if(nameComponents.length <= 1)
-			{
-				Log.e("ERROR", "ERROR: image name incorrect for deleteLocalImage");
+			if (nameComponents.length <= 1) {
+				Log.e("ERROR",
+						"ERROR: image name incorrect for deleteLocalImage");
 				return;
 			}
 			Log.w("DELETING", "Test");
@@ -80,14 +101,23 @@ public class Image {
 			Log.e("Delete image", "ERROR: Recipe image cannot be deleted");
 		}
 	}
-	
+
 	/**
-	 * returns the path of the folder where image folders are saved
-	 * @return
+	 * Returns the path of the folder where image folders are saved
+	 * 
+	 * @return Storage path for current device.
 	 */
 	public String getStoragePath() {
 		String storagePath = Environment.getExternalStorageDirectory()
 				.getAbsolutePath() + "/tmp/";
 		return storagePath;
+	}
+
+	public Bitmap getBitmap() {
+		return this.image;
+	}
+
+	public String getFilename() {
+		return this.filename;
 	}
 }

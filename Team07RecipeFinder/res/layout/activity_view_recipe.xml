@@ -57,10 +57,17 @@
                 		android:text="@string/recipe_description" />
         		</LinearLayout>
 				
-        		<!-- Recipe ingredients. -GC -->
+        		
+        		<!-- Recipe ingredients. -AS -->
+        		<LinearLayout
+            		android:layout_width="wrap_content"
+            		android:layout_height="60dp"
+            		android:orientation="horizontal"
+            		android:paddingTop="10dp" >
+            		
         		<TextView
             		android:id="@+id/tvIngredientsTitle"
-            		android:layout_width="wrap_content"
+            		android:layout_width="130dp"
             		android:layout_height="wrap_content"
            			android:paddingTop="20dp"
            			android:paddingLeft="10dp"
@@ -68,13 +75,32 @@
            			android:textStyle="bold"
            			android:text="@string/recipe_ingredients" />
         		
-        		<EditText
-            		android:id="@+id/etIngredientsList"
-            		android:layout_width="wrap_content"
-            		android:layout_height="wrap_content"
-           			android:paddingTop="2dp"
-           			android:paddingLeft="15dp"
-           			android:textSize="15sp"/>
+        		<Button
+            	    android:id="@+id/bNewIngredient"	    
+            	    android:textSize="20sp"
+            	    android:textStyle="bold"
+               		android:layout_width="25dp"
+          	        android:layout_height="25dp"	        
+          	        android:background="#3af904"
+            	    android:textColor="@android:color/white"
+                    android:text="@string/newIngredient" />
+        		
+        		</LinearLayout>
+        		
+        		<LinearLayout
+                        android:layout_width="fill_parent"
+                        android:layout_height="125dp"
+                        android:layout_gravity="right"
+                        android:layout_weight="2"
+                        android:gravity="right"
+                        android:orientation="horizontal" >
+
+                        <ListView
+                            android:id="@+id/lv_Ingredients"
+                            android:layout_width="match_parent"
+                            android:layout_height="fill_parent" >
+                        </ListView>
+                    </LinearLayout>
         		
         		<!-- Recipe directions. -GC -->
         		<TextView
