@@ -191,28 +191,7 @@ public class NewRecipeActivity extends Activity {
 		String email = theUser.getEmail();
 		return email;
 	}
-<<<<<<< HEAD
-	
-	
-=======
 
-	/**
-	 * This method takes the ingredients as an EditText and returns them as an
-	 * ArrayList of strings. It assumes that they are separated by newline
-	 * characters.
-	 * 
-	 * @param ingredientsEditText
-	 *            the ingredients as an EditText
-	 * @return the ingredients as an ArrayList of strings
-	 */
-	private ArrayList<String> parseIngredients(EditText ingredientsEditText) {
-		String ingredientsString = ingredientsEditText.getText().toString();
-		ArrayList<String> ingredients = new ArrayList<String>(
-				Arrays.asList(ingredientsString.split("\n")));
-		return ingredients;
-	}
-
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 	/**
 	 * This method creates a dialog which informs the user that they are missing
 	 * one or more fields in the recipe they tried to create.
@@ -230,7 +209,6 @@ public class NewRecipeActivity extends Activity {
 		alert.show();
 	}
 
-<<<<<<< HEAD
 	/**
 	 * This method creates a dialog with three edit texts, for ingredient, quantity,
 	 * and unit of measurement. There is a 'Cancel' and 'Ok' button.
@@ -238,13 +216,6 @@ public class NewRecipeActivity extends Activity {
 	 * @param v The view that is passed in (three edit texts).
 	 */
 	protected void ingredientDialog(final View v) {
-=======
-	// TODO comments
-	/**
-	 * @param v
-	 */
-	protected void addIngredient(final View v) {
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Add New Ingredient");
 
@@ -267,14 +238,8 @@ public class NewRecipeActivity extends Activity {
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-<<<<<<< HEAD
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET)) && (!isEmpty(quantityET))) {
 					addIngredient(ingredientET, unitET, quantityET);
-=======
-				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
-						&& (!isEmpty(quantityET))) {
-					parseIngredientInfo(ingredientET, unitET, quantityET);
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 					populateIngredientView();
 				}
 			}
@@ -286,7 +251,6 @@ public class NewRecipeActivity extends Activity {
 				});
 		alert.show();
 	}
-<<<<<<< HEAD
 	
 	/**
 	 * This method takes in three edit texts for a new ingredient (the ingredient,
@@ -297,16 +261,6 @@ public class NewRecipeActivity extends Activity {
 	 * @param quantityET   the edit text with quantity
 	 */
 	private void addIngredient(EditText ingredientET, EditText unitET,
-=======
-
-	// TODO comments
-	/**
-	 * @param ingredientET
-	 * @param unitET
-	 * @param quantityET
-	 */
-	private void parseIngredientInfo(EditText ingredientET, EditText unitET,
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 			EditText quantityET) {
 		String ingredient = ingredientET.getText().toString();
 		String unit = unitET.getText().toString();
@@ -317,16 +271,11 @@ public class NewRecipeActivity extends Activity {
 		combined.add(ingredient + ", " + quantity + " " + unit);
 
 	}
-<<<<<<< HEAD
-	
 	
 	/**
 	 * 
 	 */
-=======
 
-	// TODO comments
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 	private void populateIngredientView() {
 		ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
 		registerForContextMenu(ingredientsLV);
