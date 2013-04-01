@@ -210,9 +210,6 @@ public class HttpClient {
 		StringEntity stringEntity;
 		ArrayList<Recipe> recipeResults = new ArrayList<Recipe>();
 		HttpResponse response = null;
-		HttpEntity entity = null;
-		BufferedReader buff = null;
-		String output = null;
 
 		String queryString = "";
 		if (ingredients.size() > 1) {
@@ -238,7 +235,6 @@ public class HttpClient {
 		} catch (UnsupportedEncodingException e) {
 			e.printStackTrace();
 		} catch (ClientProtocolException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
