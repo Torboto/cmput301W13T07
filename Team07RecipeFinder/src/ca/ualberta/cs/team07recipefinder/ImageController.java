@@ -1,11 +1,9 @@
 package ca.ualberta.cs.team07recipefinder;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.UUID;
 
 import android.graphics.Bitmap;
-import android.os.Environment;
 import android.util.Log;
 
 /**
@@ -15,42 +13,6 @@ import android.util.Log;
  *         where the recipe is saved (internal/external).
  */
 public class ImageController {
-	/**
-	 * Gets images saved on the sd card associated with the recipe id associated
-	 * with uuid.
-	 * 
-	 * @param uuid
-	 *            UUID to indentify recipe by.
-	 * @return List of images that belong to recipe.
-	 */
-	static private ArrayList<Image> getAllLocalRecipeImages(UUID uuid) {
-
-		ArrayList<Image> images = new ArrayList<Image>();
-
-		try {
-			// Specify the expected file path for the recipe images.
-			File path = new File(Environment.getExternalStorageDirectory()
-					.getAbsolutePath() + "/tmp/" + String.valueOf(uuid));
-
-			File[] files = path.listFiles();
-
-			int i = 1;
-			// Create the image object
-			for (File file : files) {
-				String name = String.valueOf(uuid) + "_" + i + ".jpg";
-				Bitmap bitmap = Image.getLocalThumbnailImage(String
-						.valueOf(file));
-				Image tempImage = new Image(name, bitmap);
-				images.add(tempImage);
-				i++;
-			}
-		} catch (Exception e) {
-			// The folder may not exist or there are no images
-			Log.e("getAllLocalRecipeImages: ", "ERROR: No such folder or file.");
-		}
-		return images;
-	}
-
 	/**
 	 * Gets images for recipe from local and external, depending on where it is
 	 * located.
@@ -66,7 +28,7 @@ public class ImageController {
 		ArrayList<Image> images = new ArrayList<Image>();
 
 		if (location == Recipe.Location.LOCAL) {
-			images = getAllLocalRecipeImages(uuid);
+			images = Image.getAllLocalRecipeImages(uuid);
 		} else if (location == Recipe.Location.SERVER) {
 
 		} else {

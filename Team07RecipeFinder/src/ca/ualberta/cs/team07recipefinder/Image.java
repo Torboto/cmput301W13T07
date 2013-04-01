@@ -40,6 +40,42 @@ public class Image {
 		}
 		return bmp;
 	}
+	
+	/**
+	 * Gets images saved on the sd card associated with the recipe id associated
+	 * with uuid.
+	 * 
+	 * @param uuid
+	 *            UUID to indentify recipe by.
+	 * @return List of images that belong to recipe.
+	 */
+	static public ArrayList<Image> getAllLocalRecipeImages(UUID uuid) {
+
+		ArrayList<Image> images = new ArrayList<Image>();
+
+		try {
+			// Specify the expected file path for the recipe images.
+			File path = new File(Environment.getExternalStorageDirectory()
+					.getAbsolutePath() + "/tmp/" + String.valueOf(uuid));
+
+			File[] files = path.listFiles();
+
+			int i = 1;
+			// Create the image object
+			for (File file : files) {
+				String name = String.valueOf(uuid) + "_" + i + ".jpg";
+				Bitmap bitmap = Image.getLocalThumbnailImage(String
+						.valueOf(file));
+				Image tempImage = new Image(name, bitmap);
+				images.add(tempImage);
+				i++;
+			}
+		} catch (Exception e) {
+			// The folder may not exist or there are no images
+			Log.e("getAllLocalRecipeImages: ", "ERROR: No such folder or file.");
+		}
+		return images;
+	}
 
 	/**
 	 * Retrieves all images associated with recipe from online.
