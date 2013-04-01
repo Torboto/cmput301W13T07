@@ -6,6 +6,7 @@ import java.util.UUID;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Matrix;
 import android.os.Environment;
 import android.util.Log;
 
@@ -148,7 +149,12 @@ public class Image {
 
 	@SuppressWarnings("javadoc")
 	public Bitmap getBitmap() {
-		return this.image;
+		Bitmap aBitmap = this.image;
+		Matrix matrix = new Matrix();
+		matrix.postRotate(90);
+		aBitmap = Bitmap.createBitmap(aBitmap, 0, 0, aBitmap.getWidth(),
+				aBitmap.getHeight(), matrix, true);
+		return aBitmap;
 	}
 
 	@SuppressWarnings("javadoc")

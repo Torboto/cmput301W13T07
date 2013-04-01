@@ -2,11 +2,13 @@ package ca.ualberta.cs.team07recipefinder;
 
 import java.io.File;
 
+import android.annotation.TargetApi;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.view.View;
@@ -31,14 +33,21 @@ public class CameraActivity extends Activity {
 	Context context;
 	int duration = Toast.LENGTH_SHORT;
 	Toast toast;
+	ImageView iv;
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_camera);
 
+		TextView tv = (TextView) findViewById(R.id.status);
+		tv.setText("Click to take a photo\n");
+		iv = (ImageView) findViewById(R.id.ivPreview);
+		iv.setImageResource(R.drawable.recipe_image_outline);
+		
 		ImageButton button = (ImageButton) findViewById(R.id.ibTakeAPhoto);
 		OnClickListener listener = new OnClickListener() {
+			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 			public void onClick(View v) {
 				takeAPhoto();
 			}
@@ -69,11 +78,6 @@ public class CameraActivity extends Activity {
 			}
 		});
 
-		TextView tv = (TextView) findViewById(R.id.status);
-		tv.setText("Click to take a photo\n");
-		ImageView iv = (ImageView) findViewById(R.id.ivPreview);
-		iv.setImageResource(R.drawable.recipe_image_outline);
-
 		// Get the name of the folder the image will be saved in
 		Bundle extras = getIntent().getExtras();
 		String folderName = extras.getString("recipeId");
@@ -97,12 +101,15 @@ public class CameraActivity extends Activity {
 		startActivityForResult(intent, CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE);
 	}
 
+	@TargetApi(Build.VERSION_CODES.HONEYCOMB)
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		if (requestCode == CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE) {
 			TextView tv = (TextView) findViewById(R.id.status);
 			if (resultCode == RESULT_OK) {
 				tv.setText("Photo OK!");
 				ImageView iv = (ImageView) findViewById(R.id.ivPreview);
+				iv.setRotation(90);
+				iv.setScaleType(ImageView.ScaleType.CENTER_CROP);
 				iv.setImageDrawable(Drawable.createFromPath(imageFileUri
 						.getPath()));
 			} else if (resultCode == RESULT_CANCELED) {
