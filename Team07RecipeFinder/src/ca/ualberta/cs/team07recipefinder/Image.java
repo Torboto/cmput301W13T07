@@ -34,7 +34,7 @@ public class Image {
 	 * Retrieves the bitmap saved at the path specified by path
 	 * 
 	 * @param path
-	 * @return
+	 * @return Bitmap object to be used as the thumbnail.
 	 */
 	static public Bitmap getLocalThumbnailImage(String path) {
 		Bitmap bmp = null;
@@ -83,7 +83,7 @@ public class Image {
 	
 	/**
 	 * returns the path of the folder where image folders are saved
-	 * @return
+	 * @return Storage path for current device.
 	 */
 	public String getStoragePath() {
 		String storagePath = Environment.getExternalStorageDirectory()

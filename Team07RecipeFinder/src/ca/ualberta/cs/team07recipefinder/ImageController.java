@@ -100,8 +100,10 @@ public class ImageController {
 
 	/**
 	 * Deletes the recipe image file located at the file path.
-	 * 
-	 * @param path
+	 * @param image
+	 * Image object as it contains filename
+	 * @param location
+	 * Where images are stored on current device
 	 */
 	static public void deleteImage(Image image, Recipe.Location location) {
 		if (location == Recipe.Location.LOCAL) {

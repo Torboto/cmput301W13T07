@@ -25,7 +25,7 @@ public class ElasticSearchSearchResponse<T> {
     
     /**
      * Returns the object for a hit.
-     * @return
+     * @return Sources for all the hits from elasticsearch
      */
     public Collection<T> getSources() {
         Collection<T> out = new ArrayList<T>();

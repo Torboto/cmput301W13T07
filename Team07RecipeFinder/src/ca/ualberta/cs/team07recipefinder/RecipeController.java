@@ -24,7 +24,6 @@ public class RecipeController {
 	 * 
 	 * @param recipe
 	 * @param context
-	 * @author gcoomber
 	 */
 	static public void writeRecipe(Recipe recipe, Context context) {
 		boolean isConnected = checkInternetConnection(context);
@@ -82,39 +81,12 @@ public class RecipeController {
 	 * 
 	 * @param uuid
 	 * @param context
-	 * @return
+	 * @return Recipe object from local device
 	 */
 	static public Recipe getLocalRecipe(UUID uuid, Context context) {
 		SqlClient sqlClient = new SqlClient(context);
 		Recipe recipe = sqlClient.readRecipe(uuid);
 		return recipe;
-	}
-
-	/**
-	 * @author Torboto Get recipe object from database.
-	 * @param uuid
-	 * @param context
-	 * @return
-	 */
-	static public void getRecipeHTTP(UUID uuid, final Context context) {
-
-		// SearchRecipeTask search = new SearchRecipeTask(uuid);
-		//
-		// search.setDataDownloadListener(new DataDownloadListener() {
-		// @SuppressWarnings("unchecked")
-		// public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
-		// context.returnSearchResultstoActivity(data);
-		// }
-		// });
-		// search.execute("");
-	}
-
-	/*
-	 * Only searches HTTP server
-	 */
-	static public void searchRecipeIngredients(ArrayList<String> ingredients) {
-		// new SearchRecipeTask().execute(ingredients);
-
 	}
 
 	static public void getServerRecipe(UUID uuid, Context context) {
@@ -135,8 +107,6 @@ public class RecipeController {
 	static public void updateServerRecipe(Recipe recipe) {
 		HttpClient httpClient = new HttpClient();
 		httpClient.updateRecipe(recipe);
-		//new DeleteRecipeTask().execute(recipe.recipeId);
-		//new WriteRecipeTask().execute(recipe);
 	}
 
 	/**
@@ -145,7 +115,7 @@ public class RecipeController {
 	 * android-detect-whether-there-is-an-internet-connection-available
 	 * 
 	 * @param context
-	 * @return
+	 * @return Boolean on whether device is online or not.
 	 */
 	static public boolean checkInternetConnection(Context context) {
 		boolean isConnected = false;
@@ -178,7 +148,7 @@ public class RecipeController {
 			if (serverRecipe.getIsUpdated() == true) {
 				sqlClient.updateRecipe(localRecipe.recipeId, serverRecipe);
 			}
-			if (localRecipe.getIsUpdated() == true){
+			if (localRecipe.getIsUpdated() == true) {
 				httpClient.updateRecipe(localRecipe);
 			}
 		}
