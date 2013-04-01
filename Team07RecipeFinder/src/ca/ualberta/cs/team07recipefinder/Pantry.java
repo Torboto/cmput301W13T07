@@ -47,12 +47,12 @@ public class Pantry implements Serializable {
 	 * 
 	 */
 	public void removeNullIngredients() {
-		
-		for (int i = 0; i < this.ingredients.size(); i ++)
+
+		for (int i = 0; i < this.ingredients.size(); i++)
 			if (this.ingredients.get(i) == null) {
 				this.removeIngredient(i);
 				i--;
-		}
+			}
 	}
 
 	/**
@@ -101,7 +101,8 @@ public class Pantry implements Serializable {
 	 * this function which then returns ingredients as strings at those indexes.
 	 * 
 	 * @param ingredientIndexes
-	 * List of indexes of selected ingredients that needs to be returned to search function.
+	 *            List of indexes of selected ingredients that needs to be
+	 *            returned to search function.
 	 * @return Selected Ingredients
 	 */
 	public ArrayList<String> getSelectedIngedients(

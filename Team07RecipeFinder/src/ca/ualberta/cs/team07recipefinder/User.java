@@ -12,8 +12,11 @@ import java.io.StreamCorruptedException;
 
 import android.content.Context;
 
-/* 
- * ET: Wrote 
+/**
+ * @author Torboto
+ * 
+ *         Contains user credentials and any information that requires
+ *         persistence.
  */
 @SuppressWarnings("serial")
 public class User implements Serializable {
@@ -23,9 +26,6 @@ public class User implements Serializable {
 	private Pantry pantry;
 	private String filename = "userdata";
 
-	protected User() {
-	}
-
 	public static User getInstance() {
 		if (instance == null) {
 			instance = new User();
@@ -33,9 +33,12 @@ public class User implements Serializable {
 		return instance;
 	}
 
-	/*
-	 * ET: Sets name/email member variables for object, and then writes
-	 * serilized form to file userdata in the application data folder.
+	/**
+	 * Sets name/email member variables for object, and then writes serilized
+	 * form to file userdata in the application data folder.
+	 * 
+	 * @param context
+	 *            Required to be able to write userdata file to local memory.
 	 */
 	public void Write(Context context) {
 		try {
@@ -50,8 +53,11 @@ public class User implements Serializable {
 		}
 	}
 
-	/*
-	 * ET: Reads in User object from userdata file in application data folder
+	/**
+	 * Reads in User object from userdata file in application data folder
+	 * 
+	 * @param context
+	 *            Required to be able to read userdata file from local memory.
 	 */
 	public void Read(Context context) {
 		User user = null;
@@ -76,9 +82,9 @@ public class User implements Serializable {
 			e.printStackTrace();
 		}
 
-		email = user.email;
-		name = user.name;
-		pantry = user.pantry;
+		this.email = user.email;
+		this.name = user.name;
+		this.pantry = user.pantry;
 
 		try {
 			fin.close();
@@ -89,8 +95,12 @@ public class User implements Serializable {
 		}
 	}
 
-	/*
-	 * ET: Checks to see if userdata exists in internal app data folder.
+	/**
+	 * Checks to see if userdata exists in internal app data folder.
+	 * 
+	 * @param context
+	 *            Required to be able to read userdata file from local memory.
+	 * @return If userdata exists, returns true.
 	 */
 	public Boolean userExists(Context context) {
 		File file = context.getFileStreamPath(this.getFilename());
@@ -103,13 +113,16 @@ public class User implements Serializable {
 		}
 	}
 
-	/*
+	/**
 	 * Recipe will need a parser to compile it into a paintext format, this
 	 * method should not parse anything, simply send an email. May want to
 	 * change input to take in the paintext, and an email instead. Will require
 	 * looking into JavaEmailAPI.
+	 * 
+	 * @param recipeId
+	 *            Recipe to be emailed
 	 */
-	public void emailRecipe(int recipeId, String email) {
+	public void emailRecipe(int recipeId) {
 	}
 
 	public String getName() {
