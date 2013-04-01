@@ -71,7 +71,7 @@ public class CameraActivity extends Activity {
 		});
 		
 		TextView tv = (TextView) findViewById(R.id.status);
-		tv.setText("Click to take a photo\n¡ý");
+		tv.setText("Click to take a photo\n");
 		ImageView iv = (ImageView) findViewById(R.id.ivPreview);
 		iv.setImageResource(R.drawable.recipe_image_outline);
 
