@@ -4,6 +4,7 @@ import org.junit.Before;
 import org.junit.Test;
 import ca.ualberta.cs.team07recipefinder.Recipe;
 import ca.ualberta.cs.team07recipefinder.SqlClient;
+
 import java.util.ArrayList;
 import java.util.UUID;
 import android.test.AndroidTestCase;
@@ -26,7 +27,7 @@ public class SqlClientTestCase extends AndroidTestCase {
 		ingredients.add("ingredient2");
 		
 		testRecipe = new Recipe("Title", "Description", 
-				ingredients, "Directions", "Email");
+				ingredients, "Directions", "Email", Recipe.Location.LOCAL);
 		
 		recipeId = String.valueOf(testRecipe.getRecipeId());
 		uId = testRecipe.getRecipeId();
@@ -68,7 +69,7 @@ public class SqlClientTestCase extends AndroidTestCase {
 		
 		tempRecipe = testClient.readRecipe(uId);
 
-		assertEquals(tempRecipe.getName(), testRecipe.getName());
+		assertEquals(tempRecipe.getTitle(), testRecipe.getTitle());
 		assertEquals(tempRecipe.getDescription(), testRecipe.getDescription());
 		assertEquals(tempRecipe.getIngredients().get(0),
 				testRecipe.getIngredients().get(0));
@@ -102,7 +103,7 @@ public class SqlClientTestCase extends AndroidTestCase {
 		
 		Recipe tempRecipe = testClient.readRecipe(uId);
 		
-		assertTrue(tempRecipe.getName().equals(newRecipe.getName()));
+		assertTrue(tempRecipe.getTitle().equals(newRecipe.getTitle()));
 		assertTrue(tempRecipe.getDescription().equals(
 				newRecipe.getDescription()));
 		assertTrue(tempRecipe.getIngredients().get(0).equals(
