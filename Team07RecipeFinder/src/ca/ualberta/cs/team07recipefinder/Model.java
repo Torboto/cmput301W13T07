@@ -11,6 +11,7 @@ import java.util.ArrayList;
  * @param <V>
  * 
  */
+@SuppressWarnings("javadoc")
 public abstract class Model<V extends View> {
 	private ArrayList<V> views;
 
