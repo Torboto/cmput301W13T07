@@ -610,6 +610,14 @@ public class ViewRecipeActivity extends Activity {
 	
 
 	
+	/**
+	 * This method takes in three edit texts for a new ingredient (the ingredient,
+	 * the quantity, and the name) and adds the information to currentRecipe.
+	 * 
+	 * @param ingredientET the edit text with ingredient
+	 * @param unitET       the edit text with unit of measurement
+	 * @param quantityET   the edit text with quantity
+	 */
 	private void addIngredient(EditText ingredientET, EditText unitET,
 			EditText quantityET) {
 			String ingredient = ingredientET.getText().toString();
@@ -622,6 +630,10 @@ public class ViewRecipeActivity extends Activity {
 			ingredients.add(ingredient);
 			units.add(unit);
 			quantities.add(quantity);
+			
+			currentRecipe.setIngredients(ingredients);
+			currentRecipe.setQuantities(quantities);
+			currentRecipe.setUnits(units);
 		
 	}
 	

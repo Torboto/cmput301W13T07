@@ -68,7 +68,7 @@ public class NewRecipeActivity extends Activity {
 		newIngredientButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				addIngredient(v);
+				ingredientDialog(v);
 			}
 		});
 		
@@ -213,7 +213,13 @@ public class NewRecipeActivity extends Activity {
 		alert.show();
 	}
 
-	protected void addIngredient(final View v) {
+	/**
+	 * This method creates a dialog with three edit texts, for ingredient, quantity,
+	 * and unit of measurement. There is a 'Cancel' and 'Ok' button.
+	 * 
+	 * @param v The view that is passed in (three edit texts).
+	 */
+	protected void ingredientDialog(final View v) {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Add New Ingredient");
 		
@@ -237,7 +243,7 @@ public class NewRecipeActivity extends Activity {
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET)) && (!isEmpty(quantityET))) {
-					parseIngredientInfo(ingredientET, unitET, quantityET);
+					addIngredient(ingredientET, unitET, quantityET);
 					populateIngredientView();
 				}
 			}
@@ -250,7 +256,15 @@ public class NewRecipeActivity extends Activity {
 		alert.show();
 	}
 	
-	private void parseIngredientInfo(EditText ingredientET, EditText unitET,
+	/**
+	 * This method takes in three edit texts for a new ingredient (the ingredient,
+	 * the quantity, and the name) and adds the information to currentRecipe.
+	 * 
+	 * @param ingredientET the edit text with ingredient
+	 * @param unitET       the edit text with unit of measurement
+	 * @param quantityET   the edit text with quantity
+	 */
+	private void addIngredient(EditText ingredientET, EditText unitET,
 			EditText quantityET) {
 			String ingredient = ingredientET.getText().toString();
 			String unit = unitET.getText().toString();
@@ -262,6 +276,10 @@ public class NewRecipeActivity extends Activity {
 		
 	}
 	
+	
+	/**
+	 * 
+	 */
 	private void populateIngredientView() {
 			ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
 			registerForContextMenu(ingredientsLV);	
