@@ -381,7 +381,7 @@ public class ViewRecipeActivity extends Activity {
 	 */
 	private Recipe grabRecipeInfo() {
 		// Get the number of images the recipe has
-		RecipeController.updateImageNumber(currentRecipe);
+		ImageController.updateImageNumber(currentRecipe);
 
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);

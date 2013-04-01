@@ -94,7 +94,7 @@ public class GalleryViewActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Get the number of images the recipe has
-				RecipeController.updateImageNumber(currentRecipe);
+				ImageController.updateImageNumber(currentRecipe);
 
 				Intent cameraIntent = new Intent(getApplicationContext(),
 						CameraActivity.class);
