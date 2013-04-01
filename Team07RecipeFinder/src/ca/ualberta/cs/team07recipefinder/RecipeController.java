@@ -148,12 +148,14 @@ public class RecipeController {
 		ArrayList<Recipe> localRecipes = sqlClient.getAllRecipes();
 
 		for (Recipe localRecipe : localRecipes) {
-			Recipe serverRecipe = httpClient.readRecipe(localRecipe.recipeId);
-			if (serverRecipe.getIsUpdated() == true) {
-				sqlClient.updateRecipe(localRecipe.recipeId, serverRecipe);
-			}
 			if (localRecipe.getIsUpdated() == true) {
 				httpClient.updateRecipe(localRecipe);
+			}
+			Recipe serverRecipe = httpClient.readRecipe(localRecipe.recipeId);
+			if (serverRecipe == null) {
+				httpClient.writeRecipe(localRecipe);
+			} else if (serverRecipe.getIsUpdated() == true) {
+				sqlClient.updateRecipe(localRecipe.recipeId, serverRecipe);
 			}
 		}
 	}
