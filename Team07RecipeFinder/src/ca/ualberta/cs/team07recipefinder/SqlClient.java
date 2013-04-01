@@ -235,12 +235,9 @@ public class SqlClient extends SQLiteOpenHelper {
 	public ArrayList<Recipe> getAllRecipes() {
 		String json;
 		Recipe tempRecipe = null;
-		int size = 0;
 
 		ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
 		SQLiteDatabase db = this.getReadableDatabase();
-
-		size = recipeList.size();
 
 		// GC: Query the database for all the rows.
 		Cursor c = db.rawQuery("SELECT * FROM " + TABLE_NAME, null);
@@ -259,8 +256,6 @@ public class SqlClient extends SQLiteOpenHelper {
 
 		// db.close();
 		c.close();
-
-		size = recipeList.size();
 
 		return recipeList;
 	}

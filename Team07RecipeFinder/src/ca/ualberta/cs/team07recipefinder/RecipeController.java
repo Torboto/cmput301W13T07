@@ -120,7 +120,7 @@ public class RecipeController {
 		boolean isConnected = false;
 		try {
 			ConnectivityManager cm = (ConnectivityManager) context
-					.getSystemService(context.CONNECTIVITY_SERVICE);
+					.getSystemService(Context.CONNECTIVITY_SERVICE);
 
 			NetworkInfo networkInfo = cm.getActiveNetworkInfo();
 			isConnected = networkInfo != null && networkInfo.isAvailable()
