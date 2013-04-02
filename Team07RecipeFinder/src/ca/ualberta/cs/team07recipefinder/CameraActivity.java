@@ -89,7 +89,10 @@ public class CameraActivity extends Activity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
 	/**
-	 * Take a photo by saving a photo in the temp folder in the external storage
+	 * Take a photo by saving a photo in the temp folder in the external 
+	 * storage. This location is determined by the getFile method in the 
+	 * Camera class.
+	 * 
 	 */
 	public void takeAPhoto() {
 		Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
