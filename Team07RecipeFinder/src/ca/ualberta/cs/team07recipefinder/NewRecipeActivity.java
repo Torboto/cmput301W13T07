@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,11 +38,6 @@ public class NewRecipeActivity extends Activity {
 
 	// New recipe that will be populated with the info entered by the user
 	Recipe newRecipe = new Recipe();
-
-	ArrayList<String> ingredients = new ArrayList<String>();
-	ArrayList<String> units = new ArrayList<String>();
-	ArrayList<String> quantities = new ArrayList<String>();
-	ArrayList<String> combined = new ArrayList<String>();
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -118,7 +116,8 @@ public class NewRecipeActivity extends Activity {
 		ImageController.updateImageNumber(newRecipe);
 
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
-				&& (!isEmpty(directionsEditText)) && (!ingredients.isEmpty())) {
+				&& (!isEmpty(directionsEditText))
+				&& (!newRecipe.getIngredients().isEmpty())) {
 			/*
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
@@ -143,9 +142,7 @@ public class NewRecipeActivity extends Activity {
 		String directions = directionsEditText.getText().toString();
 		String email = grabEmail();
 		newRecipe.setDescription(description);
-		newRecipe.setIngredients(ingredients);
-		newRecipe.setQuantities(quantities);
-		newRecipe.setUnits(units);
+		;
 		newRecipe.setName(title);
 		newRecipe.setDirections(directions);
 		newRecipe.setCreatorEmail(email);
@@ -165,22 +162,6 @@ public class NewRecipeActivity extends Activity {
 	}
 
 	/**
-	 * This method takes an EditText and returns true if it is empty and false
-	 * otherwise.
-	 * 
-	 * @param etText
-	 *            the EditText to be tested
-	 * @return True: if empty, false: otherwise.
-	 */
-	private boolean isEmpty(EditText etText) {
-		// AS: returns if an Edit Text is empty or not
-		if (etText.getText().toString().trim().length() > 0)
-			return false;
-		else
-			return true;
-	}
-
-	/**
 	 * This method gets and instance of the User singleton and then extracts the
 	 * user's email.
 	 * 
@@ -190,6 +171,40 @@ public class NewRecipeActivity extends Activity {
 		User theUser = User.getInstance();
 		String email = theUser.getEmail();
 		return email;
+	}
+
+	/**
+	 * This method sets up the lvIngredients list view to show the contents of
+	 * the array list 'combined.'
+	 */
+	private void populateIngredientView() {
+		ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
+		registerForContextMenu(ingredientsLV);
+
+		ArrayList<String> combined = RecipeView.formCombinedArray(newRecipe);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.list_item, combined);
+		ingredientsLV.setAdapter(adapter);
+
+		setListViewOnClickListener(ingredientsLV);
+		setListViewHeightBasedOnChildren(ingredientsLV);
+	}
+
+	/**
+	 * This method sets up the ingredients to launch the edit ingredient dialog
+	 * when clicked on.
+	 */
+	protected void setListViewOnClickListener(final ListView listView) {
+
+		listView.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// AS: launch editIngredientDialog with the position
+				editIngredientDialog(position);
+			}
+		});
+
 	}
 
 	/**
@@ -214,7 +229,7 @@ public class NewRecipeActivity extends Activity {
 	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
 	 * 
 	 */
-	protected void ingredientDialog() {
+	private void ingredientDialog() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Add New Ingredient");
 
@@ -239,7 +254,8 @@ public class NewRecipeActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
 						&& (!isEmpty(quantityET))) {
-					addIngredient(ingredientET, unitET, quantityET);
+					RecipeView.addIngredient(ingredientET, unitET, quantityET,
+							newRecipe);
 					populateIngredientView();
 				}
 			}
@@ -251,8 +267,7 @@ public class NewRecipeActivity extends Activity {
 				});
 		alert.show();
 	}
-	
-	
+
 	/**
 	 * This method creates a dialog with three edit texts, for ingredient,
 	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
@@ -266,15 +281,15 @@ public class NewRecipeActivity extends Activity {
 
 		final EditText ingredientET = new EditText(this);
 		ingredientET.setHint("Ingredient");
-		ingredientET.setText(ingredients.get(index));
+		ingredientET.setText(newRecipe.getIngredients().get(index));
 
 		final EditText unitET = new EditText(this);
 		unitET.setHint("Unit of measurement");
-		unitET.setText(units.get(index));
+		unitET.setText(newRecipe.getUnits().get(index));
 
 		final EditText quantityET = new EditText(this);
 		quantityET.setHint("Quantity");
-		quantityET.setText(quantities.get(index));
+		quantityET.setText(newRecipe.getQuantities().get(index));
 
 		LinearLayout layout = new LinearLayout(this);
 		layout.setOrientation(1); // 1 is for vertical orientation
@@ -288,14 +303,16 @@ public class NewRecipeActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
 						&& (!isEmpty(quantityET))) {
-					editIngredient(ingredientET, unitET, quantityET, index);
+					RecipeView.editIngredient(ingredientET, unitET, quantityET,
+							index, newRecipe);
 					populateIngredientView();
 				}
 			}
 		});
 		alert.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
-				deleteIngredient(index);
+				RecipeView.deleteIngredient(index, newRecipe);
+				populateIngredientView();
 			}
 		});
 		alert.setNegativeButton("Cancel",
@@ -305,96 +322,48 @@ public class NewRecipeActivity extends Activity {
 				});
 		alert.show();
 	}
-	
 
 	/**
-	 * This method sets up the lvIngredients list view to show the contents of
-	 * the array list 'combined.'
+	 * This method takes an EditText and returns true if it is empty and false
+	 * otherwise.
+	 * 
+	 * @param etText
+	 *            the EditText to be tested
+	 * @return True: if empty, false: otherwise.
 	 */
-	private void populateIngredientView() {
-		ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
-		registerForContextMenu(ingredientsLV);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item, combined);
-		ingredientsLV.setAdapter(adapter);
-
-		setListViewOnClickListener(ingredientsLV);
-
+	private boolean isEmpty(EditText etText) {
+		if (etText.getText().toString().trim().length() > 0)
+			return false;
+		else
+			return true;
 	}
-
-	protected void setListViewOnClickListener(final ListView listView) {
-
-		listView.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// AS: launch editIngredientDialog with the position
-				editIngredientDialog(position);
-			}
-		});
-
-	}
-
 	
 	/**
-	 * This method takes in three edit texts for a new ingredient (the
-	 * ingredient, the quantity, and the name) and adds the information to
-	 * currentRecipe.
+	 * Estimates size of listview to allow it to be inside the scrollview
 	 * 
-	 * @param ingredientET
-	 *            the edit text with ingredient
-	 * @param unitET
-	 *            the edit text with unit of measurement
-	 * @param quantityET
-	 *            the edit text with quantity
+	 * @param listView
+	 *            Listview object so that new height parameter can be set
 	 */
-	private void addIngredient(EditText ingredientET, EditText unitET,
-			EditText quantityET) {
-		String ingredient = ingredientET.getText().toString();
-		String unit = unitET.getText().toString();
-		String quantity = quantityET.getText().toString();
-		ingredients.add(ingredient);
-		units.add(unit);
-		quantities.add(quantity);
-		combined.add(quantity + " " + unit + " " + ingredient);
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			// pre-condition
+			return;
+		}
 
+		int totalHeight = 0;
+		int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(),
+				MeasureSpec.AT_MOST);
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+			totalHeight += 94;
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+		listView.setLayoutParams(params);
+		listView.requestLayout();
 	}
-
-	/**
-	 * This method takes in three edit texts for a new ingredient (the
-	 * ingredient, the quantity, and the name) and an array index. It adds the
-	 * information to currentRecipe at index.
-	 * 
-	 * @param ingredientET
-	 *            the edit text with ingredient
-	 * @param unitET
-	 *            the edit text with unit of measurement
-	 * @param quantityET
-	 *            the edit text with quantity
-	 */
-	private void editIngredient(EditText ingredientET, EditText unitET,
-			EditText quantityET, int index) {
-		String ingredient = ingredientET.getText().toString();
-		String unit = unitET.getText().toString();
-		String quantity = quantityET.getText().toString();
-		ingredients.set(index, ingredient);
-		units.set(index, unit);
-		quantities.set(index, quantity);
-		combined.set(index, quantity + " " + unit + " " + ingredient);
-
-	}
-
-	/**
-	 * This method deletes the ingredient, quantity, unit, and combined
-	 * entry at index in each array list.
-	 * @param index
-	 */
-	private void deleteIngredient(int index) {
-		ingredients.remove(index);
-		units.remove(index);
-		quantities.remove(index);
-		combined.remove(index);
-		populateIngredientView();
-	}
-
 }
