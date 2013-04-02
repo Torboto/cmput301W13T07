@@ -77,7 +77,7 @@ public class ViewRecipeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				Intent galleryIntent = new Intent(getApplicationContext(),
-						GalleryViewActivity.class);
+						ImageGalleryActivity.class);
 				galleryIntent.putExtra("code", sourceCode);
 				galleryIntent.putExtra("recipeId",
 						String.valueOf(currentRecipe.getRecipeId()));

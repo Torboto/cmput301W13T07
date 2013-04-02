@@ -19,7 +19,7 @@ import android.widget.Toast;
  *         This is the gallery view activity for viewing images of a recipe.
  *         User can delete or add a image in this.
  */
-public class GalleryViewActivity extends Activity {
+public class ImageGalleryActivity extends Activity {
 	int sourceCode;
 	Recipe currentRecipe;
 	RecipeController controller = new RecipeController();
