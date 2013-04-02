@@ -124,15 +124,16 @@ public class ViewRecipeActivity extends Activity {
 					if (isEditableRecipe()) {
 						editMode();
 						Button saveButton = (Button) findViewById(R.id.b_recipeSave);
-						saveButton.setOnClickListener(new View.OnClickListener() {
-							@Override
-							public void onClick(View v) {
-								// AS: The save button calls editRecipe
-								// then finishes
-								editRecipe(recipeString);
-								savedDialog();
-							}
-						});
+						saveButton
+								.setOnClickListener(new View.OnClickListener() {
+									@Override
+									public void onClick(View v) {
+										// AS: The save button calls editRecipe
+										// then finishes
+										editRecipe(recipeString);
+										savedDialog();
+									}
+								});
 
 						Button newIngredientButton = (Button) findViewById(R.id.bNewIngredient);
 
@@ -340,7 +341,7 @@ public class ViewRecipeActivity extends Activity {
 	 * This method sets up the recipe to be edited.
 	 * 
 	 * @param recipeString
-	 * 				the string representation of a recipe UUID
+	 *            the string representation of a recipe UUID
 	 */
 	private void editMode() {
 		editableEditTexts();
@@ -368,7 +369,7 @@ public class ViewRecipeActivity extends Activity {
 	 * This method edits the recipe in the database,
 	 * 
 	 * @param recipeString
-	 * 				the string representation of a recipe UUID
+	 *            the string representation of a recipe UUID
 	 */
 	private void editRecipe(String recipeString) {
 		UUID recipeID = UUID.fromString(recipeString);
@@ -438,12 +439,12 @@ public class ViewRecipeActivity extends Activity {
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, combined);
 		ingredientsLV.setAdapter(adapter);
-
+		setListViewHeightBasedOnChildren(ingredientsLV);
 	}
-	
+
 	/**
-	 * This method sets up the ingredients to launch the edit ingredient
-	 * dialog when clicked on.
+	 * This method sets up the ingredients to launch the edit ingredient dialog
+	 * when clicked on.
 	 */
 	protected void setListViewOnClickListener() {
 
@@ -617,7 +618,8 @@ public class ViewRecipeActivity extends Activity {
 	 * This method takes an EditText and returns true if it is empty and false
 	 * otherwise.
 	 * 
-<
+	 * <
+	 * 
 	 * @param etText
 	 *            the EditText to be tested
 	 * @return True: if empty, false: otherwise.
@@ -629,6 +631,12 @@ public class ViewRecipeActivity extends Activity {
 			return true;
 	}
 
+	/**
+	 * Estimates size of listview to allow it to be inside the scrollview
+	 * 
+	 * @param listView
+	 *            Listview object so that new height parameter can be set
+	 */
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
 		ListAdapter listAdapter = listView.getAdapter();
 		if (listAdapter == null) {

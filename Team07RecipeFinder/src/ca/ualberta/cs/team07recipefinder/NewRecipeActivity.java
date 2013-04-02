@@ -8,12 +8,15 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.View.MeasureSpec;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.LinearLayout;
+import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
@@ -35,7 +38,6 @@ public class NewRecipeActivity extends Activity {
 
 	// New recipe that will be populated with the info entered by the user
 	Recipe newRecipe = new Recipe();
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -114,7 +116,8 @@ public class NewRecipeActivity extends Activity {
 		ImageController.updateImageNumber(newRecipe);
 
 		if ((!isEmpty(titleEditText)) && (!isEmpty(descriptionEditText))
-				&& (!isEmpty(directionsEditText)) && (!newRecipe.getIngredients().isEmpty())) {
+				&& (!isEmpty(directionsEditText))
+				&& (!newRecipe.getIngredients().isEmpty())) {
 			/*
 			 * AS: Now we know the required fields are filled in before we
 			 * proceed to create a new Recipe
@@ -138,7 +141,8 @@ public class NewRecipeActivity extends Activity {
 		String description = descriptionEditText.getText().toString();
 		String directions = directionsEditText.getText().toString();
 		String email = grabEmail();
-		newRecipe.setDescription(description);;
+		newRecipe.setDescription(description);
+		;
 		newRecipe.setName(title);
 		newRecipe.setDirections(directions);
 		newRecipe.setCreatorEmail(email);
@@ -176,19 +180,19 @@ public class NewRecipeActivity extends Activity {
 	private void populateIngredientView() {
 		ListView ingredientsLV = (ListView) findViewById(R.id.lvIngredients);
 		registerForContextMenu(ingredientsLV);
-		
+
 		ArrayList<String> combined = RecipeView.formCombinedArray(newRecipe);
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
 				R.layout.list_item, combined);
 		ingredientsLV.setAdapter(adapter);
 
 		setListViewOnClickListener(ingredientsLV);
-
+		setListViewHeightBasedOnChildren(ingredientsLV);
 	}
 
 	/**
-	 * This method sets up the ingredients to launch the edit ingredient
-	 * dialog when clicked on.
+	 * This method sets up the ingredients to launch the edit ingredient dialog
+	 * when clicked on.
 	 */
 	protected void setListViewOnClickListener(final ListView listView) {
 
@@ -202,7 +206,7 @@ public class NewRecipeActivity extends Activity {
 		});
 
 	}
-	
+
 	/**
 	 * This method creates a dialog which informs the user that they are missing
 	 * one or more fields in the recipe they tried to create.
@@ -219,7 +223,7 @@ public class NewRecipeActivity extends Activity {
 		});
 		alert.show();
 	}
-	
+
 	/**
 	 * This method creates a dialog with three edit texts, for ingredient,
 	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
@@ -244,13 +248,14 @@ public class NewRecipeActivity extends Activity {
 		layout.addView(unitET);
 		layout.addView(quantityET);
 
-		alert.setView(layout);		
+		alert.setView(layout);
 
 		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
 						&& (!isEmpty(quantityET))) {
-					RecipeView.addIngredient(ingredientET, unitET, quantityET, newRecipe);
+					RecipeView.addIngredient(ingredientET, unitET, quantityET,
+							newRecipe);
 					populateIngredientView();
 				}
 			}
@@ -262,7 +267,7 @@ public class NewRecipeActivity extends Activity {
 				});
 		alert.show();
 	}
-	
+
 	/**
 	 * This method creates a dialog with three edit texts, for ingredient,
 	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
@@ -298,7 +303,8 @@ public class NewRecipeActivity extends Activity {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
 						&& (!isEmpty(quantityET))) {
-					RecipeView.editIngredient(ingredientET, unitET, quantityET, index, newRecipe);
+					RecipeView.editIngredient(ingredientET, unitET, quantityET,
+							index, newRecipe);
 					populateIngredientView();
 				}
 			}
@@ -330,5 +336,34 @@ public class NewRecipeActivity extends Activity {
 			return false;
 		else
 			return true;
+	}
+	
+	/**
+	 * Estimates size of listview to allow it to be inside the scrollview
+	 * 
+	 * @param listView
+	 *            Listview object so that new height parameter can be set
+	 */
+	public static void setListViewHeightBasedOnChildren(ListView listView) {
+		ListAdapter listAdapter = listView.getAdapter();
+		if (listAdapter == null) {
+			// pre-condition
+			return;
+		}
+
+		int totalHeight = 0;
+		int desiredWidth = MeasureSpec.makeMeasureSpec(listView.getWidth(),
+				MeasureSpec.AT_MOST);
+		for (int i = 0; i < listAdapter.getCount(); i++) {
+			View listItem = listAdapter.getView(i, null, listView);
+			listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
+			totalHeight += 94;
+		}
+
+		ViewGroup.LayoutParams params = listView.getLayoutParams();
+		params.height = totalHeight
+				+ (listView.getDividerHeight() * (listAdapter.getCount() - 1));
+		listView.setLayoutParams(params);
+		listView.requestLayout();
 	}
 }

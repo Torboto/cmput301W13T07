@@ -122,39 +122,39 @@
         </ScrollView>
    </LinearLayout>
 
-        <LinearLayout
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:gravity="bottom"
-        android:orientation="horizontal" >
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="bottom"
+    android:orientation="horizontal" >
 
-        <Button
+    <Button
         android:id="@+id/b_recipeEdit"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_weight="1"
         android:text="@string/button_edit" />
-            
-        <Button
+
+    <Button
         android:id="@+id/b_recipeDelete"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_weight="1"
         android:text="@string/button_delete"/>
-            
-        <Button 
+
+    <Button 
         android:id = "@+id/b_recipeSave"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_weight="1"
         android:text="@string/save"/> 
-                
-        <Button
+
+    <Button
         android:id="@+id/b_recipeEmail"
         android:layout_height="wrap_content"
-        android:layout_width="wrap_content"
+        android:layout_width="fill_parent"
         android:layout_weight="1"
         android:text="@string/button_email"/>
-        
-        </LinearLayout>
+
+</LinearLayout>
         </LinearLayout>
