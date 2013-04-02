@@ -42,8 +42,7 @@ public class ViewRecipeActivity extends Activity {
 	KeyListener titleListener;
 	KeyListener descriptionListener;
 	KeyListener directionsListener;
-	// TODO: ET- if currentRecipe is a member variable, it shouldn't need to be
-	// passed into any functions like ParseRecipe
+
 	Recipe currentRecipe;
 
 	@Override
@@ -56,7 +55,7 @@ public class ViewRecipeActivity extends Activity {
 		final String recipeString = extras.getString("recipeId");
 
 		// AS: call fillCurrentRecipe() to get the recipe from either the local
-		// databse
+		// database
 		// or server.
 		fillCurrentRecipe(recipeString);
 
@@ -120,26 +119,20 @@ public class ViewRecipeActivity extends Activity {
 			editButton.setOnClickListener(new View.OnClickListener() {
 				@Override
 				public void onClick(View v) {
-					// TODO: This should be factored out into a method.
 					// AS: if the recipe is editable to this user then
-					// the edit button will change the editTexts and buttons
+					// the edit mode is activated
 					if (isEditableRecipe()) {
 						editMode();
-						hideEditDelete();
-						hideEmail();
-						showSaveAndAdd();
-						showThatEditable();
 						Button saveButton = (Button) findViewById(R.id.b_recipeSave);
-						saveButton
-								.setOnClickListener(new View.OnClickListener() {
-									@Override
-									public void onClick(View v) {
-										// AS: The save button calls editRecipe
-										// then finishes
-										editRecipe(recipeString);
-										savedDialog();
-									}
-								});
+						saveButton.setOnClickListener(new View.OnClickListener() {
+							@Override
+							public void onClick(View v) {
+								// AS: The save button calls editRecipe
+								// then finishes
+								editRecipe(recipeString);
+								savedDialog();
+							}
+						});
 
 						Button newIngredientButton = (Button) findViewById(R.id.bNewIngredient);
 
@@ -214,7 +207,7 @@ public class ViewRecipeActivity extends Activity {
 		if (sourceCode == 1) {
 			currentRecipe = RecipeController.getLocalRecipe(recipeID,
 					getApplicationContext());
-			parseRecipe();
+			populateRecipeInfo();
 			populateImages();
 		}
 		if (sourceCode == 2) {
@@ -223,7 +216,7 @@ public class ViewRecipeActivity extends Activity {
 			search.setDataDownloadListener(new DataDownloadListener() {
 				public void dataDownloadedSuccessfully(ArrayList<Recipe> data) {
 					currentRecipe = data.get(0);
-					parseRecipe();
+					populateRecipeInfo();
 					populateImages();
 				}
 			});
@@ -238,7 +231,7 @@ public class ViewRecipeActivity extends Activity {
 	 * @param recipe
 	 *            the recipe with information to gather
 	 */
-	private void parseRecipe() {
+	private void populateRecipeInfo() {
 		String title = currentRecipe.getTitle();
 		String directions = currentRecipe.getDirections();
 		String description = currentRecipe.getDescription();
@@ -283,24 +276,6 @@ public class ViewRecipeActivity extends Activity {
 		etDescription.setKeyListener(null);
 		etDirections.setKeyListener(null);
 
-		return;
-
-	}
-
-	/**
-	 * This method takes and ArrayList of ingredients and returns them as a
-	 * single string with newline characters between each.
-	 * 
-	 * @param ingredientsList
-	 *            an array list containing the ingredients for a recipe
-	 * @return the string containing all ingredients
-	 */
-	private String convertList(ArrayList<String> ingredientsList) {
-		String ingredients = "";
-		for (String s : ingredientsList) {
-			ingredients += (s + "\n");
-		}
-		return ingredients;
 	}
 
 	/**
@@ -310,7 +285,6 @@ public class ViewRecipeActivity extends Activity {
 	private void hideSave() {
 		Button saveButton = (Button) findViewById(R.id.b_recipeSave);
 		saveButton.setVisibility(4);
-		return;
 	}
 
 	/**
@@ -322,7 +296,6 @@ public class ViewRecipeActivity extends Activity {
 		Button addButton = (Button) findViewById(R.id.bNewIngredient);
 		saveButton.setVisibility(1);
 		addButton.setVisibility(1);
-		return;
 	}
 
 	/**
@@ -335,7 +308,6 @@ public class ViewRecipeActivity extends Activity {
 		Button deleteButton = (Button) findViewById(R.id.b_recipeDelete);
 		editButton.setVisibility(4);
 		deleteButton.setVisibility(4);
-		return;
 	}
 
 	/**
@@ -345,14 +317,13 @@ public class ViewRecipeActivity extends Activity {
 	private void hideEmail() {
 		Button emailButton = (Button) findViewById(R.id.b_recipeEmail);
 		emailButton.setVisibility(4);
-		return;
 	}
 
 	/**
 	 * This method changes the edit texts and ingredients to now be editable for
 	 * the user.
 	 */
-	private void editMode() {
+	private void editableEditTexts() {
 		EditText etTitle = (EditText) findViewById(R.id.etRecipeTitle);
 		EditText etDescription = (EditText) findViewById(R.id.etRecipeDescription);
 		EditText etDirections = (EditText) findViewById(R.id.etDirectionsList);
@@ -363,7 +334,24 @@ public class ViewRecipeActivity extends Activity {
 
 		setListViewOnClickListener();
 
+<<<<<<< HEAD
+	}
+
+	/**
+	 * This method sets up the recipe to be edited.
+	 * 
+	 * @param recipeString
+	 * 				the string representation of a recipe UUID
+	 */
+	private void editMode() {
+		editableEditTexts();
+		hideEditDelete();
+		hideEmail();
+		showSaveAndAdd();
+		showThatEditable();
+=======
 		return;
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 	}
 
 	/**
@@ -381,9 +369,10 @@ public class ViewRecipeActivity extends Activity {
 	}
 
 	/**
-	 * TODO: Comments
+	 * This method edits the recipe in the database,
 	 * 
 	 * @param recipeString
+	 * 				the string representation of a recipe UUID
 	 */
 	private void editRecipe(String recipeString) {
 		UUID recipeID = UUID.fromString(recipeString);
@@ -439,6 +428,163 @@ public class ViewRecipeActivity extends Activity {
 			return false;
 		}
 	}
+<<<<<<< HEAD
+
+	/**
+	 * This method sets up the lvIngredients list view to show the contents of
+	 * the array list 'combined' attribute of recipe.
+	 */
+	private void populateIngredientView() {
+		ListView ingredientsLV = (ListView) findViewById(R.id.lv_Ingredients);
+		registerForContextMenu(ingredientsLV);
+
+		ArrayList<String> combined = RecipeView
+				.formCombinedArray(currentRecipe);
+		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
+				R.layout.list_item, combined);
+		ingredientsLV.setAdapter(adapter);
+
+	}
+	
+	/**
+	 * This method sets up the ingredients to launch the edit ingredient
+	 * dialog when clicked on.
+	 */
+	protected void setListViewOnClickListener() {
+
+		ListView ingredientsLV = (ListView) findViewById(R.id.lv_Ingredients);
+		registerForContextMenu(ingredientsLV);
+
+		ingredientsLV.setOnItemClickListener(new OnItemClickListener() {
+			@Override
+			public void onItemClick(AdapterView<?> parent, View view,
+					int position, long id) {
+				// AS: launch editIngredientDialog with the position
+				editIngredientDialog(position);
+			}
+		});
+
+	}
+
+	/**
+	 * This method creates a dialog with three edit texts, for ingredient,
+	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
+	 * 
+	 */
+	protected void ingredientDialog() {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Add New Ingredient");
+
+		final EditText ingredientET = new EditText(this);
+		ingredientET.setHint("Ingredient");
+
+		final EditText unitET = new EditText(this);
+		unitET.setHint("Unit of measurement");
+
+		final EditText quantityET = new EditText(this);
+		quantityET.setHint("Quantity");
+
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(1); // 1 is for vertical orientation
+		layout.addView(ingredientET);
+		layout.addView(unitET);
+		layout.addView(quantityET);
+
+		alert.setView(layout);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
+						&& (!isEmpty(quantityET))) {
+					RecipeView.addIngredient(ingredientET, unitET, quantityET,
+							currentRecipe);
+					populateIngredientView();
+				}
+			}
+		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		alert.show();
+	}
+
+	/**
+	 * This method creates a dialog with three edit texts, for ingredient,
+	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
+	 * 
+	 * @param index
+	 *            The index in each array list of the current item.
+	 */
+	protected void editIngredientDialog(final int index) {
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Edit Ingredient");
+
+		final EditText ingredientET = new EditText(this);
+		ingredientET.setHint("Ingredient");
+		ingredientET.setText(currentRecipe.getIngredients().get(index));
+
+		final EditText unitET = new EditText(this);
+		unitET.setHint("Unit of measurement");
+		unitET.setText(currentRecipe.getUnits().get(index));
+
+		final EditText quantityET = new EditText(this);
+		quantityET.setHint("Quantity");
+		quantityET.setText(currentRecipe.getQuantities().get(index));
+
+		LinearLayout layout = new LinearLayout(this);
+		layout.setOrientation(1); // 1 is for vertical orientation
+		layout.addView(ingredientET);
+		layout.addView(unitET);
+		layout.addView(quantityET);
+
+		alert.setView(layout);
+
+		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
+						&& (!isEmpty(quantityET))) {
+					RecipeView.editIngredient(ingredientET, unitET, quantityET,
+							index, currentRecipe);
+					populateIngredientView();
+				}
+			}
+		});
+		alert.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				RecipeView.deleteIngredient(index, currentRecipe);
+				populateIngredientView();
+			}
+		});
+		alert.setNegativeButton("Cancel",
+				new DialogInterface.OnClickListener() {
+					public void onClick(DialogInterface dialog, int whichButton) {
+					}
+				});
+		alert.show();
+	}
+
+	/**
+	 * This method creates a dialog which informs the user that the changes to
+	 * the current recipe have been saved and finishes the activity on click of
+	 * OK.
+	 */
+	private void savedDialog() {
+		TextView tv = new TextView(this);
+		tv.setText("Changes to the current recipe have been saved.");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Success");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+				finish();
+			}
+		});
+		alert.show();
+	}
+=======
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 
 	/**
 	 * This method creates a dialog which informs that user that they can now
@@ -475,6 +621,10 @@ public class ViewRecipeActivity extends Activity {
 	}
 
 	/**
+<<<<<<< HEAD
+	 * This method takes an EditText and returns true if it is empty and false
+	 * otherwise.
+=======
 	 * This method creates a dialog which informs the user that the changes to
 	 * the current recipe have been saved and finishes the activity on click of
 	 * OK.
@@ -525,7 +675,10 @@ public class ViewRecipeActivity extends Activity {
 	/**
 	 * This method creates a dialog with three edit texts, for ingredient,
 	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 	 * 
+<<<<<<< HEAD
+=======
 	 */
 	protected void ingredientDialog() {
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
@@ -622,17 +775,19 @@ public class ViewRecipeActivity extends Activity {
 	 * This method takes an EditText and returns true if it is empty and false
 	 * otherwise.
 	 * 
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 	 * @param etText
 	 *            the EditText to be tested
 	 * @return True: if empty, false: otherwise.
 	 */
 	private boolean isEmpty(EditText etText) {
-		// AS: returns if an Edit Text is empty or not
 		if (etText.getText().toString().trim().length() > 0)
 			return false;
 		else
 			return true;
 	}
+<<<<<<< HEAD
+=======
 
 	protected void setListViewOnClickListener() {
 
@@ -758,4 +913,5 @@ public class ViewRecipeActivity extends Activity {
 		listView.requestLayout();
 	}
 
+>>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 }

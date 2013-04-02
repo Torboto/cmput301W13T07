@@ -11,7 +11,6 @@ import java.io.Serializable;
 import java.io.StreamCorruptedException;
 import java.util.ArrayList;
 
-import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 
@@ -122,6 +121,16 @@ public class User implements Serializable {
 		}
 	}
 
+	
+	/**
+	 * This method launches an activity to send a text version of
+	 * a recipe.
+	 * 
+	 * @param recipe
+	 * 			   the recipe that's information will be emailed
+	 * @param context
+	 * 			   needed context to launch new activity
+	 */
 	public void emailRecipe(Recipe recipe, Context context) {
 		String emailBody = convertToEmail(recipe);
 		Intent i = new Intent(Intent.ACTION_SEND);
@@ -132,7 +141,15 @@ public class User implements Serializable {
 		context.startActivity(Intent.createChooser(i, "Send mail..."));
 	}
 
-	
+	/**
+	 * This method takes information from a recipe and returns it in
+	 * a single String.
+	 * 
+	 * @param recipe
+	 *             the Recipe to gather information from
+	 * @return
+	 * 	           the String of information
+	 */
 	private String convertToEmail(Recipe recipe) {
 		String title = recipe.getTitle();
 		String directions = recipe.getDirections();
@@ -142,8 +159,16 @@ public class User implements Serializable {
 				+ description + "\n\nIngredients:\n" + combined
 				+ "\n\nDirections:\n" + directions;
 	}
-
 	
+	/**
+	 * This method combines the quantities, units, and ingredients of a
+	 * given Recipe and returns them as a single string.
+	 * 
+	 * @param recipe
+	 * 			   The recipe to gather information from
+	 * @return
+	 * 		       The String of information
+	 */
 	private String formCombinedString(Recipe recipe) {
 		ArrayList<String> ingredients = recipe.getIngredients();
 		ArrayList<String> quantities = recipe.getQuantities();
