@@ -9,8 +9,11 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Serializable;
 import java.io.StreamCorruptedException;
+import java.util.ArrayList;
 
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 
 /**
  * @author Torboto
@@ -27,7 +30,8 @@ public class User implements Serializable {
 	private String filename = "userdata";
 
 	/**
-	 * Singleton constructor so that only one user exists on each device, and pantry data is persistent.
+	 * Singleton constructor so that only one user exists on each device, and
+	 * pantry data is persistent.
 	 * 
 	 * @return The current instance of user.
 	 */
@@ -118,16 +122,38 @@ public class User implements Serializable {
 		}
 	}
 
-	/**
-	 * Recipe will need a parser to compile it into a paintext format, this
-	 * method should not parse anything, simply send an email. May want to
-	 * change input to take in the paintext, and an email instead. Will require
-	 * looking into JavaEmailAPI.
-	 * 
-	 * @param recipeId
-	 *            Recipe to be emailed
-	 */
-	public void emailRecipe(int recipeId) {
+	public void emailRecipe(Recipe recipe, Context context) {
+		String emailBody = convertToEmail(recipe);
+		Intent i = new Intent(Intent.ACTION_SEND);
+		i.setType("message/rfc822");
+		i.putExtra(Intent.EXTRA_EMAIL, email);
+		i.putExtra(Intent.EXTRA_SUBJECT, "Recipe");
+		i.putExtra(Intent.EXTRA_TEXT, emailBody);
+		context.startActivity(Intent.createChooser(i, "Send mail..."));
+	}
+
+	private String convertToEmail(Recipe recipe) {
+		String title = recipe.getTitle();
+		String directions = recipe.getDirections();
+		String description = recipe.getDescription();
+		String combined = formCombinedString(recipe); 
+		return "Recipe Title:\n" + title + "\n\nRecipe Description:\n"
+				+ description + "\n\nIngredients:\n" + combined
+				+ "\n\nDirections:\n" + directions;
+	}
+
+	
+	private String formCombinedString(Recipe recipe) {
+		ArrayList<String> ingredients = recipe.getIngredients();
+		ArrayList<String> quantities = recipe.getQuantities();
+		ArrayList<String> units = recipe.getUnits();
+		String combined = new String();
+
+		for (int index = 0; index < ingredients.size(); index++) {
+			combined = combined + (quantities.get(index) + " " + units.get(index) + "  "
+					+ ingredients.get(index));
+		}
+		return combined;
 	}
 
 	public String getName() {

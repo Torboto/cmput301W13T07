@@ -90,8 +90,8 @@ public class ViewRecipeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// AS: The email button calls emailToSelf() and emailDialog()
-				emailToSelf();
-				emailDialog();
+				User user = User.getInstance();
+				user.emailRecipe(currentRecipe, getApplicationContext());
 			}
 
 		});
@@ -404,7 +404,7 @@ public class ViewRecipeActivity extends Activity {
 		String title = etTitle.getText().toString();
 		String description = etDescription.getText().toString();
 		String directions = etDirections.getText().toString();
-		String email = grabEmail();
+		String email = currentRecipe.getCreatorEmail();
 		Recipe newRecipe = new Recipe();
 		newRecipe.setName(title);
 		newRecipe.setDescription(description);
@@ -418,17 +418,7 @@ public class ViewRecipeActivity extends Activity {
 
 	}
 
-	/**
-	 * This method gets and instance of the User singleton and then extracts the
-	 * user's email.
-	 * 
-	 * @return the user's email as a string
-	 */
-	private String grabEmail() {
-		User theUser = User.getInstance();
-		String email = theUser.getEmail();
-		return email;
-	}
+	
 
 	/**
 	 * This method determines if the current recipe is editable. If the user's
@@ -437,7 +427,8 @@ public class ViewRecipeActivity extends Activity {
 	 * @return true if editable or false otherwise
 	 */
 	private boolean isEditableRecipe() {
-		String userEmail = grabEmail();
+		User user = User.getInstance();
+		String userEmail = user.getEmail();
 		String creatorEmail = currentRecipe.getCreatorEmail();
 		if (userEmail.equalsIgnoreCase(creatorEmail)) {
 			return true;
@@ -499,43 +490,7 @@ public class ViewRecipeActivity extends Activity {
 		});
 		alert.show();
 	}
-
-	private void emailDialog() {
-		TextView tv = new TextView(this);
-		tv.setText("Email sent to your account!");
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Email");
-		alert.setView(tv);
-		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-			}
-		});
-		alert.show();
-	}
-
-	// TODO: Factor this out into email class
-	private void emailToSelf() {
-		String userEmail = grabEmail();
-		String emailBody = convertToEmail();
-
-		Intent i = new Intent(Intent.ACTION_SEND);
-		i.setType("message/rfc822");
-		i.putExtra(Intent.EXTRA_EMAIL, userEmail);
-		i.putExtra(Intent.EXTRA_SUBJECT, "Recipe");
-		i.putExtra(Intent.EXTRA_TEXT, emailBody);
-		startActivity(Intent.createChooser(i, "Send mail..."));
-	}
-
-	// TODO: ET - factor this out into another class
-	private String convertToEmail() {
-		String title = currentRecipe.getTitle();
-		String directions = currentRecipe.getDirections();
-		String description = currentRecipe.getDescription();
-		String ingredients = convertList(currentRecipe.getIngredients());
-		return "Recipe Title:\n" + title + "\n\nRecipe Description:\n"
-				+ description + "\n\nIngredients:\n" + ingredients
-				+ "\n\nDirections:\n" + directions;
-	}
+	
 
 	private ArrayList<String> formCombinedArray(Recipe recipe) {
 		ArrayList<String> ingredients = recipe.getIngredients();
@@ -773,5 +728,6 @@ public class ViewRecipeActivity extends Activity {
 		populateIngredientView();
 		
 	}
+	
 	
 }
