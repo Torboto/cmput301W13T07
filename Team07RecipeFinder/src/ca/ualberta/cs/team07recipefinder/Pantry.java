@@ -65,7 +65,6 @@ public class Pantry implements Serializable {
 	 * @param index
 	 */
 	public void removeIngredient(int index) {
-
 		this.ingredients.remove(index);
 	}
 

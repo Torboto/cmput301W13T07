@@ -290,15 +290,18 @@ public class MainActivity extends Activity {
 		AdapterContextMenuInfo info = (AdapterContextMenuInfo) item
 				.getMenuInfo();
 		int index = info.position;
+		int ID = item.getItemId();
 		switch (item.getItemId()) {
 		case R.id.menu_delete_ingredient:
 			myPantry.removeIngredient(index);
 			user.setPantry(myPantry);
 			user.Write(getApplicationContext());
+			break;
 		case R.id.menu_edit_ingredient:
 			editIngredient(index);
 			user.setPantry(myPantry);
 			user.Write(getApplicationContext());
+			break;
 			// default:
 			// return super.onContextItemSelected(item);
 		}
