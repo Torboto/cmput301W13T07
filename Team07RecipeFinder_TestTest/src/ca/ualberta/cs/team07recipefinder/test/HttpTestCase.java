@@ -1,12 +1,11 @@
 package ca.ualberta.cs.team07recipefinder.test;
 
-import static org.junit.Assert.assertTrue;
-
 import java.util.ArrayList;
 
 import junit.framework.TestCase;
 
 import org.junit.Before;
+import org.junit.BeforeClass;
 import org.junit.Test;
 
 import ca.ualberta.cs.team07recipefinder.HttpClient;
@@ -21,6 +20,10 @@ public class HttpTestCase extends TestCase {
 	HttpClient httpClient;
 	Recipe recipe;
 	
+	@BeforeClass 
+    public static void setUpClass() {      
+        System.out.println("HttpTestCase Setup");
+    }
 	
 	/**
 	 * Use the Before tag to notify the suite to run Setup before running tests
@@ -32,8 +35,19 @@ public class HttpTestCase extends TestCase {
 		ArrayList<String> ingredients = new ArrayList<String>();
 		ingredients.add("fish");
 		ingredients.add("cats");
+		ArrayList<String> quantities = new ArrayList<String>();
+		ingredients.add("unit");
+		ingredients.add("unit");
+		ArrayList<String> amounts = new ArrayList<String>();
+		ingredients.add("2");
+		ingredients.add("1");
+		
 		recipe = new Recipe("test", "test_desc", ingredients, "DIRECTINOS",
 				"ern@bleh.com", Recipe.Location.SERVER);
+		recipe.setQuantities(quantities);
+		recipe.setUnits(amounts);
+		
+		httpClient.writeRecipe(recipe);
 	}
 
 	/**
@@ -41,7 +55,6 @@ public class HttpTestCase extends TestCase {
 	 */
 	@Test
 	public void testWrite() {
-		httpClient.writeRecipe(recipe);
 		Recipe output = httpClient.readRecipe(recipe.getRecipeId());
 		assertTrue(output == recipe);
 	}

@@ -7,8 +7,8 @@ import org.junit.runner.RunWith;
 import org.junit.runners.Suite;
 import org.junit.runners.Suite.SuiteClasses;
 
-@RunWith(Suite.class)
-@SuiteClasses({ HttpTestCase.class, SqlClientTestCase.class, UserTestCase.class })
+@RunWith(value = Suite.class)
+@SuiteClasses(value = { HttpTestCase.class })
 public class RecipeFinderTestSuite extends TestSuite {
 	
 	/**
@@ -16,8 +16,9 @@ public class RecipeFinderTestSuite extends TestSuite {
 	 */
 	RecipeFinderTestSuite(){
 		TestSuite suite = new TestSuite(HttpTestCase.class);
-		TestResult result = null;
+		//TestResult result = null;
 		//suite.addTestSuite(RecipeTestCase.class);
-		suite.run(result);
+		
+		//suite.run(result);
 	}
 }

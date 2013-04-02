@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    android:name="@string/app_name"
     package="ca.ualberta.cs.team07recipefinder"
     android:versionCode="1"
     android:versionName="1.0" >
@@ -36,7 +37,7 @@
         </activity>
         <activity
             android:name="ca.ualberta.cs.team07recipefinder.ViewRecipeActivity"
-            android:label="@string/title_activity_view_searched_recipe" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.team07recipefinder.NewRecipeActivity"
@@ -48,16 +49,16 @@
         </activity>
         <activity
             android:name="ca.ualberta.cs.team07recipefinder.CameraActivity"
-            android:label="@string/title_activity_camera" >
+            android:label="@string/app_name" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.team07recipefinder.SearchByPantryActivity"
-            android:theme="@android:style/Theme.Dialog"
-            android:label="@string/title_activity_search_by_pantry" >
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Dialog" >
         </activity>
         <activity
             android:name="ca.ualberta.cs.team07recipefinder.GalleryViewActivity"
-            android:label="@string/title_activity_gallery_view" >
+            android:label="@string/app_name" >
         </activity>
     </application>
 
