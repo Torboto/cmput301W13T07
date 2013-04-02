@@ -63,6 +63,9 @@ public class Recipe {
 	public Recipe() {
 		this.isUpdated = false;
 		this.imageNumber = 0;
+		this.ingredients = new ArrayList <String>();
+		this.quantities = new ArrayList <String>();
+		this.units = new ArrayList <String>();
 	}
 
 	public UUID getRecipeId() {
