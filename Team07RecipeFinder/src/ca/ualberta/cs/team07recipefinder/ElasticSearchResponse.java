@@ -1,13 +1,12 @@
 package ca.ualberta.cs.team07recipefinder;
 
 /**
- * @author Torboto
- * 
- *         Elastic Search response type used for getting data back from the
- *         internet.
+ * Elastic Search response type used for getting data back from the internet.
  * 
  * @param <T>
  *            type
+ * 
+ * @author Torboto
  */
 public class ElasticSearchResponse<T> {
 	String _index;

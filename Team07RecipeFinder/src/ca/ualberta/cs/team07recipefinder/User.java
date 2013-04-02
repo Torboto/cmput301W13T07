@@ -15,10 +15,10 @@ import android.content.Context;
 import android.content.Intent;
 
 /**
+ * Contains user credentials and any information that requires persistence.
+ * 
  * @author Torboto
  * 
- *         Contains user credentials and any information that requires
- *         persistence.
  */
 @SuppressWarnings("serial")
 public class User implements Serializable {
@@ -121,15 +121,13 @@ public class User implements Serializable {
 		}
 	}
 
-	
 	/**
-	 * This method launches an activity to send a text version of
-	 * a recipe.
+	 * This method launches an activity to send a text version of a recipe.
 	 * 
 	 * @param recipe
-	 * 			   the recipe that's information will be emailed
+	 *            the recipe that's information will be emailed
 	 * @param context
-	 * 			   needed context to launch new activity
+	 *            needed context to launch new activity
 	 */
 	public void emailRecipe(Recipe recipe, Context context) {
 		String emailBody = convertToEmail(recipe);
@@ -142,32 +140,30 @@ public class User implements Serializable {
 	}
 
 	/**
-	 * This method takes information from a recipe and returns it in
-	 * a single String.
+	 * This method takes information from a recipe and returns it in a single
+	 * String.
 	 * 
 	 * @param recipe
-	 *             the Recipe to gather information from
-	 * @return
-	 * 	           the String of information
+	 *            the Recipe to gather information from
+	 * @return the String of information
 	 */
 	private String convertToEmail(Recipe recipe) {
 		String title = recipe.getTitle();
 		String directions = recipe.getDirections();
 		String description = recipe.getDescription();
-		String combined = formCombinedString(recipe); 
+		String combined = formCombinedString(recipe);
 		return "Recipe Title:\n" + title + "\n\nRecipe Description:\n"
 				+ description + "\n\nIngredients:\n" + combined
 				+ "\n\nDirections:\n" + directions;
 	}
-	
+
 	/**
-	 * This method combines the quantities, units, and ingredients of a
-	 * given Recipe and returns them as a single string.
+	 * This method combines the quantities, units, and ingredients of a given
+	 * Recipe and returns them as a single string.
 	 * 
 	 * @param recipe
-	 * 			   The recipe to gather information from
-	 * @return
-	 * 		       The String of information
+	 *            The recipe to gather information from
+	 * @return The String of information
 	 */
 	private String formCombinedString(Recipe recipe) {
 		ArrayList<String> ingredients = recipe.getIngredients();
@@ -176,8 +172,9 @@ public class User implements Serializable {
 		String combined = new String();
 
 		for (int index = 0; index < ingredients.size(); index++) {
-			combined = combined + (quantities.get(index) + " " + units.get(index) + "  "
-					+ ingredients.get(index));
+			combined = combined
+					+ (quantities.get(index) + " " + units.get(index) + "  " + ingredients
+							.get(index));
 		}
 		return combined;
 	}

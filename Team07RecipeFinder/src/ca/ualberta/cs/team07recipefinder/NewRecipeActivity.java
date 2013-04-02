@@ -22,13 +22,13 @@ import android.widget.TextView;
 import android.widget.AdapterView.OnItemClickListener;
 
 /**
- * @author ajstarna
+ * The NewRecipeActvity displays EditTexts for the user to enter a recipe title,
+ * description, and directions. There is also a list view for ingredients. If
+ * the user fills in every EditText and at least one ingredient then hits the
+ * 'done' button, a new Recipe is written to the user's database with the
+ * entered information.
  * 
- *         The NewRecipeActvity displays EditTexts for the user to enter a
- *         recipe title, description, and directions. There is also a list view
- *         for ingredients. If the user fills in every EditText and at least one
- *         ingredient then hits the 'done' button, a new Recipe is written to
- *         the user's database with the entered information.
+ * @author ajstarna
  */
 public class NewRecipeActivity extends Activity {
 
@@ -337,7 +337,7 @@ public class NewRecipeActivity extends Activity {
 		else
 			return true;
 	}
-	
+
 	/**
 	 * Estimates size of listview to allow it to be inside the scrollview
 	 * 

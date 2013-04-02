@@ -7,13 +7,12 @@ import java.util.UUID;
 import android.os.AsyncTask;
 
 /**
- * @author Torboto
+ * Async task to get search results from elastic search server. Has a
+ * DataDownloadListener type to allow the passing of data back to the activity.
+ * DataDownloadListener calls DownloadSuccessful method when the task is
+ * complete, which then calls a method inside of Main Activity.
  * 
- *         Async task to get search results from elastic search server. Has a
- *         DataDownloadListener type to allow the passing of data back to the
- *         activity. DataDownloadListener calls DownloadSuccessful method when
- *         the task is complete, which then calls a method inside of Main
- *         Activity.
+ * @author Torboto
  */
 public class SearchRecipeTask extends AsyncTask<String, List<String>, Void> {
 	/**

@@ -8,12 +8,13 @@ import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 
 /**
+ * Writes and deletes recipes to the local database (cache) and can
+ * update/write/delete . Also contains the logic that determines if the device
+ * is connected to the internet. Without internet access, no Recipes write to
+ * the webservice.
+ * 
  * @author gcoomber
  * 
- *         Writes and deletes recipes to the local database (cache) and can
- *         update/write/delete . Also contains the logic that determines if the
- *         device is connected to the internet. Without internet access, no
- *         Recipes write to the webservice.
  */
 public class RecipeController {
 

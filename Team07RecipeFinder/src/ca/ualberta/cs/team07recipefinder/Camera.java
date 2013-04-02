@@ -5,12 +5,10 @@ import java.io.File;
 import android.os.Environment;
 
 /**
+ * A class that contains the folder name where images are saved, the number of
+ * images in the file, and a method for setting the file for the bitmap image.
+ * 
  * @author gcoomber
- * 
- * A class that contains the folder name where images are saved, the
- * number of images in the file, and a method for setting the file for the
- * bitmap image.
- * 
  */
 public class Camera {
 	private String folderName;
@@ -26,8 +24,8 @@ public class Camera {
 	};
 
 	/**
-	 * Creates and returns the file with the file path where the image 
-	 * will be saved.
+	 * Creates and returns the file with the file path where the image will be
+	 * saved.
 	 * 
 	 * @return
 	 */

@@ -3,10 +3,10 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.ArrayList;
 
 /**
- * @author Torboto
+ * Abstract type to be used as a trigger for async tasks to return data back to
+ * activity.
  * 
- *         Abstract type to be used as a trigger for async tasks to return data
- *         back to activity.
+ * @author Torboto
  */
 public abstract interface DataDownloadListener {
 	/**

@@ -12,11 +12,10 @@ import android.database.sqlite.SQLiteOpenHelper;
 import com.google.gson.Gson;
 
 /**
- * @author gcoomber
+ * A helper class for the Sqlite database that stores the user's locally cached
+ * recipes. Recipes can be added to the database, deleted, and updated.
  * 
- *         A helper class for the Sqlite database that stores the user's locally
- *         cached recipes. Recipes can be added to the database, deleted, and
- *         updated.
+ * @author gcoomber
  */
 public class SqlClient extends SQLiteOpenHelper {
 	/**
@@ -243,8 +242,7 @@ public class SqlClient extends SQLiteOpenHelper {
 	}
 
 	/**
-	 *  Deletes all data from the table. The table still exists but it is 
-	 *  empty.
+	 * Deletes all data from the table. The table still exists but it is empty.
 	 */
 	public void deleteAllRows() {
 		SQLiteDatabase db = this.getWritableDatabase();

@@ -18,12 +18,12 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
- * @author ajstarna
+ * This activity is launched when the user selects "Search Using My Pantry" from
+ * the Search tab. The user selects ingredients from their pantry, which are
+ * returned to the main activity as an ArrayList and used in an ingredients
+ * search.
  * 
- *         This activity is launched when the user selects
- *         "Search Using My Pantry" from the Search tab. The user selects
- *         ingredients from their pantry, which are returned to the main
- *         activity as an ArrayList and used in an ingredients search.
+ * @author ajstarna
  */
 public class SearchByPantryActivity extends Activity {
 	ListView ingredientsLV;

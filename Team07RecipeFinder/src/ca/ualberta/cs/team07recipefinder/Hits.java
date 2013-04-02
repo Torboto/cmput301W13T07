@@ -3,12 +3,12 @@ package ca.ualberta.cs.team07recipefinder;
 import java.util.Collection;
 
 /**
- * @author Torboto
- * 
- *         Gets and returns a collection of hits from elastic search server.
+ * Gets and returns a collection of hits from elastic search server.
  * 
  * @param <T>
  *            type
+ * 
+ * @author Torboto
  */
 public class Hits<T> {
 	/**

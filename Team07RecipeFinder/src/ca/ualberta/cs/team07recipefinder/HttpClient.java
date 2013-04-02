@@ -25,12 +25,12 @@ import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
 /**
- * @author Torboto
  * 
- *         Methods for saving recipes, deleting recipes, and searching for
- *         recipes from webservice:
- *         http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/
- *         Majority of code from: https://github.com/rayzhangcl/ESDemo
+ * Methods for saving recipes, deleting recipes, and searching for recipes from
+ * webservice: http://cmput301.softwareprocess.es:8080/CMPUT301W13T07/ Majority
+ * of code from: https://github.com/rayzhangcl/ESDemo
+ * 
+ * @author Torboto
  */
 public class HttpClient {
 
@@ -139,7 +139,7 @@ public class HttpClient {
 
 			return recipe;
 		}
-		//Null means the recipe does not exist.
+		// Null means the recipe does not exist.
 		return null;
 	}
 

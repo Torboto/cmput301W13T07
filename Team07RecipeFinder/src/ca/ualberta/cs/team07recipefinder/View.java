@@ -1,11 +1,12 @@
 package ca.ualberta.cs.team07recipefinder;
 
 /**
- * @author gcoomber
  * 
- *         Generic View interface for the view classes to implement.
+ * Generic View interface for the view classes to implement.
  * 
  * @param <M>
+ * 
+ * @author gcoomber
  */
 public interface View<M> {
 	/**

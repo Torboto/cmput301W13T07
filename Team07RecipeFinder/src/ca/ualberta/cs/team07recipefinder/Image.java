@@ -11,9 +11,9 @@ import android.os.Environment;
 import android.util.Log;
 
 /**
- * @author Torboto, gcoomber
- * 
  *         Data class to hold filename and bitmap together for saving purposes.
+ *         
+ * @author Torboto, gcoomber
  */
 public class Image {
 	Bitmap image;

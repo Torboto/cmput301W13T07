@@ -5,10 +5,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * @author xiaohuim
+ * This is the Pantry class has only one variable, ingredients, which is a array
+ * list of strings.
  * 
- *         This is the Pantry class has only one variable, ingredients, which is
- *         a array list of strings.
+ * @author xiaohuim
  */
 @SuppressWarnings("serial")
 public class Pantry implements Serializable {
@@ -93,9 +93,9 @@ public class Pantry implements Serializable {
 	 * Returns the ingredient at the given index as a string.
 	 * 
 	 * @param index
-	 * 		Location of ingredient in the array.
+	 *            Location of ingredient in the array.
 	 * @param ingredient
-	 * 		Updated ingredient information.
+	 *            Updated ingredient information.
 	 */
 	public void updateIngredient(int index, String ingredient) {
 

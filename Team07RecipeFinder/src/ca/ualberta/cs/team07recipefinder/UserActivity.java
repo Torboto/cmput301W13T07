@@ -8,9 +8,10 @@ import android.view.View;
 import android.widget.EditText;
 
 /**
+ * Activity which displays account creation the first time app is used.
+ * 
  * @author Torboto
  * 
- *         Activity which displays account creation the first time app is used.
  */
 public class UserActivity extends Activity {
 

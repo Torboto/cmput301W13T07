@@ -25,17 +25,17 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 /**
+ * The ViewRecipeActivity displays the information about a particular Recipe.
+ * The title, description, ingredients, and directions are shown to the user.
+ * Different buttons are visible depending on whether the activity was launched
+ * from the user's recipes or from a search of the online database. An integer
+ * named "code" is passed through the intent which signifies which buttons are
+ * seen. If the user is looking at their own recipe then they have the options
+ * to delete or edit. If the user is viewing a searched recipe, they can save it
+ * to their own database.
+ * 
  * @author ajstarna
  * 
- *         The ViewRecipeActivity displays the information about a particular
- *         Recipe. The title, description, ingredients, and directions are shown
- *         to the user. Different buttons are visible depending on whether the
- *         activity was launched from the user's recipes or from a search of the
- *         online database. An integer named "code" is passed through the intent
- *         which signifies which buttons are seen. If the user is looking at
- *         their own recipe then they have the options to delete or edit. If the
- *         user is viewing a searched recipe, they can save it to their own
- *         database.
  */
 public class ViewRecipeActivity extends Activity {
 	int sourceCode;
@@ -53,7 +53,7 @@ public class ViewRecipeActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		sourceCode = extras.getInt("code");
 		final String recipeString = extras.getString("recipeId");
-		
+
 		// AS: call fillCurrentRecipe() to get the recipe from either the local
 		// database
 		// or server.
@@ -166,7 +166,7 @@ public class ViewRecipeActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
-		
+
 		// PopulateImages cannot be called before the async task has returned
 		// with recipe object, otherwise currentRecipe will be null.
 		if (currentRecipe != null
@@ -617,7 +617,7 @@ public class ViewRecipeActivity extends Activity {
 		});
 		alert.show();
 	}
-	
+
 	/**
 	 * This method creates a dialog which informs the user that there are no
 	 * search results to return

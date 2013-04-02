@@ -4,9 +4,9 @@ import java.util.ArrayList;
 import java.util.UUID;
 
 /**
- * @author gcoomber
+ * Data class that contains the components of a Recipe.
  * 
- *         Data class that contains the components of a Recipe.
+ * @author gcoomber
  */
 public class Recipe {
 
@@ -63,15 +63,15 @@ public class Recipe {
 	public Recipe() {
 		this.isUpdated = false;
 		this.imageNumber = 0;
-		this.ingredients = new ArrayList <String>();
-		this.quantities = new ArrayList <String>();
-		this.units = new ArrayList <String>();
+		this.ingredients = new ArrayList<String>();
+		this.quantities = new ArrayList<String>();
+		this.units = new ArrayList<String>();
 	}
 
 	public UUID getRecipeId() {
 		return this.recipeId;
 	}
-	
+
 	public void setRecipeId(UUID uuid) {
 		this.recipeId = uuid;
 	}
@@ -168,7 +168,7 @@ public class Recipe {
 		/**
 		 * Located on local device, in SQL database.
 		 */
-		LOCAL, 
+		LOCAL,
 		/**
 		 * Located on elasticsearch webservice.
 		 */

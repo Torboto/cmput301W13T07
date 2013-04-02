@@ -5,9 +5,9 @@ import java.util.UUID;
 import android.os.AsyncTask;
 
 /**
- * @author Torboto
+ * Async task that deletes recipe from elasticsearch.
  * 
- *         Async task that deletes recipe from elasticsearch.
+ * @author Torboto
  */
 public class DeleteRecipeTask extends AsyncTask<UUID, Void, Void> {
 

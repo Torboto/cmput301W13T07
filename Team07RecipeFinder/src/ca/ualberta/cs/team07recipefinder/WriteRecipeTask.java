@@ -3,9 +3,10 @@ package ca.ualberta.cs.team07recipefinder;
 import android.os.AsyncTask;
 
 /**
- * @author Torboto
  * 
- *         Async task to write recipe to elasticsearch.
+ * Async task to write recipe to elasticsearch.
+ * 
+ * @author Torboto
  */
 public class WriteRecipeTask extends AsyncTask<Recipe, Void, Void> {
 

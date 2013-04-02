@@ -26,12 +26,12 @@ import android.widget.TabHost.TabSpec;
 import android.widget.TextView;
 
 /**
+ * Main activity that is launched when user has an account. It handles the
+ * pantry, searching, and viewing local recipes.
+ * 
  * @author Torboto
  * @author gcoomber
  * @author xiaohuim
- * 
- *         Main activity that is launched when user has an account. It handles
- *         the pantry, searching, and viewing local recipes.
  */
 public class MainActivity extends Activity {
 

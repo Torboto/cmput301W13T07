@@ -20,11 +20,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 /**
- * @author edited by gcoomber
+ * Activity that allows the user to take a picture and save it to the sd
+ * storage. The code is an altered version of the lab example code for the
+ * camera test.
  * 
- *         Activity that allows the user to take a picture and save it to the sd
- *         storage. The code is an altered version of the lab example code for
- *         the camera test.
+ * @author edited by gcoomber
  */
 public class CameraActivity extends Activity {
 
@@ -44,7 +44,7 @@ public class CameraActivity extends Activity {
 		tv.setText("Click to take a photo\n");
 		iv = (ImageView) findViewById(R.id.ivPreview);
 		iv.setImageResource(R.drawable.recipe_image_outline);
-		
+
 		ImageButton button = (ImageButton) findViewById(R.id.ibTakeAPhoto);
 		OnClickListener listener = new OnClickListener() {
 			@TargetApi(Build.VERSION_CODES.HONEYCOMB)
@@ -89,9 +89,9 @@ public class CameraActivity extends Activity {
 	private static final int CAPTURE_IMAGE_ACTIVITY_REQUEST_CODE = 100;
 
 	/**
-	 * Take a photo by saving a photo in the temp folder in the external 
-	 * storage. This location is determined by the getFile method in the 
-	 * Camera class.
+	 * Take a photo by saving a photo in the temp folder in the external
+	 * storage. This location is determined by the getFile method in the Camera
+	 * class.
 	 * 
 	 */
 	public void takeAPhoto() {

@@ -14,10 +14,10 @@ import android.widget.ImageView;
 import android.widget.Toast;
 
 /**
- * @author xiaohui
+ * This is the gallery view activity for viewing images of a recipe. User can
+ * delete or add a image in this.
  * 
- *         This is the gallery view activity for viewing images of a recipe.
- *         User can delete or add a image in this.
+ * @author xiaohui
  */
 public class ImageGalleryActivity extends Activity {
 	int sourceCode;
@@ -146,8 +146,8 @@ public class ImageGalleryActivity extends Activity {
 	}
 
 	/**
-	 *         This method will reload the images variable in case the images
-	 *         are changed.
+	 * This method will reload the images variable in case the images are
+	 * changed.
 	 */
 	protected void loadImages() {
 		images = ImageController.getAllRecipeImages(
@@ -165,8 +165,8 @@ public class ImageGalleryActivity extends Activity {
 	}
 
 	/**
-	 *         This method will reset the currently showing image in the
-	 *         ImageView given the current index.
+	 * This method will reset the currently showing image in the ImageView given
+	 * the current index.
 	 * 
 	 * @param index
 	 */

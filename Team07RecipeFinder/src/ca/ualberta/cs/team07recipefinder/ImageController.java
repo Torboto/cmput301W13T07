@@ -7,10 +7,10 @@ import android.graphics.Bitmap;
 import android.util.Log;
 
 /**
- * @author Torboto
+ * Controller for images. Decides how to access the image depending on where the
+ * recipe is saved (internal/external).
  * 
- *         Controller for images. Decides how to access the image depending on
- *         where the recipe is saved (internal/external).
+ * @author Torboto
  */
 public class ImageController {
 	/**
@@ -106,7 +106,7 @@ public class ImageController {
 
 		return maxImageNumber;
 	}
-	
+
 	/**
 	 * Update the integer value that represents the number of saved images for a
 	 * locally saved recipe.

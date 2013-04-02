@@ -4,13 +4,12 @@ import java.util.ArrayList;
 import java.util.Collection;
 
 /**
- * @author Torboto
- * 
- *         Elastic Search response type used for getting data back from the
- *         internet.
+ * Elastic Search response type used for getting data back from the internet.
  * 
  * @param <T>
  *            type
+ * 
+ * @author Torboto
  */
 public class ElasticSearchSearchResponse<T> {
 	int took;
