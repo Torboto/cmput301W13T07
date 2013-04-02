@@ -70,6 +70,7 @@ public class ViewRecipeActivity extends Activity {
 			public void onClick(View v) {
 				SqlClient sqlClient = new SqlClient(getApplicationContext());
 				sqlClient.writeRecipe(currentRecipe);
+				showRecipeSaved();
 			}
 		});
 
@@ -609,6 +610,23 @@ public class ViewRecipeActivity extends Activity {
 		tv.setText("Only the original creator may edit their recipe!");
 		AlertDialog.Builder alert = new AlertDialog.Builder(this);
 		alert.setTitle("Sorry");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
+	}
+	
+	/**
+	 * This method creates a dialog which informs the user that there are no
+	 * search results to return
+	 */
+	private void showRecipeSaved() {
+		TextView tv = new TextView(this);
+		tv.setText("Recipe has been saved in MyRecipes!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Complete!");
 		alert.setView(tv);
 		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {

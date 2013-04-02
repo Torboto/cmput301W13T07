@@ -302,8 +302,8 @@ public class MainActivity extends Activity {
 			user.setPantry(myPantry);
 			user.Write(getApplicationContext());
 			break;
-			// default:
-			// return super.onContextItemSelected(item);
+		// default:
+		// return super.onContextItemSelected(item);
 		}
 		populatePantry();
 		return true;
@@ -373,7 +373,7 @@ public class MainActivity extends Activity {
 	 *            receives list of recipes that matched the search
 	 */
 	public void setSearch(ArrayList<Recipe> recipes) {
-		if(recipes.size() == 0){
+		if (recipes.size() == 0) {
 			noSearchResults();
 		}
 		ListView searchListView = (ListView) findViewById(R.id.lvSearchResults);
@@ -383,10 +383,10 @@ public class MainActivity extends Activity {
 
 		setListViewOnClickListener(searchListView, recipes);
 	}
-	
+
 	/**
-	 * This method creates a dialog which informs the user that they are missing
-	 * one or more fields in the recipe they tried to create.
+	 * This method creates a dialog which informs the user that there are no
+	 * search results to return
 	 */
 	private void noSearchResults() {
 		TextView tv = new TextView(this);
