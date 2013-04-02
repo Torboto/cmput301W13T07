@@ -53,7 +53,7 @@ public class ViewRecipeActivity extends Activity {
 		Bundle extras = getIntent().getExtras();
 		sourceCode = extras.getInt("code");
 		final String recipeString = extras.getString("recipeId");
-
+		
 		// AS: call fillCurrentRecipe() to get the recipe from either the local
 		// database
 		// or server.
@@ -78,12 +78,17 @@ public class ViewRecipeActivity extends Activity {
 		pictureButton.setOnClickListener(new View.OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Intent galleryIntent = new Intent(getApplicationContext(),
-						ImageGalleryActivity.class);
-				galleryIntent.putExtra("code", sourceCode);
-				galleryIntent.putExtra("recipeId",
-						String.valueOf(currentRecipe.getRecipeId()));
-				startActivity(galleryIntent);
+				// Only editable in editmode
+				if (isEditableRecipe()) {
+					Intent galleryIntent = new Intent(getApplicationContext(),
+							ImageGalleryActivity.class);
+					galleryIntent.putExtra("code", sourceCode);
+					galleryIntent.putExtra("recipeId",
+							String.valueOf(currentRecipe.getRecipeId()));
+					startActivity(galleryIntent);
+				} else {
+					showThatNotEditable();
+				}
 			}
 		});
 
@@ -145,11 +150,7 @@ public class ViewRecipeActivity extends Activity {
 									}
 								});
 
-					}
-
-					// AS: if not editable then nothing happens (inform user
-					// here)
-					else {
+					} else {
 						showThatNotEditable();
 					}
 				}
@@ -164,6 +165,7 @@ public class ViewRecipeActivity extends Activity {
 	@Override
 	public void onResume() {
 		super.onResume();
+		
 		// PopulateImages cannot be called before the async task has returned
 		// with recipe object, otherwise currentRecipe will be null.
 		if (currentRecipe != null
@@ -344,6 +346,7 @@ public class ViewRecipeActivity extends Activity {
 	 *            the string representation of a recipe UUID
 	 */
 	private void editMode() {
+		// Set the boolean to true to indicate in edit mode
 		editableEditTexts();
 		hideEditDelete();
 		hideEmail();
