@@ -132,6 +132,7 @@ public class User implements Serializable {
 		context.startActivity(Intent.createChooser(i, "Send mail..."));
 	}
 
+	
 	private String convertToEmail(Recipe recipe) {
 		String title = recipe.getTitle();
 		String directions = recipe.getDirections();
