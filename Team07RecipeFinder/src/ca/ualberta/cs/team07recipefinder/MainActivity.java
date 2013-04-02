@@ -73,6 +73,8 @@ public class MainActivity extends Activity {
 	public void onResume() {
 		super.onResume();
 
+		myPantry = user.getPantry();
+		
 		// GC: Populate and set click listener for items in the myRecipes
 		// listview
 		populateMyRecipes();
