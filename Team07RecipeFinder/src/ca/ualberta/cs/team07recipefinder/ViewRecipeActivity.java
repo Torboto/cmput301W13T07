@@ -748,7 +748,7 @@ public class ViewRecipeActivity extends Activity {
 		for (int i = 0; i < listAdapter.getCount(); i++) {
 			View listItem = listAdapter.getView(i, null, listView);
 			listItem.measure(desiredWidth, MeasureSpec.UNSPECIFIED);
-			totalHeight += listItem.getMeasuredHeight();
+			totalHeight += 94;
 		}
 
 		ViewGroup.LayoutParams params = listView.getLayoutParams();
