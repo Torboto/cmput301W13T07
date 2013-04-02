@@ -1,6 +1,6 @@
 package ca.ualberta.cs.team07recipefinder;
 
-/*
+/**
  * Copyright 2012  Bryan Liles <iam@smartic.us> and Abram Hindle <abram.hindle@softwareprocess.es> . All rights reserved.
 
  Redistribution and use in source and binary forms, with or without modification, are
