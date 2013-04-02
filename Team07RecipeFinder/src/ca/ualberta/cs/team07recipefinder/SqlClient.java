@@ -242,7 +242,10 @@ public class SqlClient extends SQLiteOpenHelper {
 		return recipeList;
 	}
 
-	// Deletes all data from the table
+	/**
+	 *  Deletes all data from the table. The table still exists but it is 
+	 *  empty.
+	 */
 	public void deleteAllRows() {
 		SQLiteDatabase db = this.getWritableDatabase();
 		db.execSQL("DELETE FROM " + TABLE_NAME);

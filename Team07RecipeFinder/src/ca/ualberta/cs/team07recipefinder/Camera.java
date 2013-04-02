@@ -7,13 +7,14 @@ import android.os.Environment;
 /**
  * @author gcoomber
  * 
- *         A helper class that contains data and methods for the camera
- *         activity.
- * 	
+ * A class that contains the folder name where images are saved, the
+ * number of images in the file, and a method for setting the file for the
+ * bitmap image.
+ * 
  */
 public class Camera {
 	private String folderName;
-	int imageNumber;
+	private int imageNumber;
 
 	/**
 	 * @param folderName
@@ -25,7 +26,8 @@ public class Camera {
 	};
 
 	/**
-	 * Gets the file with the file path that the image will be saved at.
+	 * Creates and returns the file with the file path where the image 
+	 * will be saved.
 	 * 
 	 * @return
 	 */
