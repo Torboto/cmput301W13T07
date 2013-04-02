@@ -334,7 +334,6 @@ public class ViewRecipeActivity extends Activity {
 
 		setListViewOnClickListener();
 
-<<<<<<< HEAD
 	}
 
 	/**
@@ -349,9 +348,6 @@ public class ViewRecipeActivity extends Activity {
 		hideEmail();
 		showSaveAndAdd();
 		showThatEditable();
-=======
-		return;
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 	}
 
 	/**
@@ -428,7 +424,6 @@ public class ViewRecipeActivity extends Activity {
 			return false;
 		}
 	}
-<<<<<<< HEAD
 
 	/**
 	 * This method sets up the lvIngredients list view to show the contents of
@@ -583,8 +578,6 @@ public class ViewRecipeActivity extends Activity {
 		});
 		alert.show();
 	}
-=======
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 
 	/**
 	 * This method creates a dialog which informs that user that they can now
@@ -621,161 +614,10 @@ public class ViewRecipeActivity extends Activity {
 	}
 
 	/**
-<<<<<<< HEAD
-	 * This method takes an EditText and returns true if it is empty and false
-	 * otherwise.
-=======
-	 * This method creates a dialog which informs the user that the changes to
-	 * the current recipe have been saved and finishes the activity on click of
-	 * OK.
-	 */
-	private void savedDialog() {
-		TextView tv = new TextView(this);
-		tv.setText("Changes to the current recipe have been saved.");
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Success");
-		alert.setView(tv);
-		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				finish();
-			}
-		});
-		alert.show();
-	}
-
-	private ArrayList<String> formCombinedArray(Recipe recipe) {
-		ArrayList<String> ingredients = recipe.getIngredients();
-		ArrayList<String> quantities = recipe.getQuantities();
-		ArrayList<String> units = recipe.getUnits();
-		ArrayList<String> combined = new ArrayList<String>();
-
-		for (int index = 0; index < ingredients.size(); index++) {
-			combined.add(quantities.get(index) + " " + units.get(index) + "  "
-					+ ingredients.get(index));
-		}
-		return combined;
-	}
-
-	/**
-	 * This method sets up the lvIngredients list view to show the contents of
-	 * the array list 'combined' attribute of recipe.
-	 */
-	private void populateIngredientView() {
-		ListView ingredientsLV = (ListView) findViewById(R.id.lv_Ingredients);
-		registerForContextMenu(ingredientsLV);
-
-		ArrayList<String> combined = formCombinedArray(currentRecipe);
-		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-				R.layout.list_item, combined);
-		ingredientsLV.setAdapter(adapter);
-		setListViewHeightBasedOnChildren(ingredientsLV);
-
-	}
-
-	/**
-	 * This method creates a dialog with three edit texts, for ingredient,
-	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
-	 * 
-<<<<<<< HEAD
-=======
-	 */
-	protected void ingredientDialog() {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Add New Ingredient");
-
-		final EditText ingredientET = new EditText(this);
-		ingredientET.setHint("Ingredient");
-
-		final EditText unitET = new EditText(this);
-		unitET.setHint("Unit of measurement");
-
-		final EditText quantityET = new EditText(this);
-		quantityET.setHint("Quantity");
-
-		LinearLayout layout = new LinearLayout(this);
-		layout.setOrientation(1); // 1 is for vertical orientation
-		layout.addView(ingredientET);
-		layout.addView(unitET);
-		layout.addView(quantityET);
-
-		alert.setView(layout);
-
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
-						&& (!isEmpty(quantityET))) {
-					addIngredient(ingredientET, unitET, quantityET);
-					populateIngredientView();
-				}
-			}
-		});
-		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-					}
-				});
-		alert.show();
-	}
-
-	/**
-	 * This method creates a dialog with three edit texts, for ingredient,
-	 * quantity, and unit of measurement. There is a 'Cancel' and 'Ok' button.
-	 * 
-	 * @param index
-	 *            The index in each array list of the current item.
-	 */
-	protected void editIngredientDialog(final int index) {
-		AlertDialog.Builder alert = new AlertDialog.Builder(this);
-		alert.setTitle("Edit Ingredient");
-
-		final EditText ingredientET = new EditText(this);
-		ingredientET.setHint("Ingredient");
-		ingredientET.setText(currentRecipe.getIngredients().get(index));
-
-		final EditText unitET = new EditText(this);
-		unitET.setHint("Unit of measurement");
-		unitET.setText(currentRecipe.getUnits().get(index));
-
-		final EditText quantityET = new EditText(this);
-		quantityET.setHint("Quantity");
-		quantityET.setText(currentRecipe.getQuantities().get(index));
-
-		LinearLayout layout = new LinearLayout(this);
-		layout.setOrientation(1); // 1 is for vertical orientation
-		layout.addView(ingredientET);
-		layout.addView(unitET);
-		layout.addView(quantityET);
-
-		alert.setView(layout);
-
-		alert.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				if ((!isEmpty(ingredientET)) && (!isEmpty(unitET))
-						&& (!isEmpty(quantityET))) {
-					editIngredient(ingredientET, unitET, quantityET, index);
-					populateIngredientView();
-				}
-			}
-		});
-		alert.setNeutralButton("Delete", new DialogInterface.OnClickListener() {
-			public void onClick(DialogInterface dialog, int whichButton) {
-				deleteIngredient(index);
-			}
-		});
-		alert.setNegativeButton("Cancel",
-				new DialogInterface.OnClickListener() {
-					public void onClick(DialogInterface dialog, int whichButton) {
-					}
-				});
-		alert.show();
-	}
-
-	/**
 	 * This method takes an EditText and returns true if it is empty and false
 	 * otherwise.
 	 * 
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
+<
 	 * @param etText
 	 *            the EditText to be tested
 	 * @return True: if empty, false: otherwise.
@@ -785,109 +627,6 @@ public class ViewRecipeActivity extends Activity {
 			return false;
 		else
 			return true;
-	}
-<<<<<<< HEAD
-=======
-
-	protected void setListViewOnClickListener() {
-
-		ListView ingredientsLV = (ListView) findViewById(R.id.lv_Ingredients);
-		registerForContextMenu(ingredientsLV);
-
-		ingredientsLV.setOnItemClickListener(new OnItemClickListener() {
-			@Override
-			public void onItemClick(AdapterView<?> parent, View view,
-					int position, long id) {
-				// AS: launch editIngredientDialog with the position
-				editIngredientDialog(position);
-			}
-		});
-
-	}
-
-	/**
-	 * This method takes in three edit texts for a new ingredient (the
-	 * ingredient, the quantity, and the name) and adds the information to
-	 * currentRecipe.
-	 * 
-	 * @param ingredientET
-	 *            the edit text with ingredient
-	 * @param unitET
-	 *            the edit text with unit of measurement
-	 * @param quantityET
-	 *            the edit text with quantity
-	 */
-	private void addIngredient(EditText ingredientET, EditText unitET,
-			EditText quantityET) {
-		String ingredient = ingredientET.getText().toString();
-		String unit = unitET.getText().toString();
-		String quantity = quantityET.getText().toString();
-		ArrayList<String> ingredients = currentRecipe.getIngredients();
-		ArrayList<String> quantities = currentRecipe.getQuantities();
-		ArrayList<String> units = currentRecipe.getUnits();
-
-		ingredients.add(ingredient);
-		units.add(unit);
-		quantities.add(quantity);
-
-		currentRecipe.setIngredients(ingredients);
-		currentRecipe.setQuantities(quantities);
-		currentRecipe.setUnits(units);
-
-	}
-
-	/**
-	 * This method takes in three edit texts for a new ingredient (the
-	 * ingredient, the quantity, and the name) and an array index. It adds the
-	 * information to currentRecipe at index.
-	 * 
-	 * @param ingredientET
-	 *            the edit text with ingredient
-	 * @param unitET
-	 *            the edit text with unit of measurement
-	 * @param quantityET
-	 *            the edit text with quantity
-	 */
-	private void editIngredient(EditText ingredientET, EditText unitET,
-			EditText quantityET, int index) {
-		String ingredient = ingredientET.getText().toString();
-		String unit = unitET.getText().toString();
-		String quantity = quantityET.getText().toString();
-
-		ArrayList<String> ingredients = currentRecipe.getIngredients();
-		ArrayList<String> quantities = currentRecipe.getQuantities();
-		ArrayList<String> units = currentRecipe.getUnits();
-		ingredients.set(index, ingredient);
-		units.set(index, unit);
-		quantities.set(index, quantity);
-
-		currentRecipe.setIngredients(ingredients);
-		currentRecipe.setQuantities(quantities);
-		currentRecipe.setUnits(units);
-
-	}
-
-	/**
-	 * This method deletes the ingredient, quantity, unit, and combined entry at
-	 * index in each array list.
-	 * 
-	 * @param index
-	 */
-	private void deleteIngredient(int index) {
-		ArrayList<String> ingredients = currentRecipe.getIngredients();
-		ArrayList<String> quantities = currentRecipe.getQuantities();
-		ArrayList<String> units = currentRecipe.getUnits();
-
-		ingredients.remove(index);
-		units.remove(index);
-		quantities.remove(index);
-
-		currentRecipe.setIngredients(ingredients);
-		currentRecipe.setQuantities(quantities);
-		currentRecipe.setUnits(units);
-
-		populateIngredientView();
-
 	}
 
 	public static void setListViewHeightBasedOnChildren(ListView listView) {
@@ -912,6 +651,4 @@ public class ViewRecipeActivity extends Activity {
 		listView.setLayoutParams(params);
 		listView.requestLayout();
 	}
-
->>>>>>> branch 'master' of git@github.com:Torboto/cmput301W13T07.git
 }
