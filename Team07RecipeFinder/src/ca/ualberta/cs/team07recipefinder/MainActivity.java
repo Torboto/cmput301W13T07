@@ -373,12 +373,32 @@ public class MainActivity extends Activity {
 	 *            receives list of recipes that matched the search
 	 */
 	public void setSearch(ArrayList<Recipe> recipes) {
+		if(recipes.size() == 0){
+			noSearchResults();
+		}
 		ListView searchListView = (ListView) findViewById(R.id.lvSearchResults);
 		ArrayAdapter<Recipe> adapter = new ArrayAdapter<Recipe>(
 				getBaseContext(), android.R.layout.simple_list_item_1, recipes);
 		searchListView.setAdapter(adapter);
 
 		setListViewOnClickListener(searchListView, recipes);
+	}
+	
+	/**
+	 * This method creates a dialog which informs the user that they are missing
+	 * one or more fields in the recipe they tried to create.
+	 */
+	private void noSearchResults() {
+		TextView tv = new TextView(this);
+		tv.setText("No recipes match this search. Try creating one!");
+		AlertDialog.Builder alert = new AlertDialog.Builder(this);
+		alert.setTitle("Sorry");
+		alert.setView(tv);
+		alert.setNegativeButton("OK", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int whichButton) {
+			}
+		});
+		alert.show();
 	}
 
 	/**
