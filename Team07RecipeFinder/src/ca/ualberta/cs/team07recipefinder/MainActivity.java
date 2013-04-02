@@ -67,17 +67,18 @@ public class MainActivity extends Activity {
 		myPantry = user.getPantry();
 		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
 		registerForContextMenu(ingredientsLV);
+
+		myPantry = user.getPantry();
 	}
 
 	@Override
 	public void onResume() {
 		super.onResume();
 
-		myPantry = user.getPantry();
-		
 		// GC: Populate and set click listener for items in the myRecipes
 		// listview
 		populateMyRecipes();
+		populatePantry();
 
 		// GC: Clicklistener for the add recipes button. When the add button is
 		// clicked the NewRecipeActivity is launched.
@@ -213,7 +214,7 @@ public class MainActivity extends Activity {
 					myPantry.addIngredient(ingredientName);
 					user.setPantry(myPantry);
 					user.Write(getApplicationContext());
-					onStart();
+					populatePantry();
 				}
 			}
 		});
@@ -257,6 +258,7 @@ public class MainActivity extends Activity {
 		alert.setPositiveButton("OK", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int whichButton) {
 				myPantry.updateIngredient(index, et.getText().toString());
+				populatePantry();
 			}
 		});
 		alert.setNegativeButton("Cancel",
@@ -293,25 +295,21 @@ public class MainActivity extends Activity {
 			myPantry.removeIngredient(index);
 			user.setPantry(myPantry);
 			user.Write(getApplicationContext());
-			onStart();
-			return true;
 		case R.id.menu_edit_ingredient:
 			editIngredient(index);
 			user.setPantry(myPantry);
 			user.Write(getApplicationContext());
-			onStart();
-			return true;
-		default:
-			return super.onContextItemSelected(item);
+			// default:
+			// return super.onContextItemSelected(item);
 		}
+		populatePantry();
+		return true;
 	}
 
-	@Override
 	/**
-	 * This will load and show all ingredients in the ListView under Pantry tab.
+	 * 
 	 */
-	protected void onStart() {
-		super.onStart();
+	public void populatePantry() {
 		ingredientsLV = (ListView) findViewById(R.id.lvPantry);
 		ArrayList<String> ingredients = myPantry.getAllIngredients();
 		ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
@@ -327,8 +325,8 @@ public class MainActivity extends Activity {
 	}
 
 	/**
-	 * For MyRecipes Tab. Retrieves all recipes from the cache and lists
-	 * their names and returns the list of retrieved recipes
+	 * For MyRecipes Tab. Retrieves all recipes from the cache and lists their
+	 * names and returns the list of retrieved recipes
 	 */
 	public void populateMyRecipes() {
 		ArrayList<Recipe> recipes = new ArrayList<Recipe>();
