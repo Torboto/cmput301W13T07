@@ -80,16 +80,12 @@ public class ViewRecipeActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// Only editable in editmode
-				if (isEditableRecipe()) {
 					Intent galleryIntent = new Intent(getApplicationContext(),
 							ImageGalleryActivity.class);
 					galleryIntent.putExtra("code", sourceCode);
 					galleryIntent.putExtra("recipeId",
 							String.valueOf(currentRecipe.getRecipeId()));
 					startActivity(galleryIntent);
-				} else {
-					showThatNotEditable();
-				}
 			}
 		});
 
